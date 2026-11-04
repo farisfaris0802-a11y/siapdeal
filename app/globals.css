@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+    --background: 42 40% 97%;
+    --foreground: 160 47% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 160 47% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 47% 10%;
+    --primary: 158 62% 20%;
+    --primary-foreground: 42 50% 98%;
+    --secondary: 42 42% 93%;
+    --secondary-foreground: 160 40% 16%;
+    --muted: 42 28% 94%;
+    --muted-foreground: 158 12% 40%;
+    --accent: 40 93% 56%;
+    --accent-foreground: 160 47% 12%;
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 18% 87%;
+    --input: 40 18% 84%;
+    --ring: 158 55% 28%;
+    --radius: 0.9rem;
+  }
+
+  .dark {
+    --background: 160 40% 6%;
+    --foreground: 42 40% 96%;
+    --card: 160 33% 9%;
+    --card-foreground: 42 40% 96%;
+    --popover: 160 33% 9%;
+    --popover-foreground: 42 40% 96%;
+    --primary: 152 52% 55%;
+    --primary-foreground: 160 47% 8%;
+    --secondary: 160 24% 14%;
+    --secondary-foreground: 42 40% 96%;
+    --muted: 160 24% 14%;
+    --muted-foreground: 158 12% 65%;
+    --accent: 40 93% 56%;
+    --accent-foreground: 160 47% 8%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 42 40% 96%;
+    --border: 160 20% 18%;
+    --input: 160 20% 18%;
+    --ring: 152 52% 55%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  ::selection {
+    @apply bg-accent/40 text-ink;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .grain {
+    background-image: radial-gradient(rgba(11, 43, 34, 0.06) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(11, 43, 34, 0.2) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(11, 43, 34, 0.18);
+    border-radius: 999px;
+  }
+
+  .animate-in-up {
+    animation: in-up 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .animate-delay-1 {
+    animation-delay: 80ms;
+  }
+
+  .animate-delay-2 {
+    animation-delay: 160ms;
+  }
+
+  .animate-delay-3 {
+    animation-delay: 240ms;
+  }
+}
+
+@keyframes in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-scroll {
+  scrollbar-gutter: stable;
+}
