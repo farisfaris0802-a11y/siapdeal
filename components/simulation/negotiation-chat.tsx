@@ -7,14 +7,12 @@ import { useChat } from "ai/react";
 import {
   AlertCircle,
   ArrowLeft,
-  ArrowRight,
   CheckCircle2,
   CircleStop,
   Clock,
   Info,
   Lightbulb,
   Loader2,
-  Lock,
   RotateCcw,
   Send,
   ShieldCheck,
@@ -27,6 +25,7 @@ import { toast } from "sonner";
 
 import { detectOutcome } from "@/lib/ai/buyer-prompt";
 import { sanitizeAssistantText } from "@/lib/ai/sanitize";
+import { CATEGORY_LABEL } from "@/lib/catalog";
 import {
   DIFFICULTY_META,
   PARTNER_META,
@@ -36,7 +35,7 @@ import type {
   ChatMessage,
   Difficulty,
   PartnerType,
-  Product,
+  ProductCategory,
   SessionOutcome,
 } from "@/lib/types";
 import { cn, formatRupiah } from "@/lib/utils";
@@ -57,6 +56,7 @@ interface ChatProduct {
   name: string;
   base_price: number;
   usp: string;
+  category: ProductCategory;
 }
 
 interface NegotiationChatProps {
@@ -232,25 +232,25 @@ export function NegotiationChat({
         <div className="flex min-w-0 items-center gap-3">
           <Link
             href="/dashboard"
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-border bg-white text-muted-foreground shadow-sm transition-colors hover:text-foreground"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all duration-200 hover:border-emerald-200 hover:text-emerald-700"
             aria-label="Kembali ke dashboard"
           >
             <ArrowLeft className="h-4 w-4" />
           </Link>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-1.5">
-              <Badge variant="outline" className="bg-white text-[10px]">
+              <Badge variant="outline" className="border-slate-200 bg-white text-[10px] text-slate-600">
                 {partner.shortLabel}
               </Badge>
               <Badge
                 variant={difficulty === "hard" ? "destructive" : difficulty === "medium" ? "warning" : "success"}
                 className="text-[10px]"
               >
-                {diff.label}
+                Level: {diff.label}
               </Badge>
-              <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-700">
+              <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
-                Sesi aktif
+                Sesi Aktif
               </span>
             </div>
             <h1 className="mt-1 truncate font-display text-lg font-bold leading-tight text-ink sm:text-xl">
@@ -260,48 +260,59 @@ export function NegotiationChat({
         </div>
 
         <Button
-          variant="outline"
           size="sm"
-          className="h-9 shrink-0 gap-1.5 border-rose-200 bg-white text-rose-700 hover:bg-rose-50 hover:text-rose-800"
+          className="h-auto min-h-9 w-full shrink-0 gap-1.5 whitespace-normal bg-primary px-4 py-2 text-[11px] font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:bg-emerald-700 sm:w-auto sm:text-xs"
           onClick={() => setEndOpen(true)}
           disabled={locked}
         >
           <CircleStop className="h-4 w-4" />
-          Akhiri sesi
+          Selesaikan &amp; Lihat Evaluasi Deal
         </Button>
       </div>
 
       {/* Body */}
       <div className="grid min-h-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1fr)_310px]">
-        <div className="flex min-h-0 flex-col overflow-hidden rounded-2xl border border-border/80 bg-white shadow-soft relative">
+        <div className="relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-soft">
           {/* Chat header */}
-          <div className="flex shrink-0 items-center justify-between border-b border-border/70 bg-sand-50/70 px-4 py-3">
-            <div className="flex min-w-0 items-center gap-2.5">
-              <div className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-100 text-base ring-1 ring-emerald-200">
+          <div className="flex shrink-0 items-center justify-between border-b border-slate-200/80 bg-white px-4 py-3.5">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-emerald-50 text-lg ring-1 ring-emerald-100">
                 {partner.emoji}
-                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500" />
+                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white bg-emerald-500" />
               </div>
               <div className="min-w-0">
-                <p className="truncate text-sm font-bold leading-tight text-ink">
-                  {partner.buyerName}
-                </p>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <p className="truncate text-sm font-bold leading-tight text-ink">
+                    {partner.buyerName}
+                  </p>
+                  <Badge
+                    variant="outline"
+                    className="border-emerald-200 bg-emerald-50/80 text-[8px] uppercase tracking-wide text-emerald-700"
+                  >
+                    Mitra B2B
+                  </Badge>
+                </div>
                 <p className="truncate text-[10px] text-muted-foreground">
                   {partner.buyerRole} · {partner.company}
+                </p>
+                <p className="mt-0.5 flex items-center gap-1 text-[9px] font-medium text-emerald-700">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  Online · siap bernegosiasi
                 </p>
               </div>
             </div>
             <Badge variant="success" className="shrink-0 gap-1 text-[10px]">
               <Sparkles className="h-3 w-3" />
-              AI
+              AI Negotiator
             </Badge>
           </div>
 
           {/* Messages */}
           <div
             ref={scrollRef}
-            className="chat-scroll flex-1 space-y-4 overflow-y-auto bg-[#FDFCF8] px-3 py-4 sm:px-5"
+            className="chat-scroll flex-1 space-y-4 overflow-y-auto bg-[#F8FAF9] px-3 py-4 sm:px-5"
           >
-            <div className="mx-auto max-w-md rounded-xl border border-border/60 bg-white/70 px-3 py-2 text-center text-[10px] leading-relaxed text-muted-foreground">
+            <div className="mx-auto max-w-md rounded-xl border border-slate-200/80 bg-white/80 px-3 py-2 text-center text-[10px] leading-relaxed text-slate-500">
               Simulasi latihan. AI memerankan pembeli profesional dan tidak
               mewakili perusahaan nyata.
             </div>
@@ -315,46 +326,57 @@ export function NegotiationChat({
               if (!content) return null;
 
               return (
-                <div
-                  key={message.id}
-                  className={cn("flex gap-2.5", isUser ? "justify-end" : "justify-start")}
-                >
+                <div key={message.id} className={cn(isUser ? "" : "space-y-1")}>
                   {!isUser && (
-                    <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-100 text-[11px] font-bold text-emerald-800">
-                      {partner.buyerName.split(" ").slice(-1)[0]?.charAt(0) ?? "P"}
-                    </div>
+                    <p className="pl-9 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
+                      Mitra B2B
+                    </p>
                   )}
                   <div
-                    className={cn(
-                      "max-w-[86%] whitespace-pre-wrap break-words rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed shadow-sm sm:max-w-[78%] sm:text-sm",
-                      isUser
-                        ? "rounded-tr-md bg-primary text-primary-foreground"
-                        : "rounded-tl-md border border-border/70 bg-white text-ink"
-                    )}
+                    className={cn("flex gap-2.5", isUser ? "justify-end" : "justify-start")}
                   >
-                    {content}
-                  </div>
-                  {isUser && (
-                    <div className="mt-0.5 hidden h-7 w-7 shrink-0 place-items-center rounded-full bg-secondary text-[10px] font-bold text-secondary-foreground sm:grid">
-                      Anda
+                    {!isUser && (
+                      <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-50 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-100">
+                        {partner.buyerName.split(" ").slice(-1)[0]?.charAt(0) ?? "P"}
+                      </div>
+                    )}
+                    <div
+                      className={cn(
+                        "max-w-[86%] whitespace-pre-wrap break-words rounded-2xl px-4 py-3 text-[13px] leading-relaxed shadow-sm sm:max-w-[78%] sm:text-sm",
+                        isUser
+                          ? "rounded-tr-none bg-primary text-primary-foreground shadow-emerald-950/10"
+                          : "rounded-tl-none border border-slate-200 bg-white text-slate-700"
+                      )}
+                    >
+                      {content}
                     </div>
-                  )}
+                    {isUser && (
+                      <div className="mt-0.5 hidden h-7 w-7 shrink-0 place-items-center rounded-full bg-slate-900 text-[10px] font-bold text-white sm:grid">
+                        Anda
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             })}
 
             {isLoading && (
-              <div className="flex gap-2.5">
-                <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-100 text-[11px] font-bold text-emerald-800">
-                  {partner.buyerName.split(" ").slice(-1)[0]?.charAt(0) ?? "P"}
-                </div>
-                <div className="flex items-center gap-1.5 rounded-2xl rounded-tl-md border border-border/70 bg-white px-4 py-3 shadow-sm">
-                  <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-muted-foreground/60" />
-                  <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-muted-foreground/60 [animation-delay:150ms]" />
-                  <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-muted-foreground/60 [animation-delay:300ms]" />
-                  <span className="ml-1 text-[10px] text-muted-foreground">
-                    {partner.buyerName} mengetik…
-                  </span>
+              <div className="space-y-1">
+                <p className="pl-9 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
+                  Mitra B2B
+                </p>
+                <div className="flex gap-2.5">
+                  <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-50 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-100">
+                    {partner.buyerName.split(" ").slice(-1)[0]?.charAt(0) ?? "P"}
+                  </div>
+                  <div className="flex items-center gap-1.5 rounded-2xl rounded-tl-none border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                    <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500" />
+                    <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500 [animation-delay:150ms]" />
+                    <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500 [animation-delay:300ms]" />
+                    <span className="ml-1 text-[10px] text-slate-500">
+                      {partner.buyerName} sedang meninjau penawaran Anda...
+                    </span>
+                  </div>
                 </div>
               </div>
             )}
@@ -453,18 +475,18 @@ export function NegotiationChat({
                 placeholder={
                   locked
                     ? "Sesi sedang dievaluasi…"
-                    : "Tulis respons negosiasi Anda… (Enter untuk kirim)"
+                    : "Ketik respons negosiasi Anda di sini... (Tekan Enter untuk kirim)"
                 }
                 disabled={locked}
                 maxLength={MAX_CHARS}
-                className="min-h-[52px] resize-none rounded-2xl border-border/80 py-3.5 pl-4 pr-24 text-sm focus-visible:ring-primary/30"
+                className="min-h-[56px] resize-none rounded-2xl border-slate-200 bg-white py-3.5 pl-4 pr-24 text-sm leading-relaxed shadow-sm transition-all focus-visible:border-emerald-300 focus-visible:ring-emerald-600/15"
               />
-              <div className="absolute bottom-2 right-2 flex items-center gap-1.5">
+              <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1.5">
                 {input.length > 0 && (
                   <span
                     className={cn(
                       "text-[10px] tabular-nums",
-                      input.length > MAX_CHARS - 100 ? "text-rose-600" : "text-muted-foreground/60"
+                      input.length > MAX_CHARS - 100 ? "text-rose-600" : "text-slate-400"
                     )}
                   >
                     {input.length}/{MAX_CHARS}
@@ -476,7 +498,7 @@ export function NegotiationChat({
                     size="icon"
                     variant="outline"
                     onClick={() => stop()}
-                    className="h-9 w-9 shrink-0 rounded-full"
+                    className="h-9 w-9 shrink-0 rounded-full border-slate-200"
                     aria-label="Hentikan respons"
                   >
                     <Square className="h-3.5 w-3.5" />
@@ -486,7 +508,7 @@ export function NegotiationChat({
                     type="submit"
                     size="icon"
                     disabled={!input.trim() || locked}
-                    className="h-9 w-9 shrink-0 rounded-full"
+                    className="h-9 w-9 shrink-0 rounded-full bg-primary shadow-sm transition-all duration-200 hover:bg-emerald-700"
                     aria-label="Kirim pesan"
                   >
                     <Send className="h-4 w-4" />
@@ -494,12 +516,26 @@ export function NegotiationChat({
                 )}
               </div>
             </form>
-            <div className="mt-2 flex items-center justify-between px-1 text-[10px] text-muted-foreground">
-              <span className="inline-flex items-center gap-1">
-                <Lock className="h-3 w-3" />
-                Percakapan disimpan untuk evaluasi
+            <div className="mt-2 flex items-center justify-between gap-3 px-1 text-[10px]">
+              <span
+                className={cn(
+                  "inline-flex items-center gap-1.5 font-medium",
+                  isLoading ? "text-emerald-700" : "text-slate-400"
+                )}
+              >
+                <span
+                  className={cn(
+                    "h-1.5 w-1.5 rounded-full",
+                    isLoading ? "animate-pulse bg-emerald-500" : "bg-slate-300"
+                  )}
+                />
+                {isLoading
+                  ? "AI sedang mengetik..."
+                  : "AI siap menerima respons Anda"}
               </span>
-              <span className="hidden sm:inline">Shift + Enter untuk baris baru</span>
+              <span className="hidden text-slate-400 sm:inline">
+                Shift + Enter untuk baris baru
+              </span>
             </div>
           </div>
 
@@ -528,47 +564,61 @@ export function NegotiationChat({
 
         {/* Sidebar */}
         <aside className="hidden min-h-0 space-y-3 overflow-y-auto pr-0.5 xl:block">
-          <div className="rounded-2xl border border-border/80 bg-white p-4 shadow-soft">
-            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-              Skenario
-            </p>
-            <p className="mt-2 font-display text-base font-bold leading-snug text-ink">
+          <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-soft">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                Detail Skenario
+              </p>
+              <Badge variant="success" className="text-[9px]">
+                Live
+              </Badge>
+            </div>
+            <p className="mt-2.5 font-display text-lg font-bold leading-snug text-ink">
               {product.name}
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Harga dasar {formatRupiah(product.base_price)} / unit
+              {formatRupiah(product.base_price)} / unit ·{" "}
+              {CATEGORY_LABEL[product.category]}
             </p>
 
-            <div className="mt-3 rounded-xl bg-sand-50 p-3 text-[11px] leading-relaxed text-muted-foreground">
-              <p className="mb-1 flex items-center gap-1 font-semibold text-ink">
-                <Info className="h-3.5 w-3.5 text-primary" />
-                Keunggulan yang Anda klaim
-              </p>
-              {product.usp}
+            <div className="mt-4 space-y-2.5 border-t border-slate-100 pt-4 text-[11px]">
+              {[
+                ["Harga dasar", formatRupiah(product.base_price)],
+                ["Kategori", CATEGORY_LABEL[product.category]],
+                ["Mitra", partner.shortLabel],
+                ["Tingkat", diff.label],
+                ["Pembeli", partner.buyerName],
+              ].map(([label, value]) => (
+                <div key={label} className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-600" />
+                  <span className="min-w-0 flex-1 text-muted-foreground">{label}</span>
+                  <span className="max-w-[150px] text-right font-semibold leading-snug text-ink">
+                    {value}
+                  </span>
+                </div>
+              ))}
             </div>
 
-            <div className="mt-3 space-y-2 border-t border-border/70 pt-3 text-[11px]">
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Mitra</span>
-                <span className="font-semibold text-ink">{partner.shortLabel}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Kesulitan</span>
-                <span className="font-semibold text-ink">{diff.label}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Pembeli</span>
-                <span className="font-semibold text-ink">{partner.buyerName}</span>
-              </div>
+            <div className="mt-4 rounded-xl border border-emerald-100 bg-emerald-50/60 p-3.5">
+              <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-emerald-800">
+                <Info className="h-3.5 w-3.5" />
+                Keunggulan klaim
+              </p>
+              <p className="mt-1.5 text-[11px] leading-relaxed text-emerald-950/70">
+                {product.usp}
+              </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-amber-200 bg-amber-50/70 p-4">
-            <p className="flex items-center gap-1.5 text-xs font-bold text-amber-900">
-              <Lightbulb className="h-4 w-4 text-amber-700" />
-              Strategi yang perlu dicoba
+          <div className="rounded-2xl border border-amber-200/80 bg-amber-50/80 p-4">
+            <p className="flex items-center gap-1.5 text-xs font-bold text-amber-950">
+              <Lightbulb className="h-4 w-4 text-amber-600" />
+              Strategi &amp; tips negosiasi
             </p>
-            <ul className="mt-2.5 space-y-2 text-[11px] leading-relaxed text-amber-900/80">
+            <p className="mt-1 text-[10px] text-amber-800/70">
+              Panduan cepat untuk level {diff.label.toLowerCase()}.
+            </p>
+            <ul className="mt-3 space-y-2 text-[11px] leading-relaxed text-amber-950/75">
               {difficulty === "easy" ? (
                 <>
                   <li>• Sebutkan harga, isi paket, dan syarat secara spesifik sejak awal.</li>
@@ -589,31 +639,34 @@ export function NegotiationChat({
                 </>
               )}
             </ul>
+            <p className="mt-3 border-t border-amber-200/70 pt-2.5 text-[10px] font-medium text-amber-800/70">
+              Gunakan data, nilai produk, dan trade-off — bukan diskon langsung.
+            </p>
           </div>
 
-          <div className="rounded-2xl border border-border/80 bg-white p-4 shadow-soft">
-            <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+          <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-soft">
+            <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
               <Target className="h-3.5 w-3.5" />
               Dinilai di akhir sesi
             </p>
             <div className="mt-3 space-y-2">
               {RUBRIC_ASPECTS.map((aspect, index) => (
                 <div key={aspect.key} className="flex items-start gap-2 text-[11px]">
-                  <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-secondary text-[9px] font-bold text-secondary-foreground">
+                  <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-slate-100 text-[9px] font-bold text-slate-500">
                     {index + 1}
                   </span>
-                  <span className="leading-snug text-muted-foreground">{aspect.label}</span>
+                  <span className="leading-snug text-slate-500">{aspect.label}</span>
                 </div>
               ))}
             </div>
-            <div className="mt-3 flex items-center gap-1.5 border-t border-border/70 pt-3 text-[10px] text-muted-foreground">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-700" />
+            <div className="mt-3 flex items-center gap-1.5 border-t border-slate-100 pt-3 text-[10px] text-slate-400">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
               Rubrik tetap dan konsisten antar sesi.
             </div>
           </div>
 
-          <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-sand-50 px-3 py-2.5 text-[10px] text-muted-foreground">
-            <Clock className="h-3.5 w-3.5 shrink-0" />
+          <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-2.5 text-[10px] text-slate-500">
+            <Clock className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
             Sesi berakhir otomatis saat sepakat atau buntu.
           </div>
         </aside>
@@ -623,18 +676,17 @@ export function NegotiationChat({
       <Dialog open={endOpen} onOpenChange={setEndOpen}>
         <DialogContent>
           <DialogHeader>
-            <div className="mb-2 grid h-11 w-11 place-items-center rounded-full bg-rose-100 text-rose-700">
-              <CircleStop className="h-5 w-5" />
+            <div className="mb-2 grid h-11 w-11 place-items-center rounded-full bg-emerald-50 text-emerald-700">
+              <CheckCircle2 className="h-5 w-5" />
             </div>
-            <DialogTitle>Akhiri sesi sekarang?</DialogTitle>
+            <DialogTitle>Selesaikan &amp; lihat evaluasi deal?</DialogTitle>
             <DialogDescription>
-              Percakapan akan ditutup dan AI akan menilai seluruh transkrip
-              menggunakan rubrik 5 aspek. Anda tidak bisa melanjutkan chat
-              setelah ini.
+              Percakapan akan ditutup dan AI menilai seluruh transkrip dengan
+              rubrik 5 aspek. Hasilnya langsung tersedia di halaman evaluasi.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="rounded-xl border border-border/70 bg-sand-50 p-3.5 text-xs leading-relaxed text-muted-foreground">
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-xs leading-relaxed text-slate-500">
             <p className="font-semibold text-ink">Ringkasan sesi</p>
             <div className="mt-2 space-y-1.5">
               <div className="flex justify-between gap-3">
@@ -669,9 +721,9 @@ export function NegotiationChat({
               Lanjutkan negosiasi
             </Button>
             <Button
-              variant="destructive"
               onClick={handleManualEnd}
               disabled={isEvaluating || !hasUserMessage}
+              className="gap-1.5"
             >
               {isEvaluating ? (
                 <>
@@ -680,8 +732,8 @@ export function NegotiationChat({
                 </>
               ) : (
                 <>
-                  Akhiri & evaluasi
-                  <ArrowRight className="h-4 w-4" />
+                  <CheckCircle2 className="h-4 w-4" />
+                  Selesaikan &amp; Lihat Evaluasi Deal
                 </>
               )}
             </Button>

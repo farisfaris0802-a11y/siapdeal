@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+﻿import type { Config } from "tailwindcss";
 
 const config: Config = {
   darkMode: ["class"],
@@ -51,13 +51,13 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
         ink: {
-          DEFAULT: "#0B2B22",
-          soft: "#39564B",
+          DEFAULT: "#0F172A",
+          soft: "#475569",
         },
         sand: {
-          50: "#FBF9F4",
-          100: "#F4F0E6",
-          200: "#E9E2D2",
+          50: "#F8FAF9",
+          100: "#F1F5F3",
+          200: "#E2E8E5",
         },
       },
       borderRadius: {
@@ -76,8 +76,8 @@ const config: Config = {
         ],
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(11, 43, 34, 0.04), 0 12px 32px -12px rgba(11, 43, 34, 0.16)",
-        lift: "0 2px 4px rgba(11, 43, 34, 0.05), 0 24px 60px -24px rgba(11, 43, 34, 0.28)",
+        soft: "0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.12)",
+        lift: "0 2px 4px rgba(15, 23, 42, 0.05), 0 24px 56px -24px rgba(15, 23, 42, 0.22)",
       },
       keyframes: {
         "accordion-down": {
@@ -109,3 +109,4 @@ const config: Config = {
 };
 
 export default config;
+

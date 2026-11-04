@@ -182,7 +182,8 @@ export async function POST(request: Request) {
         ...baseOptions,
         model: evaluationConfig.model,
         providerOptions:
-          evaluationConfig.provider === "google"
+          evaluationConfig.provider === "google" &&
+          evaluationConfig.supportsThinkingConfig
             ? {
                 google: {
                   thinkingConfig: {

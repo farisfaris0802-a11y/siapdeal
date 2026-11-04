@@ -55,8 +55,8 @@ export function stripThinkBlocks(text: string) {
 
 export function isInternalSentence(sentence: string) {
   const normalized = sentence
-    .replace(/^[\s>*\-â€“â€”â€¢]+/, "")
-    .replace(/^["'â€œâ€]+|["'â€œâ€]+$/g, "")
+    .replace(/^[\s>*\-–—•]+/, "")
+    .replace(/^["'“”]+|["'“”]+$/g, "")
     .trim();
 
   if (!normalized) return false;

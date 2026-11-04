@@ -181,7 +181,7 @@ export default async function LandingPage() {
 
           {/* Hero visual */}
           <div className="relative mx-auto w-full max-w-[520px] animate-in-up animate-delay-2 lg:mx-0">
-            <div className="absolute -right-3 -top-5 z-20 hidden w-[178px] rounded-2xl border border-white bg-white/95 p-3.5 shadow-lift backdrop-blur sm:block">
+            <div className="absolute -right-6 -top-20 z-20 hidden w-[178px] rounded-2xl border border-white bg-white/95 p-3.5 shadow-lift backdrop-blur sm:block">
               <div className="flex items-center justify-between">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                   Skor negosiasi
@@ -219,14 +219,14 @@ export default async function LandingPage() {
                     <p className="text-[11px] text-muted-foreground">
                       F&amp;B Director · Amrita Resort Nusa Dua
                     </p>
+                    <Badge variant="warning" className="mt-1 text-[9px]">
+                      Hotel Resort
+                    </Badge>
                   </div>
                 </div>
-                <Badge variant="warning" className="text-[10px]">
-                  Hotel Resort
-                </Badge>
               </div>
 
-              <div className="space-y-3.5 bg-[#FDFCF8] p-5">
+              <div className="space-y-3.5 bg-[#F8FAF9] p-5">
                 <div className="flex gap-2.5">
                   <div className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-amber-100 text-[11px] font-bold text-amber-800">
                     A
@@ -307,136 +307,6 @@ export default async function LandingPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ============================== MASALAH ============================== */}
-      <section className="border-y border-border/60 bg-white">
-        <div className="container grid gap-10 py-16 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-24">
-          <div>
-            <Badge variant="muted" className="mb-4">
-              Kenapa UMKM Bali butuh ini
-            </Badge>
-            <h2 className="text-balance font-display text-3xl font-bold leading-tight tracking-tight text-ink sm:text-4xl">
-              Negosiasi Bali punya aturannya sendiri. Jangan belajar dari
-              kesepakatan yang sudah hilang.
-            </h2>
-            <p className="mt-4 max-w-xl text-pretty leading-relaxed text-muted-foreground">
-              Hotel menuntut sertifikasi dan TOP panjang. Pusat oleh-oleh menawar
-              dengan titip jual. Beach club menghitung food cost per porsi.
-              Pelatihan sales umumnya tidak menyiapkan Anda menghadapi ketiganya
-              sekaligus.
-            </p>
-
-            <div className="mt-7 space-y-4">
-              {[
-                {
-                  title: "Tiga gaya pembeli, satu produk",
-                  body: "Harga distributor hotel, margin ritel 40%, dan food cost 30% menuntut jawaban yang berbeda.",
-                },
-                {
-                  title: "Titip jual dan TOP 60 hari",
-                  body: "Stok dan arus kas Anda dipertaruhkan. Tanpa latihan, mudah menyerah pada syarat yang merugikan.",
-                },
-                {
-                  title: "Tidak tahu bagian mana yang lemah",
-                  body: "Tanpa rubrik tetap, sulit tahu apakah masalahnya di nilai produk, objection handling, atau closing.",
-                },
-              ].map((item, index) => (
-                <div key={item.title} className="flex gap-3.5">
-                  <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-rose-50 text-xs font-bold text-rose-700">
-                    {index + 1}
-                  </span>
-                  <div>
-                    <p className="text-sm font-bold text-ink">{item.title}</p>
-                    <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
-                      {item.body}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative overflow-hidden rounded-3xl bg-primary p-8 text-primary-foreground shadow-lift sm:p-10">
-            <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/20 blur-2xl" />
-            <Quote className="h-9 w-9 text-accent" />
-            <blockquote className="mt-5 font-display text-2xl font-semibold leading-snug sm:text-[1.7rem]">
-              “Saya sudah tiga kali presentasi ke hotel dan selalu gugup saat
-              ditanya margin serta TOP. Baru sadar, jawaban saya terlalu umum.”
-            </blockquote>
-            <p className="mt-5 text-sm leading-relaxed text-primary-foreground/70">
-              — cerita yang berulang dari pengrajin dan produsen makanan Bali
-            </p>
-            <div className="mt-8 grid grid-cols-3 gap-4 border-t border-white/15 pt-6">
-              {[
-                ["1", "Persiapan"],
-                ["5", "Aspek dinilai"],
-                ["∞", "Kesempatan ulang"],
-              ].map(([value, label]) => (
-                <div key={label}>
-                  <p className="font-display text-3xl font-bold text-accent">{value}</p>
-                  <p className="mt-1 text-[11px] font-medium text-primary-foreground/70">
-                    {label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================== FITUR ============================== */}
-      <section id="fitur" className="container scroll-mt-20 py-16 lg:py-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <Badge variant="muted" className="mb-4">
-            Fitur inti MVP
-          </Badge>
-          <h2 className="text-balance font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-            Satu alur sederhana: atur skenario, bernegosiasi, lalu evaluasi.
-          </h2>
-          <p className="mt-4 text-pretty text-muted-foreground">
-            Tidak ada teori panjang. Anda langsung berlatih menghadapi tekanan
-            pembeli profesional dan mendapat umpan balik yang bisa dipakai.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {[
-            {
-              icon: MessageSquare,
-              title: "Pembeli virtual khas Bali",
-              body: "F&B Director Nusa Dua, manager oleh-oleh, dan owner beach club Canggu. Karakter, batas harga, dan playbook tawar-menawar terkunci pada persona.",
-              accent: "bg-emerald-50 text-emerald-700",
-            },
-            {
-              icon: Target,
-              title: "Rubrik penilaian 5 aspek",
-              body: "Setiap transkrip dinilai dengan rubrik tetap — bukan penilaian subjektif. Skor 0–100, kelebihan, kelemahan, dan alasan yang spesifik.",
-              accent: "bg-amber-50 text-amber-700",
-            },
-            {
-              icon: Lightbulb,
-              title: "Kalimat pengganti yang lebih kuat",
-              body: "Respons lemah diubah menjadi contoh kalimat siap pakai, lengkap dengan alasan mengapa versi baru lebih efektif.",
-              accent: "bg-sky-50 text-sky-700",
-            },
-          ].map((feature) => (
-            <div
-              key={feature.title}
-              className="group rounded-2xl border border-border/80 bg-white p-6 shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
-            >
-              <span className={`grid h-11 w-11 place-items-center rounded-xl ${feature.accent}`}>
-                <feature.icon className="h-5 w-5" />
-              </span>
-              <h3 className="mt-5 font-display text-xl font-bold text-ink">
-                {feature.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {feature.body}
-              </p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -547,7 +417,7 @@ export default async function LandingPage() {
               </div>
             </div>
 
-            <div className="relative flex flex-col justify-center gap-6 bg-[#F7F3E8] p-8 text-ink sm:p-12">
+            <div className="relative flex flex-col justify-center gap-6 bg-[#F8FAF9] p-8 text-ink sm:p-12">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
@@ -729,7 +599,7 @@ export default async function LandingPage() {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-3xl bg-[#0B2B22] p-6 text-white shadow-lift sm:p-8">
+          <div className="relative overflow-hidden rounded-3xl bg-[#0F172A] p-6 text-white shadow-lift sm:p-8">
             <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/15 blur-3xl" />
             <div className="pointer-events-none absolute inset-0 grain opacity-20" />
             <div className="relative flex items-center justify-between">

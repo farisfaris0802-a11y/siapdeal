@@ -7,6 +7,7 @@ import {
   CalendarDays,
   ChevronRight,
   CirclePlay,
+  ClipboardCheck,
   ClipboardList,
   Clock,
   Lightbulb,
@@ -166,12 +167,20 @@ export default async function DashboardPage() {
               : "Pantau perkembangan negosiasi dan lanjutkan latihan Anda."}
           </p>
         </div>
-        <Button asChild size="lg" className="shrink-0">
-          <Link href="/simulasi/baru">
-            <Plus className="h-4 w-4" />
-            Simulasi baru
-          </Link>
-        </Button>
+        <div className="flex shrink-0 items-center gap-2">
+          <Button asChild size="lg" variant="outline" className="hidden bg-white sm:inline-flex">
+            <Link href="/evaluasi">
+              <ClipboardCheck className="h-4 w-4" />
+              Evaluasi
+            </Link>
+          </Button>
+          <Button asChild size="lg">
+            <Link href="/simulasi/baru">
+              <Plus className="h-4 w-4" />
+              Simulasi Baru
+            </Link>
+          </Button>
+        </div>
       </div>
 
       {/* Active session */}

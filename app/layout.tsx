@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/fraunces";
 import "@fontsource-variable/plus-jakarta-sans";
 import { Toaster } from "sonner";
 
@@ -33,7 +32,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B2B22",
+  themeColor: "#0F172A",
   width: "device-width",
   initialScale: 1,
 };

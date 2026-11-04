@@ -181,7 +181,7 @@ export async function POST(request: Request) {
       }))
       .filter((message) => message.content.length > 0);
 
-    const { model, provider } = getAIConfig();
+    const { model, provider, supportsThinkingConfig } = getAIConfig();
 
     const result = streamText({
       model,
@@ -193,10 +193,9 @@ export async function POST(request: Request) {
       // Sengaja TIDAK mengatur stopSequences. Jangan menambahkan stop token
       // yang bisa memotong angka, harga, atau tanda baca di tengah kalimat.
       maxRetries: 1,
-      // Gemini: matikan hidden thinking agar kuota output 1000 token fokus
-      // ke dialog pembeli, bukan proses berpikir internal.
+      // Gemini Flash mendukung thinkingConfig; Flash Lite tidak.
       providerOptions:
-        provider === "google"
+        provider === "google" && supportsThinkingConfig
           ? {
               google: {
                 thinkingConfig: { thinkingBudget: 0, includeThoughts: false },

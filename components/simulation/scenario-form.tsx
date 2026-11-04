@@ -485,7 +485,7 @@ export function ScenarioForm({
 
       {/* Preview */}
       <div className="space-y-4 xl:sticky xl:top-8 xl:self-start">
-        <div className="relative overflow-hidden rounded-3xl bg-[#0B2B22] p-6 text-white shadow-lift">
+        <div className="relative overflow-hidden rounded-3xl bg-[#0F172A] p-6 text-white shadow-lift">
           <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-accent/15 blur-2xl" />
           <div className="pointer-events-none absolute inset-0 grain opacity-20" />
 

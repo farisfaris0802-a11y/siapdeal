@@ -54,8 +54,8 @@ export function ScoreRadar({
     >
       <defs>
         <linearGradient id="radar-fill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#047857" stopOpacity="0.32" />
-          <stop offset="100%" stopColor="#047857" stopOpacity="0.08" />
+          <stop offset="0%" stopColor="#0F5132" stopOpacity="0.32" />
+          <stop offset="100%" stopColor="#0F5132" stopOpacity="0.08" />
         </linearGradient>
       </defs>
 
@@ -88,20 +88,20 @@ export function ScoreRadar({
       <polygon
         points={polygonPoints(valuePoints)}
         fill="url(#radar-fill)"
-        stroke="#047857"
+        stroke="#0F5132"
         strokeWidth="2.2"
         strokeLinejoin="round"
       />
 
       {valuePoints.map((point, index) => (
         <g key={data[index].key}>
-          <circle cx={point.x} cy={point.y} r="7" fill="#047857" opacity="0.12" />
+          <circle cx={point.x} cy={point.y} r="7" fill="#0F5132" opacity="0.12" />
           <circle
             cx={point.x}
             cy={point.y}
             r="3.6"
             fill="#FFFFFF"
-            stroke="#047857"
+            stroke="#0F5132"
             strokeWidth="2"
           >
             <title>{`${data[index].label}: ${data[index].score}/100`}</title>
@@ -112,7 +112,7 @@ export function ScoreRadar({
             textAnchor="middle"
             fontSize="9.5"
             fontWeight="700"
-            fill="#0B2B22"
+            fill="#0F172A"
           >
             {data[index].score}
           </text>
@@ -131,7 +131,7 @@ export function ScoreRadar({
             x={outer.x}
             y={outer.y + (outer.y < cy ? -2 : 8)}
             textAnchor={anchor}
-            fill="#0B2B22"
+            fill="#0F172A"
             fontSize="10.5"
             fontWeight="600"
           >

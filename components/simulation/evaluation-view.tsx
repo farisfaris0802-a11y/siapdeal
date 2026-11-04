@@ -463,7 +463,7 @@ export function EvaluationView({
             <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90" />
           </summary>
 
-          <div className="max-h-[520px] space-y-3 overflow-y-auto border-t border-border/60 bg-[#FDFCF8] p-4 sm:p-5">
+          <div className="max-h-[520px] space-y-3 overflow-y-auto border-t border-border/60 bg-[#F8FAF9] p-4 sm:p-5">
             {messages.map((message) => {
               const isUser = message.role === "user";
               const content = isUser

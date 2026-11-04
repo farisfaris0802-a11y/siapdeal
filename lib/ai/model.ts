@@ -15,19 +15,23 @@ export function getAIConfig() {
 
   if (googleKey) {
     const google = createGoogleGenerativeAI({ apiKey: googleKey });
+    const modelId = process.env.AI_MODEL || "gemini-3.5-flash";
     return {
       provider: "google" as const,
-      model: google(process.env.AI_MODEL || "gemini-3.5-flash"),
-      label: process.env.AI_MODEL || "gemini-3.5-flash",
+      model: google(modelId),
+      label: modelId,
+      supportsThinkingConfig: !modelId.includes("lite"),
     };
   }
 
   if (process.env.OPENAI_API_KEY) {
     const openai = createOpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const modelId = process.env.AI_MODEL || "gpt-4o-mini";
     return {
       provider: "openai" as const,
-      model: openai(process.env.AI_MODEL || "gpt-4o-mini"),
-      label: process.env.AI_MODEL || "gpt-4o-mini",
+      model: openai(modelId),
+      label: modelId,
+      supportsThinkingConfig: false,
     };
   }
 
@@ -62,6 +66,7 @@ export function getEvaluationConfig() {
       label: primaryId,
       fallbackModel: google(fallbackId),
       fallbackLabel: fallbackId,
+      supportsThinkingConfig: !primaryId.includes("lite"),
     };
   }
 
@@ -74,6 +79,7 @@ export function getEvaluationConfig() {
       label: modelId,
       fallbackModel: null,
       fallbackLabel: null,
+      supportsThinkingConfig: false,
     };
   }
 

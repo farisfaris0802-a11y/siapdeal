@@ -19,7 +19,7 @@ export function ScoreRing({
   const offset = circumference - (clamped / 100) * circumference;
 
   const color =
-    clamped >= 80 ? "#047857" : clamped >= 60 ? "#B45309" : "#BE123C";
+    clamped >= 80 ? "#0F5132" : clamped >= 60 ? "#B45309" : "#BE123C";
 
   return (
     <div
@@ -72,3 +72,4 @@ export function ScoreRing({
     </div>
   );
 }
+

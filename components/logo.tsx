@@ -6,12 +6,14 @@ export function Logo({
   className,
   href = "/",
   showWordmark = true,
+  tagline,
   compact = false,
   inverted = false,
 }: {
   className?: string;
   href?: string;
   showWordmark?: boolean;
+  tagline?: string;
   compact?: boolean;
   inverted?: boolean;
 }) {
@@ -56,13 +58,25 @@ export function Logo({
         </svg>
       </span>
       {showWordmark && (
-        <span
-          className={cn(
-            "font-display text-[1.35rem] font-bold leading-none tracking-tight",
-            inverted ? "text-white" : "text-ink"
+        <span className="flex min-w-0 flex-col">
+          <span
+            className={cn(
+              "font-display text-[1.35rem] font-bold leading-none tracking-tight",
+              inverted ? "text-white" : "text-ink"
+            )}
+          >
+            SiapDeal<span className="text-accent">.</span>
+          </span>
+          {tagline && (
+            <span
+              className={cn(
+                "mt-1 truncate text-[8.5px] font-semibold uppercase tracking-[0.16em]",
+                inverted ? "text-white/40" : "text-muted-foreground/80"
+              )}
+            >
+              {tagline}
+            </span>
           )}
-        >
-          SiapDeal<span className="text-accent">.</span>
         </span>
       )}
     </Link>

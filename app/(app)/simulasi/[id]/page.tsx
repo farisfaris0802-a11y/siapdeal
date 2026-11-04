@@ -41,6 +41,7 @@ export default async function SimulationChatPage({
           name: session.products.name,
           base_price: Number(session.products.base_price),
           usp: session.products.usp,
+          category: session.products.category,
         }}
         partnerType={session.buyer_personas.partner_type}
         difficulty={session.buyer_personas.difficulty}
