@@ -26,7 +26,7 @@ export function AppShell({
   return (
     <div className="min-h-screen bg-background">
       {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-[264px] flex-col overflow-hidden bg-[#0F172A] px-4 py-6 lg:flex">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-[260px] flex-col overflow-hidden bg-[#0F172A] px-4 py-6 lg:flex">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.18),transparent_68%)]" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-px bg-white/[0.06]" />
 
@@ -129,7 +129,7 @@ export function AppShell({
         </div>
       </header>
 
-      <div className="lg:pl-[264px]">
+      <div className="lg:pl-[260px]">
         <main className="min-h-[calc(100dvh-3.5rem)] pb-16 lg:min-h-screen lg:pb-0">
           {children}
         </main>

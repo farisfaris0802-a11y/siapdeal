@@ -16,7 +16,6 @@ import {
   MapPin,
   MessageSquare,
   MessagesSquare,
-  Quote,
   ShieldCheck,
   Store,
   Target,

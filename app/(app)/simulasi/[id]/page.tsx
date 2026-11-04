@@ -46,6 +46,10 @@ export default async function SimulationChatPage({
         partnerType={session.buyer_personas.partner_type}
         difficulty={session.buyer_personas.difficulty}
         initialMessages={messages}
+        isJudge={
+          Boolean(user.is_anonymous) ||
+          user.user_metadata?.role === "judge"
+        }
       />
     </div>
   );

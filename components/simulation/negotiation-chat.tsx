@@ -9,27 +9,24 @@ import {
   ArrowLeft,
   CheckCircle2,
   CircleStop,
-  Clock,
   Info,
   Lightbulb,
   Loader2,
+  Mic,
+  PanelRight,
   RotateCcw,
   Send,
-  ShieldCheck,
   Sparkles,
-  Square,
-  Target,
   XCircle,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
 
 import { detectOutcome } from "@/lib/ai/buyer-prompt";
 import { sanitizeAssistantText } from "@/lib/ai/sanitize";
-import { CATEGORY_LABEL } from "@/lib/catalog";
 import {
   DIFFICULTY_META,
   PARTNER_META,
-  RUBRIC_ASPECTS,
 } from "@/lib/ai/personas";
 import type {
   ChatMessage,
@@ -38,7 +35,8 @@ import type {
   ProductCategory,
   SessionOutcome,
 } from "@/lib/types";
-import { cn, formatRupiah } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { ScenarioPanel } from "@/components/simulation/scenario-panel";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -59,12 +57,28 @@ interface ChatProduct {
   category: ProductCategory;
 }
 
+interface SpeechRecognitionEventLike {
+  results: ArrayLike<ArrayLike<{ transcript: string }>>;
+}
+
+interface SpeechRecognitionLike {
+  lang: string;
+  interimResults: boolean;
+  continuous: boolean;
+  start: () => void;
+  stop: () => void;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+}
+
 interface NegotiationChatProps {
   sessionId: string;
   product: ChatProduct;
   partnerType: PartnerType;
   difficulty: Difficulty;
   initialMessages: ChatMessage[];
+  isJudge?: boolean;
 }
 
 const MAX_CHARS = 1500;
@@ -75,12 +89,16 @@ export function NegotiationChat({
   partnerType,
   difficulty,
   initialMessages,
+  isJudge = false,
 }: NegotiationChatProps) {
   const router = useRouter();
   const partner = PARTNER_META[partnerType];
   const diff = DIFFICULTY_META[difficulty];
 
   const [endOpen, setEndOpen] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [coachOpen, setCoachOpen] = useState(false);
+  const [isListening, setIsListening] = useState(false);
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [evaluationError, setEvaluationError] = useState<string | null>(null);
   const [autoOutcome, setAutoOutcome] = useState<Exclude<SessionOutcome, "manual"> | null>(
@@ -136,10 +154,10 @@ export function NegotiationChat({
   const {
     messages,
     input,
+    setInput,
     handleInputChange,
     handleSubmit,
     isLoading,
-    stop,
     error: chatError,
     reload,
   } = useChat({
@@ -170,6 +188,68 @@ export function NegotiationChat({
 
   const locked = isEvaluating || autoOutcome !== null;
   const hasUserMessage = messages.some((message) => message.role === "user");
+
+  const startVoiceInput = () => {
+    if (typeof window === "undefined") return;
+
+    const speechWindow = window as unknown as {
+      SpeechRecognition?: new () => SpeechRecognitionLike;
+      webkitSpeechRecognition?: new () => SpeechRecognitionLike;
+    };
+    const Recognition =
+      speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition;
+
+    if (!Recognition) {
+      toast.info("Browser ini belum mendukung input suara. Gunakan Chrome atau Edge.");
+      return;
+    }
+
+    const recognition = new Recognition();
+    recognition.lang = "id-ID";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+    setIsListening(true);
+
+    recognition.onresult = (event) => {
+      const transcript = Array.from(event.results)
+        .map((result) => result[0]?.transcript ?? "")
+        .join(" ")
+        .trim();
+      if (transcript) setInput(transcript);
+    };
+    recognition.onerror = () => {
+      setIsListening(false);
+      toast.error("Input suara gagal. Coba lagi.");
+    };
+    recognition.onend = () => setIsListening(false);
+    recognition.start();
+  };
+
+  const coachSuggestions = [
+    {
+      title: "Tanyakan volume & kebutuhan",
+      body: "Buka ruang negosiasi dengan data, bukan langsung diskon.",
+      example: `Bapak/Ibu, untuk kebutuhan ${product.name}, berapa volume ideal per bulan? Saya bisa siapkan skema harga bertingkat.`,
+    },
+    {
+      title: "Tukar konsesi dengan syarat",
+      body: "Setiap penurunan harga harus dibayar dengan komitmen lain.",
+      example:
+        "Saya bisa menyesuaikan harga jika TOP dipersingkat menjadi 30 hari dan ada komitmen volume minimal 100 pcs.",
+    },
+    {
+      title: "Kunci langkah lanjutan",
+      body: "Closing konkret menurunkan risiko keputusan menggantung.",
+      example:
+        "Boleh kita kunci uji coba 2 minggu untuk 100 pcs, lalu review bersama pada akhir bulan?",
+    },
+  ];
+
+  const applyCoachSuggestion = (suggestion: string) => {
+    setInput(suggestion);
+    setCoachOpen(false);
+    textareaRef.current?.focus();
+  };
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -250,7 +330,7 @@ export function NegotiationChat({
               </Badge>
               <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
-                Sesi Aktif
+                Sesi Aktif · {isJudge ? "Mode Juri" : "Fast Demo"}
               </span>
             </div>
             <h1 className="mt-1 truncate font-display text-lg font-bold leading-tight text-ink sm:text-xl">
@@ -259,19 +339,30 @@ export function NegotiationChat({
           </div>
         </div>
 
-        <Button
-          size="sm"
-          className="h-auto min-h-9 w-full shrink-0 gap-1.5 whitespace-normal bg-primary px-4 py-2 text-[11px] font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:bg-emerald-700 sm:w-auto sm:text-xs"
-          onClick={() => setEndOpen(true)}
-          disabled={locked}
-        >
-          <CircleStop className="h-4 w-4" />
-          Selesaikan &amp; Lihat Evaluasi Deal
-        </Button>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-auto min-h-9 gap-1.5 border-slate-200 bg-white text-[11px] text-slate-600 hover:border-emerald-200 hover:text-emerald-700 xl:hidden"
+            onClick={() => setInfoOpen(true)}
+          >
+            <PanelRight className="h-4 w-4" />
+            Detail Skenario
+          </Button>
+          <Button
+            size="sm"
+            className="h-auto min-h-9 w-full shrink-0 gap-1.5 whitespace-normal border border-rose-200 bg-rose-50 px-4 py-2 text-[11px] font-semibold text-rose-700 shadow-sm transition-all duration-200 hover:bg-rose-100 sm:w-auto sm:text-xs"
+            onClick={() => setEndOpen(true)}
+            disabled={locked}
+          >
+            <CircleStop className="h-4 w-4" />
+            Selesaikan &amp; Lihat Evaluasi Deal
+          </Button>
+        </div>
       </div>
 
       {/* Body */}
-      <div className="grid min-h-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1fr)_310px]">
+      <div className="grid min-h-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-soft">
           {/* Chat header */}
           <div className="flex shrink-0 items-center justify-between border-b border-slate-200/80 bg-white px-4 py-3.5">
@@ -328,8 +419,8 @@ export function NegotiationChat({
               return (
                 <div key={message.id} className={cn(isUser ? "" : "space-y-1")}>
                   {!isUser && (
-                    <p className="pl-9 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                      Mitra B2B
+                    <p className="pl-9 text-[9px] font-semibold tracking-wide text-slate-400">
+                      {partner.buyerRole} · {partner.company}
                     </p>
                   )}
                   <div
@@ -362,8 +453,8 @@ export function NegotiationChat({
 
             {isLoading && (
               <div className="space-y-1">
-                <p className="pl-9 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                  Mitra B2B
+                <p className="pl-9 text-[9px] font-semibold tracking-wide text-slate-400">
+                  {partner.buyerRole} · {partner.company}
                 </p>
                 <div className="flex gap-2.5">
                   <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-50 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-100">
@@ -456,6 +547,21 @@ export function NegotiationChat({
               </Alert>
             )}
 
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <button
+                type="button"
+                onClick={() => setCoachOpen(true)}
+                disabled={locked}
+                className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-[10px] font-semibold text-amber-800 transition-colors hover:bg-amber-100 disabled:opacity-50"
+              >
+                <Lightbulb className="h-3.5 w-3.5" />
+                Tanya Coach AI
+              </button>
+              <span className="hidden text-[10px] text-slate-400 sm:inline">
+                Saran cepat, bukan jawaban otomatis
+              </span>
+            </div>
+
             <form onSubmit={submitMessage} className="relative">
               <Textarea
                 ref={textareaRef}
@@ -479,41 +585,47 @@ export function NegotiationChat({
                 }
                 disabled={locked}
                 maxLength={MAX_CHARS}
-                className="min-h-[56px] resize-none rounded-2xl border-slate-200 bg-white py-3.5 pl-4 pr-24 text-sm leading-relaxed shadow-sm transition-all focus-visible:border-emerald-300 focus-visible:ring-emerald-600/15"
+                className="min-h-[56px] resize-none rounded-2xl border-slate-200 bg-white py-3.5 pl-4 pr-28 text-sm leading-relaxed shadow-sm transition-all focus-visible:border-emerald-300 focus-visible:ring-emerald-600/15"
               />
-              <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1.5">
+              <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1">
                 {input.length > 0 && (
                   <span
                     className={cn(
-                      "text-[10px] tabular-nums",
+                      "hidden text-[10px] tabular-nums sm:inline",
                       input.length > MAX_CHARS - 100 ? "text-rose-600" : "text-slate-400"
                     )}
                   >
                     {input.length}/{MAX_CHARS}
                   </span>
                 )}
-                {isLoading ? (
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant="outline"
-                    onClick={() => stop()}
-                    className="h-9 w-9 shrink-0 rounded-full border-slate-200"
-                    aria-label="Hentikan respons"
-                  >
-                    <Square className="h-3.5 w-3.5" />
-                  </Button>
-                ) : (
-                  <Button
-                    type="submit"
-                    size="icon"
-                    disabled={!input.trim() || locked}
-                    className="h-9 w-9 shrink-0 rounded-full bg-primary shadow-sm transition-all duration-200 hover:bg-emerald-700"
-                    aria-label="Kirim pesan"
-                  >
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  onClick={startVoiceInput}
+                  disabled={locked || isLoading}
+                  className={cn(
+                    "h-9 w-9 shrink-0 rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-emerald-700",
+                    isListening && "bg-amber-50 text-amber-700"
+                  )}
+                  aria-label="Input suara"
+                  title="Input suara"
+                >
+                  <Mic className={cn("h-4 w-4", isListening && "animate-pulse")} />
+                </Button>
+                <Button
+                  type="submit"
+                  size="icon"
+                  disabled={!input.trim() || locked || isLoading}
+                  className="h-9 w-9 shrink-0 rounded-full bg-primary shadow-sm transition-all duration-200 hover:bg-emerald-700 disabled:bg-primary/60"
+                  aria-label="Kirim pesan"
+                >
+                  {isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
                     <Send className="h-4 w-4" />
-                  </Button>
-                )}
+                  )}
+                </Button>
               </div>
             </form>
             <div className="mt-2 flex items-center justify-between gap-3 px-1 text-[10px]">
@@ -562,122 +674,117 @@ export function NegotiationChat({
           )}
         </div>
 
-        {/* Sidebar */}
+        {/* Sidebar desktop */}
         <aside className="hidden min-h-0 space-y-3 overflow-y-auto pr-0.5 xl:block">
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-soft">
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                Detail Skenario
-              </p>
-              <Badge variant="success" className="text-[9px]">
-                Live
-              </Badge>
-            </div>
-            <p className="mt-2.5 font-display text-lg font-bold leading-snug text-ink">
-              {product.name}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              {formatRupiah(product.base_price)} / unit ·{" "}
-              {CATEGORY_LABEL[product.category]}
-            </p>
-
-            <div className="mt-4 space-y-2.5 border-t border-slate-100 pt-4 text-[11px]">
-              {[
-                ["Harga dasar", formatRupiah(product.base_price)],
-                ["Kategori", CATEGORY_LABEL[product.category]],
-                ["Mitra", partner.shortLabel],
-                ["Tingkat", diff.label],
-                ["Pembeli", partner.buyerName],
-              ].map(([label, value]) => (
-                <div key={label} className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-600" />
-                  <span className="min-w-0 flex-1 text-muted-foreground">{label}</span>
-                  <span className="max-w-[150px] text-right font-semibold leading-snug text-ink">
-                    {value}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-4 rounded-xl border border-emerald-100 bg-emerald-50/60 p-3.5">
-              <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-emerald-800">
-                <Info className="h-3.5 w-3.5" />
-                Keunggulan klaim
-              </p>
-              <p className="mt-1.5 text-[11px] leading-relaxed text-emerald-950/70">
-                {product.usp}
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-amber-200/80 bg-amber-50/80 p-4">
-            <p className="flex items-center gap-1.5 text-xs font-bold text-amber-950">
-              <Lightbulb className="h-4 w-4 text-amber-600" />
-              Strategi &amp; tips negosiasi
-            </p>
-            <p className="mt-1 text-[10px] text-amber-800/70">
-              Panduan cepat untuk level {diff.label.toLowerCase()}.
-            </p>
-            <ul className="mt-3 space-y-2 text-[11px] leading-relaxed text-amber-950/75">
-              {difficulty === "easy" ? (
-                <>
-                  <li>• Sebutkan harga, isi paket, dan syarat secara spesifik sejak awal.</li>
-                  <li>• Hubungkan USP dengan manfaat nyata untuk mitra.</li>
-                  <li>• Tutup dengan pertanyaan yang meminta komitmen.</li>
-                </>
-              ) : difficulty === "medium" ? (
-                <>
-                  <li>• Jangan langsung menurunkan harga; tanyakan dulu kebutuhan volume.</li>
-                  <li>• Tukar konsesi harga dengan syarat pembayaran atau komitmen volume.</li>
-                  <li>• Jawab keberatan TOP dengan solusi, bukan penolakan.</li>
-                </>
-              ) : (
-                <>
-                  <li>• Jaga batas harga Anda dan jangan panik saat pembeli mengancam mundur.</li>
-                  <li>• Tawarkan paket alternatif: harga lebih rendah untuk komitmen lebih besar.</li>
-                  <li>• Tolak konsinyasi penuh dengan alternatif yang tetap menguntungkan.</li>
-                </>
-              )}
-            </ul>
-            <p className="mt-3 border-t border-amber-200/70 pt-2.5 text-[10px] font-medium text-amber-800/70">
-              Gunakan data, nilai produk, dan trade-off — bukan diskon langsung.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-soft">
-            <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
-              <Target className="h-3.5 w-3.5" />
-              Dinilai di akhir sesi
-            </p>
-            <div className="mt-3 space-y-2">
-              {RUBRIC_ASPECTS.map((aspect, index) => (
-                <div key={aspect.key} className="flex items-start gap-2 text-[11px]">
-                  <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-slate-100 text-[9px] font-bold text-slate-500">
-                    {index + 1}
-                  </span>
-                  <span className="leading-snug text-slate-500">{aspect.label}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-3 flex items-center gap-1.5 border-t border-slate-100 pt-3 text-[10px] text-slate-400">
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
-              Rubrik tetap dan konsisten antar sesi.
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-50 px-3 py-2.5 text-[10px] text-slate-500">
-            <Clock className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
-            Sesi berakhir otomatis saat sepakat atau buntu.
-          </div>
+          <ScenarioPanel
+            product={product}
+            partnerType={partnerType}
+            difficulty={difficulty}
+          />
         </aside>
       </div>
+
+      {/* Mobile scenario drawer */}
+      {infoOpen && (
+        <div
+          className="fixed inset-0 z-[60] xl:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Detail skenario"
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
+            onClick={() => setInfoOpen(false)}
+            aria-label="Tutup detail skenario"
+          />
+          <div className="absolute inset-x-0 bottom-0 max-h-[86dvh] overflow-y-auto rounded-t-3xl border-t border-slate-200 bg-[#F8FAF9] p-4 pb-8 shadow-2xl">
+            <div className="mx-auto h-1 w-10 rounded-full bg-slate-300" />
+            <div className="mt-3 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                  Informasi sesi
+                </p>
+                <h2 className="mt-1 font-display text-lg font-bold text-ink">
+                  Detail Skenario
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setInfoOpen(false)}
+                className="grid h-9 w-9 place-items-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:text-ink"
+                aria-label="Tutup"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="mt-4">
+              <ScenarioPanel
+                product={product}
+                partnerType={partnerType}
+                difficulty={difficulty}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Coach dialog */}
+      <Dialog open={coachOpen} onOpenChange={setCoachOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <div className="mb-2 grid h-11 w-11 place-items-center rounded-full bg-amber-50 text-amber-600">
+              <Lightbulb className="h-5 w-5" />
+            </div>
+            <DialogTitle>Tanya Coach AI</DialogTitle>
+            <DialogDescription>
+              Gunakan saran ini sebagai pemicu berpikir. Sesuaikan dengan harga,
+              volume, dan syarat yang sedang dinegosiasikan.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-2.5">
+            {coachSuggestions.map((suggestion, index) => (
+              <div
+                key={suggestion.title}
+                className="rounded-xl border border-amber-200/80 bg-amber-50/70 p-3.5"
+              >
+                <p className="text-xs font-bold text-amber-950">
+                  {index + 1}. {suggestion.title}
+                </p>
+                <p className="mt-1 text-[11px] leading-relaxed text-amber-900/75">
+                  {suggestion.body}
+                </p>
+                <p className="mt-2 rounded-lg border border-amber-200 bg-white/80 p-2.5 text-[11px] italic leading-relaxed text-slate-600">
+                  “{suggestion.example}”
+                </p>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  className="mt-2 h-7 border-amber-300 bg-white text-[10px] text-amber-800 hover:bg-amber-50"
+                  onClick={() => applyCoachSuggestion(suggestion.example)}
+                >
+                  Masukkan ke chat
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCoachOpen(false)}>
+              Tutup
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* End session dialog */}
       <Dialog open={endOpen} onOpenChange={setEndOpen}>
         <DialogContent>
           <DialogHeader>
-            <div className="mb-2 grid h-11 w-11 place-items-center rounded-full bg-emerald-50 text-emerald-700">
-              <CheckCircle2 className="h-5 w-5" />
+            <div className="mb-2 grid h-11 w-11 place-items-center rounded-full bg-rose-50 text-rose-600">
+              <CircleStop className="h-5 w-5" />
             </div>
             <DialogTitle>Selesaikan &amp; lihat evaluasi deal?</DialogTitle>
             <DialogDescription>
@@ -723,7 +830,7 @@ export function NegotiationChat({
             <Button
               onClick={handleManualEnd}
               disabled={isEvaluating || !hasUserMessage}
-              className="gap-1.5"
+              className="gap-1.5 bg-rose-600 text-white hover:bg-rose-700"
             >
               {isEvaluating ? (
                 <>
@@ -732,7 +839,7 @@ export function NegotiationChat({
                 </>
               ) : (
                 <>
-                  <CheckCircle2 className="h-4 w-4" />
+                  <CircleStop className="h-4 w-4" />
                   Selesaikan &amp; Lihat Evaluasi Deal
                 </>
               )}
