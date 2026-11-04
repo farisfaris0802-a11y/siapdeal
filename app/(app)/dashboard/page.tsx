@@ -146,42 +146,71 @@ export default async function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-[1240px] px-4 py-6 sm:px-6 lg:px-8 lg:py-9">
-      {/* Header */}
-      <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-        <div>
-          <p className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
-            <CalendarDays className="h-3.5 w-3.5" />
-            {formatDate(new Date())}
-          </p>
-          <h1 className="mt-1.5 flex flex-wrap items-center gap-2.5 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-            Halo, {firstName}.
-            {isJudge && (
-              <Badge className="border-amber-200 bg-amber-100 text-[10px] text-amber-900">
-                Demo Juri · Bali DigiFest 2026
-              </Badge>
-            )}
-          </h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">
-            {sessions.length === 0
-              ? "Siap memulai latihan negosiasi pertama Anda?"
-              : "Pantau perkembangan negosiasi dan lanjutkan latihan Anda."}
-          </p>
+      {/* Executive workspace banner */}
+      <section className="relative mb-6 overflow-hidden rounded-3xl bg-[#0F172A] p-6 text-white shadow-lift sm:p-8">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(16,185,129,0.26),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(245,158,11,0.14),transparent_52%)]" />
+        <div className="pointer-events-none absolute inset-0 grain opacity-20" />
+        <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
+        <div className="relative flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+          <div>
+            <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-200/70">
+              <CalendarDays className="h-3.5 w-3.5" />
+              Workspace · {formatDate(new Date())}
+            </p>
+            <h1 className="mt-2.5 flex flex-wrap items-center gap-2.5 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Halo, {firstName}.
+              {isJudge && (
+                <span className="rounded-full border border-amber-300/20 bg-amber-400/15 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wide text-amber-200">
+                  Demo Juri
+                </span>
+              )}
+            </h1>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/60">
+              {sessions.length === 0
+                ? "Siap memulai latihan negosiasi pertama Anda? Pilih skenario, hadapi mitra virtual, lalu lihat skor deal Anda."
+                : "Pantau perkembangan negosiasi, bandingkan skor, dan lanjutkan latihan berikutnya."}
+            </p>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <Button
+              asChild
+              variant="outline"
+              className="hidden border-white/15 bg-white/[0.06] text-white hover:bg-white/10 hover:text-white sm:inline-flex"
+            >
+              <Link href="/evaluasi">
+                <ClipboardCheck className="h-4 w-4" />
+                Evaluasi
+              </Link>
+            </Button>
+            <Button asChild className="bg-emerald-500 text-white shadow-lg shadow-emerald-950/30 hover:bg-emerald-400">
+              <Link href="/simulasi/baru">
+                <Plus className="h-4 w-4" />
+                Simulasi Baru
+              </Link>
+            </Button>
+          </div>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <Button asChild size="lg" variant="outline" className="hidden bg-white sm:inline-flex">
-            <Link href="/evaluasi">
-              <ClipboardCheck className="h-4 w-4" />
-              Evaluasi
-            </Link>
-          </Button>
-          <Button asChild size="lg">
-            <Link href="/simulasi/baru">
-              <Plus className="h-4 w-4" />
-              Simulasi Baru
-            </Link>
-          </Button>
+
+        <div className="relative mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/10 pt-4 text-[10px] text-white/50">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            3 persona Bali
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+            Rubrik 5 aspek
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+            Feedback real-time
+          </span>
+          <span className="ml-auto hidden items-center gap-1.5 text-white/40 sm:inline-flex">
+            <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+            Executive negotiation workspace
+          </span>
         </div>
-      </div>
+      </section>
 
       {/* Active session */}
       {activeSessions.length > 0 && (

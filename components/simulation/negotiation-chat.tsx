@@ -365,35 +365,38 @@ export function NegotiationChat({
       <div className="grid min-h-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-soft">
           {/* Chat header */}
-          <div className="flex shrink-0 items-center justify-between border-b border-slate-200/80 bg-white px-4 py-3.5">
+          <div className="flex shrink-0 items-center justify-between bg-[linear-gradient(120deg,#0B3B2A_0%,#0F5132_56%,#0E7490_135%)] px-4 py-3.5 text-white">
             <div className="flex min-w-0 items-center gap-3">
-              <div className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-emerald-50 text-lg ring-1 ring-emerald-100">
+              <div className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white/10 text-lg ring-1 ring-white/20">
                 {partner.emoji}
-                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white bg-emerald-500" />
+                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[#0F5132] bg-emerald-300" />
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <p className="truncate text-sm font-bold leading-tight text-ink">
+                  <p className="truncate text-sm font-bold leading-tight text-white">
                     {partner.buyerName}
                   </p>
                   <Badge
                     variant="outline"
-                    className="border-emerald-200 bg-emerald-50/80 text-[8px] uppercase tracking-wide text-emerald-700"
+                    className="border-white/15 bg-white/10 text-[8px] uppercase tracking-wide text-white/80"
                   >
                     Mitra B2B
                   </Badge>
                 </div>
-                <p className="truncate text-[10px] text-muted-foreground">
+                <p className="truncate text-[10px] text-white/55">
                   {partner.buyerRole} · {partner.company}
                 </p>
-                <p className="mt-0.5 flex items-center gap-1 text-[9px] font-medium text-emerald-700">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                <p className="mt-0.5 flex items-center gap-1 text-[9px] font-medium text-emerald-200/80">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
                   Online · siap bernegosiasi
                 </p>
               </div>
             </div>
-            <Badge variant="success" className="shrink-0 gap-1 text-[10px]">
-              <Sparkles className="h-3 w-3" />
+            <Badge
+              variant="outline"
+              className="shrink-0 gap-1 border-white/15 bg-white/10 text-[10px] text-white/85"
+            >
+              <Sparkles className="h-3 w-3 text-amber-300" />
               AI Negotiator
             </Badge>
           </div>

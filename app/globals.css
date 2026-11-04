@@ -5,7 +5,7 @@
 @layer base {
   :root {
     --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
-    --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
     --background: 160 20% 98%;
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;

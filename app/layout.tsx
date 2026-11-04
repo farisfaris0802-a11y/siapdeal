@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/fraunces";
+import "@fontsource-variable/fraunces/wght-italic.css";
 import "@fontsource-variable/plus-jakarta-sans";
 import { Toaster } from "sonner";
 

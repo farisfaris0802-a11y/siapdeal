@@ -38,7 +38,8 @@ export function ScenarioPanel({
 
   return (
     <div className="space-y-3">
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-soft">
+      <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-5 pt-6 shadow-soft">
+        <span className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#0F5132_0%,#10B981_58%,#F59E0B_100%)]" />
         <div className="flex items-center justify-between gap-2">
           <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
             Detail Skenario
@@ -84,14 +85,18 @@ export function ScenarioPanel({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-amber-200/80 bg-amber-50/80 p-4">
-        <p className="flex items-center gap-1.5 text-xs font-bold text-amber-950">
-          <Lightbulb className="h-4 w-4 text-amber-600" />
-          Strategi &amp; tips negosiasi
-        </p>
-        <p className="mt-1 text-[10px] text-amber-800/70">
-          Panduan cepat untuk level {diff.label.toLowerCase()}.
-        </p>
+      <div className="rounded-2xl border border-amber-200/80 bg-[linear-gradient(145deg,#FFFBEB_0%,#FEF3C7_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+        <div className="flex items-start gap-2.5">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl border border-amber-200 bg-white/70 text-amber-600">
+            <Lightbulb className="h-4 w-4" />
+          </span>
+          <div>
+            <p className="text-xs font-bold text-amber-950">Strategi &amp; tips negosiasi</p>
+            <p className="mt-0.5 text-[10px] text-amber-800/70">
+              Panduan cepat untuk level {diff.label.toLowerCase()}.
+            </p>
+          </div>
+        </div>
         <ul className="mt-3 space-y-2 text-[11px] leading-relaxed text-amber-950/75">
           {difficulty === "easy" ? (
             <>

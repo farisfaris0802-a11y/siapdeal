@@ -10,9 +10,9 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 hover:shadow-md active:translate-y-px",
+          "bg-[linear-gradient(180deg,#177A52_0%,#0F5132_100%)] text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_24px_-14px_rgba(15,81,50,0.75)] hover:brightness-105 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_14px_28px_-14px_rgba(15,81,50,0.8)] active:translate-y-px",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "bg-[linear-gradient(180deg,#E11D48_0%,#BE123C_100%)] text-destructive-foreground shadow-sm hover:brightness-105",
         outline:
           "border border-border bg-background hover:bg-secondary hover:text-secondary-foreground",
         secondary:
@@ -20,7 +20,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-secondary hover:text-secondary-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         accent:
-          "bg-accent text-accent-foreground shadow-sm hover:bg-accent/90 active:translate-y-px",
+          "bg-[linear-gradient(180deg,#F59E0B_0%,#D97706_100%)] text-accent-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_10px_24px_-14px_rgba(217,119,6,0.8)] hover:brightness-105 active:translate-y-px",
       },
       size: {
         default: "h-10 px-5 py-2",
