@@ -114,38 +114,38 @@ export function PreSessionTransitionProvider({
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/10 blur-3xl" />
 
           <div className="relative z-10 flex flex-col items-center text-center">
-            <div className="relative grid h-28 w-28 place-items-center">
+            <div className="relative grid h-16 w-16 place-items-center sm:h-24 sm:w-24">
               <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500/15 motion-reduce:animate-none" />
               <span className="absolute inset-2 animate-pulse rounded-full border border-amber-400/30 motion-reduce:animate-none" />
-              <span className="absolute inset-4 rounded-full border border-emerald-400/25" />
-              <span className="relative grid h-16 w-16 place-items-center rounded-full bg-slate-900/90 text-emerald-400 shadow-[0_0_56px_rgba(16,185,129,0.32)] ring-1 ring-emerald-400/30">
-                <Radar className="h-7 w-7 animate-pulse motion-reduce:animate-none" />
+              <span className="absolute inset-3 rounded-full border border-emerald-400/25 sm:inset-4" />
+              <span className="relative grid h-10 w-10 place-items-center rounded-full bg-slate-900/90 text-emerald-400 shadow-[0_0_56px_rgba(16,185,129,0.32)] ring-1 ring-emerald-400/30 sm:h-16 sm:w-16">
+                <Radar className="h-5 w-5 animate-pulse motion-reduce:animate-none sm:h-7 sm:w-7" />
               </span>
             </div>
 
             <div
               aria-hidden="true"
-              className="mt-5 flex h-7 items-end gap-1.5"
+              className="mt-4 flex h-6 items-end gap-1.5 sm:mt-5 sm:h-7"
             >
               {[0, 1, 2].map((bar) => (
                 <span
                   key={bar}
-                  className="voice-bar h-6 w-1.5 rounded-full bg-emerald-400"
+                  className="voice-bar h-5 w-1.5 rounded-full bg-emerald-400 sm:h-6"
                   style={{ animationDelay: `${bar * 120}ms` }}
                 />
               ))}
             </div>
 
-            <p className="mt-6 text-sm font-medium text-slate-200 sm:text-base">
+            <p className="mt-5 max-w-[16rem] text-balance break-words text-xs font-medium leading-relaxed text-slate-200 sm:mt-6 sm:max-w-md sm:text-sm">
               {phase === 0
                 ? "Menginisialisasi Simulator B2B AI..."
                 : "Menyiapkan skenario negosiasi F&B Director..."}
             </p>
-            <p className="mt-2 text-[11px] text-slate-500">
+            <p className="mt-2 text-[10px] text-slate-500 sm:text-[11px]">
               Menyiapkan ruang latihan Anda
             </p>
 
-            <div className="mt-5 h-1 w-52 overflow-hidden rounded-full bg-slate-800">
+            <div className="mt-5 h-1 w-44 overflow-hidden rounded-full bg-slate-800 sm:w-52">
               <span className="presession-progress block h-full w-full origin-left rounded-full bg-gradient-to-r from-emerald-400 via-emerald-300 to-amber-300" />
             </div>
           </div>

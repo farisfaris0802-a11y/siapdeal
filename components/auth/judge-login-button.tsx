@@ -18,6 +18,7 @@ export function JudgeLoginButton({
   icon = "gavel",
   rememberJudgeMode = false,
   hideLabelOnMobile = false,
+  mobileLabel,
   transitionOnSubmit = false,
 }: {
   label?: string;
@@ -28,6 +29,7 @@ export function JudgeLoginButton({
   icon?: "gavel" | "sparkles" | "target";
   rememberJudgeMode?: boolean;
   hideLabelOnMobile?: boolean;
+  mobileLabel?: string;
   transitionOnSubmit?: boolean;
 }) {
   const { pending } = useFormStatus();
@@ -41,7 +43,7 @@ export function JudgeLoginButton({
       variant={variant}
       disabled={pending}
       className={cn("group", className)}
-      aria-label={hideLabelOnMobile ? label : undefined}
+      aria-label={mobileLabel || hideLabelOnMobile ? label : undefined}
       onClick={(event) => {
         if (rememberJudgeMode) {
           window.localStorage.setItem("siapdeal_mode_juri", "true");
@@ -66,9 +68,16 @@ export function JudgeLoginButton({
       ) : (
         <>
           <Icon className="h-4 w-4" />
-          <span className={hideLabelOnMobile ? "hidden sm:inline" : undefined}>
-            {label}
-          </span>
+          {mobileLabel ? (
+            <>
+              <span className="sm:hidden">{mobileLabel}</span>
+              <span className="hidden sm:inline">{label}</span>
+            </>
+          ) : (
+            <span className={hideLabelOnMobile ? "hidden sm:inline" : undefined}>
+              {label}
+            </span>
+          )}
         </>
       )}
     </Button>

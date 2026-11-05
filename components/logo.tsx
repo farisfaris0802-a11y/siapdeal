@@ -73,6 +73,7 @@ export function Logo({
   showTagline = true,
   compact = false,
   inverted = false,
+  wordmarkClassName,
 }: {
   className?: string;
   href?: string;
@@ -81,6 +82,7 @@ export function Logo({
   showTagline?: boolean;
   compact?: boolean;
   inverted?: boolean;
+  wordmarkClassName?: string;
 }) {
   return (
     <Link
@@ -98,7 +100,12 @@ export function Logo({
 
       {showWordmark && (
         <span className="flex min-w-0 flex-col">
-          <span className="font-sans text-[1.35rem] font-semibold leading-none">
+          <span
+            className={cn(
+              "font-sans text-[1.35rem] font-semibold leading-none",
+              wordmarkClassName
+            )}
+          >
             <span className={inverted ? "text-primary-foreground" : "text-brand-navy"}>
               SIAP
             </span>

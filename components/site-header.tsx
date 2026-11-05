@@ -23,15 +23,16 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
             href="/"
             inverted
             showTagline={false}
-            className="hidden sm:inline-flex"
+            wordmarkClassName="text-lg"
+            className="hidden min-[420px]:inline-flex"
           />
           <Logo
             href="/"
             compact
             showWordmark={false}
-            className="sm:hidden"
+            className="min-[420px]:hidden"
           />
-          <span className="hidden rounded-full border border-emerald-800 bg-emerald-950/80 px-2 py-0.5 text-[10px] font-medium text-emerald-400 sm:inline-flex">
+          <span className="hidden rounded-full border border-emerald-800 bg-emerald-950/80 px-2 py-0.5 text-[9px] font-medium text-emerald-400 sm:inline-flex">
             v1.0 MVP
           </span>
         </div>
@@ -59,9 +60,9 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
                 variant="ghost"
                 icon="target"
                 rememberJudgeMode
-                hideLabelOnMobile
+                mobileLabel="Juri"
                 transitionOnSubmit
-                className="h-9 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 text-xs font-semibold text-amber-300 hover:bg-amber-500/20"
+                className="h-9 rounded-xl border border-amber-500/40 bg-amber-500/10 px-2.5 text-xs font-semibold text-amber-300 hover:bg-amber-500/20 sm:px-3"
               />
             </form>
           )}
@@ -69,7 +70,7 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
           <Button
             asChild
             size="sm"
-            className="h-9 rounded-xl bg-emerald-600 px-3 text-xs font-semibold text-white shadow-md shadow-emerald-950 transition-colors hover:bg-emerald-500 sm:h-10 sm:px-4 sm:text-sm"
+            className="h-9 rounded-xl bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white shadow-md shadow-emerald-950 transition-colors hover:bg-emerald-500 sm:h-10 sm:px-4 sm:py-0 sm:text-sm"
           >
             {isLoggedIn ? (
               <Link href="/dashboard">

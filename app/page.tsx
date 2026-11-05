@@ -70,7 +70,7 @@ export default async function LandingPage() {
     <div className="min-h-screen bg-background font-sans text-ink">
       <SiteHeader isLoggedIn={Boolean(user)} />
 
-      <section className="relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-primary text-cream">
+      <section className="relative isolate flex min-h-[85vh] flex-col overflow-hidden bg-primary text-cream sm:min-h-[calc(100svh-4rem)]">
         <Image
           src="/images/meeting-hero.jpg"
           alt=""
@@ -82,14 +82,14 @@ export default async function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/60 to-primary/95" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/15 to-primary/45" />
 
-        <div className="container relative z-10 flex flex-1 flex-col justify-center pb-8 pt-12 sm:pt-16">
+        <div className="container relative z-10 flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 sm:pt-16">
           <div className="mx-auto max-w-4xl text-center">
             <p className="flex items-center justify-center gap-2 text-xs font-medium text-cream/75">
               <MapPin className="h-3.5 w-3.5 text-cream/60" />
               Bali, Indonesia
             </p>
 
-            <h1 className="mx-auto mt-5 max-w-4xl text-balance font-display text-[3.1rem] font-semibold leading-[0.98] tracking-[-0.025em] text-cream drop-shadow-lg sm:text-6xl lg:text-[5.2rem]">
+            <h1 className="mx-auto mt-4 max-w-4xl text-balance font-display text-2xl font-semibold leading-tight tracking-[-0.02em] text-cream drop-shadow-lg sm:mt-5 sm:text-4xl md:text-6xl">
               Deal hebat
               <br className="hidden sm:block" />{" "}
               dimenangkan sebelum
@@ -97,16 +97,16 @@ export default async function LandingPage() {
               meja negosiasi
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-balance text-[15px] leading-relaxed text-cream/80 drop-shadow-md sm:text-lg">
+            <p className="mx-auto mt-3 max-w-sm text-balance text-xs leading-relaxed text-slate-300 drop-shadow-md sm:mt-6 sm:max-w-xl sm:text-sm">
               Bersama AI, latih tawar-menawar, jaga margin, dan jawab keberatan
               sebelum bertemu F&amp;B Director hotel, manajer ritel, dan owner
               beach club Bali yang sesungguhnya.
             </p>
 
-            <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+            <div className="mt-8 flex w-full flex-col items-stretch justify-center gap-3 px-2 sm:flex-row sm:items-center">
               <TransitionLink
                 href={user ? "/simulasi/baru" : "/register"}
-                className="group inline-flex h-14 items-center justify-between gap-6 rounded-2xl bg-cream pl-7 pr-2 text-sm font-semibold text-cream-foreground shadow-2xl shadow-black/20 transition-transform duration-300 hover:-translate-y-0.5 active:scale-[0.98] sm:min-w-[220px]"
+                className="group inline-flex w-full items-center justify-between gap-4 rounded-xl bg-cream py-3.5 pl-6 pr-2 text-sm font-semibold text-cream-foreground shadow-2xl shadow-black/20 transition-transform duration-300 hover:-translate-y-0.5 active:scale-[0.98] sm:h-14 sm:w-auto sm:min-w-[220px] sm:py-0"
               >
                 <span>{user ? "Mulai simulasi" : "Mulai Gratis"}</span>
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-primary text-cream transition-transform duration-300 group-hover:translate-x-0.5">
@@ -117,14 +117,14 @@ export default async function LandingPage() {
               {user ? (
                 <Link
                   href="/dashboard"
-                  className="inline-flex h-14 items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-6 text-sm font-semibold text-cream backdrop-blur-xl transition-colors hover:bg-white/20"
+                  className="inline-flex w-full items-center justify-center rounded-xl border border-white/25 bg-white/10 px-4 py-3.5 text-sm font-semibold text-cream backdrop-blur-xl transition-colors hover:bg-white/20 sm:h-14 sm:w-auto sm:py-0"
                 >
                   Buka dashboard
                 </Link>
               ) : (
                 <JudgeDemoForm
                   formClassName="w-full sm:w-auto"
-                  buttonClassName="h-14 w-full rounded-2xl border border-white/25 bg-white/10 px-6 text-sm font-semibold text-cream shadow-none backdrop-blur-xl hover:bg-white/20 hover:text-cream sm:w-auto"
+                  buttonClassName="h-auto w-full justify-center rounded-xl border border-white/25 bg-white/10 px-4 py-3.5 text-sm font-semibold text-cream shadow-none backdrop-blur-xl hover:bg-white/20 hover:text-cream sm:h-14 sm:w-auto sm:py-0"
                 />
               )}
             </div>
