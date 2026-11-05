@@ -22,6 +22,13 @@ function friendlyAuthError(message: string) {
   if (normalized.includes("email not confirmed")) {
     return "Email belum dikonfirmasi. Buka tautan di inbox email Anda terlebih dahulu.";
   }
+  if (
+    normalized.includes("email logins are disabled") ||
+    normalized.includes("email signups are disabled") ||
+    normalized.includes("email provider is disabled")
+  ) {
+    return "Login email belum diaktifkan di Supabase. Buka Dashboard Supabase → Authentication → Providers → Email, aktifkan provider Email, lalu coba lagi.";
+  }
   if (normalized.includes("already registered")) {
     return "Email ini sudah terdaftar. Silakan masuk.";
   }
