@@ -72,24 +72,23 @@ export default async function LandingPage() {
 
       <section className="relative isolate flex min-h-[85vh] flex-col overflow-hidden bg-primary text-cream sm:min-h-[calc(100svh-4rem)]">
         <Image
-          src="/images/meeting-hero.jpg"
+          src="/images/boardroom-hero.jpg"
           alt=""
           fill
           priority
           sizes="100vw"
           className="scale-105 object-cover object-center blur-[1px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/60 to-primary/95" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/15 to-primary/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/90 to-slate-950" />
 
         <div className="container relative z-10 flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 sm:pt-16">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="flex items-center justify-center gap-2 text-xs font-medium text-cream/75">
-              <MapPin className="h-3.5 w-3.5 text-cream/60" />
+            <p className="flex items-center justify-center gap-2 text-xs font-medium text-white/70">
+              <MapPin className="h-3.5 w-3.5 text-white/55" />
               Bali, Indonesia
             </p>
 
-            <h1 className="mx-auto mt-4 max-w-4xl text-balance font-display text-2xl font-semibold leading-tight tracking-[-0.02em] text-cream drop-shadow-lg sm:mt-5 sm:text-4xl md:text-6xl">
+            <h1 className="mx-auto mt-4 max-w-4xl text-balance font-display text-3xl font-semibold leading-tight tracking-[-0.02em] text-white drop-shadow-lg sm:mt-5 sm:text-4xl md:text-6xl">
               Deal hebat
               <br className="hidden sm:block" />{" "}
               dimenangkan sebelum
@@ -97,7 +96,7 @@ export default async function LandingPage() {
               meja negosiasi
             </h1>
 
-            <p className="mx-auto mt-3 max-w-sm text-balance text-xs leading-relaxed text-slate-300 drop-shadow-md sm:mt-6 sm:max-w-xl sm:text-sm">
+            <p className="mx-auto mt-3 max-w-sm text-balance text-xs leading-relaxed text-slate-200 drop-shadow-md sm:mt-6 sm:max-w-xl sm:text-sm">
               Bersama AI, latih tawar-menawar, jaga margin, dan jawab keberatan
               sebelum bertemu F&amp;B Director hotel, manajer ritel, dan owner
               beach club Bali yang sesungguhnya.
@@ -129,7 +128,7 @@ export default async function LandingPage() {
               )}
             </div>
 
-            <p className="mt-4 text-[11px] text-cream/50">
+            <p className="mt-4 text-[11px] text-white/50">
               Tanpa registrasi. Satu klik untuk demo.
             </p>
           </div>
@@ -138,25 +137,25 @@ export default async function LandingPage() {
             id="cara-kerja"
             className="mx-auto mt-16 w-full max-w-5xl scroll-mt-24 sm:mt-auto sm:pt-20"
           >
-            <div className="overflow-hidden rounded-2xl border border-white/15 bg-primary/30 backdrop-blur-xl">
+            <div className="w-full max-w-full overflow-hidden rounded-2xl border border-white/15 bg-slate-950/40 backdrop-blur-xl">
               <div className="grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
                 {steps.map((step) => (
                   <div
                     key={step.number}
-                    className="flex items-start gap-4 p-4 sm:p-5"
+                    className="flex w-full max-w-full items-start gap-4 overflow-hidden p-4 sm:p-5"
                   >
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/20 bg-white/5 text-cream">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/20 bg-white/5 text-white">
                       <step.icon className="h-4 w-4" />
                     </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-semibold text-cream">
+                    <div className="min-w-0 flex-1 break-words">
+                      <p className="text-sm font-semibold text-white">
                         {step.title}
                       </p>
-                      <p className="mt-1 text-[11px] leading-relaxed text-cream/55">
+                      <p className="mt-1 text-[11px] leading-relaxed text-white/55">
                         {step.body}
                       </p>
                     </div>
-                    <span className="text-[10px] tabular-nums text-cream/35">
+                    <span className="text-[10px] tabular-nums text-white/35">
                       {step.number}
                     </span>
                   </div>
@@ -164,7 +163,7 @@ export default async function LandingPage() {
               </div>
             </div>
 
-            <div className="mt-5 flex flex-col justify-between gap-2 text-[10px] text-cream/45 sm:flex-row">
+            <div className="mt-5 flex flex-col justify-between gap-2 text-[10px] text-white/45 sm:flex-row">
               <span>SiapDeal, negosiasi B2B untuk UMKM Bali</span>
               <span>Percakapan dan evaluasi dibantu AI</span>
             </div>
@@ -173,8 +172,8 @@ export default async function LandingPage() {
       </section>
 
       <section id="rubrik" className="scroll-mt-24 bg-background">
-        <div className="container py-16 lg:py-24">
-          <div className="overflow-hidden rounded-3xl bg-primary text-cream shadow-2xl shadow-primary/10">
+        <div className="container px-4 py-16 sm:px-6 lg:py-24">
+          <div className="w-full max-w-full overflow-hidden rounded-3xl bg-primary text-cream shadow-2xl shadow-primary/10">
             <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
               <div className="p-7 sm:p-10 lg:p-12">
                 <h2 className="max-w-lg font-display text-3xl font-semibold leading-tight tracking-tight text-cream sm:text-4xl">
@@ -195,7 +194,7 @@ export default async function LandingPage() {
                       <span className="font-display text-sm font-bold text-accent">
                         0{index + 1}
                       </span>
-                      <div>
+                      <div className="min-w-0 flex-1 break-words">
                         <p className="text-sm font-semibold text-cream">
                           {aspect.label}
                         </p>
@@ -216,7 +215,7 @@ export default async function LandingPage() {
                   Kopi Kintamani, Hotel Resort, level menengah
                 </p>
 
-                <div className="mt-6 flex items-center gap-5">
+                <div className="mt-6 flex w-full flex-col items-center gap-5 sm:flex-row sm:items-center">
                   <ScoreRing score={74} size={112} strokeWidth={9} />
                   <div className="space-y-2.5">
                     {[
@@ -227,7 +226,7 @@ export default async function LandingPage() {
                       ["Closing assertion", 79],
                     ].map(([label, score]) => (
                       <div key={label} className="flex items-center gap-2.5">
-                        <span className="w-[124px] shrink-0 text-[10px] text-muted-foreground">
+                        <span className="w-24 shrink-0 break-words text-[10px] text-muted-foreground sm:w-[124px]">
                           {label}
                         </span>
                         <span className="h-1 w-12 overflow-hidden rounded-full bg-secondary">
@@ -267,7 +266,7 @@ export default async function LandingPage() {
       </section>
 
       <footer className="bg-primary text-cream">
-        <div className="container py-12">
+        <div className="container px-4 pb-20 pt-12 sm:px-6 sm:pb-12">
           <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
             <div className="max-w-sm">
               <Logo href="/" inverted />

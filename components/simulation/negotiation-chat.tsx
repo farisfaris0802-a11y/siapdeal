@@ -814,7 +814,7 @@ export function NegotiationChat({
               </div>
             )}
 
-            <div className="mb-2 flex items-center justify-between gap-2">
+            <div className="mb-2 flex w-full max-w-full flex-wrap items-center justify-between gap-2">
               <button
                 type="button"
                 onClick={() => setCoachOpen(true)}
@@ -1036,7 +1036,7 @@ export function NegotiationChat({
             {coachSuggestions.map((suggestion, index) => (
               <div
                 key={suggestion.title}
-                className="rounded-xl border border-brand-teal/25 bg-brand-teal/10 p-3.5"
+                className="w-full max-w-full overflow-hidden break-words rounded-xl border border-brand-teal/25 bg-brand-teal/10 p-3.5"
               >
                 <p className="text-xs font-bold text-brand-navy">
                   {index + 1}. {suggestion.title}

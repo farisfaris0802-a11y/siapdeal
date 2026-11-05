@@ -123,7 +123,7 @@ export function AppShell({
       </header>
 
       <div className="lg:pl-[260px]">
-        <main className="min-h-[calc(100dvh-3.5rem)] pb-16 lg:min-h-screen lg:pb-0">
+        <main className="min-h-[calc(100dvh-3.5rem)] pb-20 lg:min-h-screen lg:pb-0">
           {children}
         </main>
       </div>

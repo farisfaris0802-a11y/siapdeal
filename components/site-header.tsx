@@ -23,14 +23,7 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
             href="/"
             inverted
             showTagline={false}
-            wordmarkClassName="text-lg"
-            className="hidden min-[420px]:inline-flex"
-          />
-          <Logo
-            href="/"
-            compact
-            showWordmark={false}
-            className="min-[420px]:hidden"
+            wordmarkClassName="text-base sm:text-xl"
           />
           <span className="hidden rounded-full border border-emerald-800 bg-emerald-950/80 px-2 py-0.5 text-[9px] font-medium text-emerald-400 sm:inline-flex">
             v1.0 MVP
@@ -51,7 +44,7 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
 
         <div className="flex shrink-0 items-center gap-2">
           {!isLoggedIn && (
-            <form action={judgeLoginAction} className="flex">
+            <form action={judgeLoginAction} className="hidden min-[390px]:flex">
               <input type="hidden" name="next" value="/simulator" />
               <JudgeLoginButton
                 label="Mode Demo"
@@ -60,7 +53,7 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
                 variant="ghost"
                 icon="target"
                 rememberJudgeMode
-                mobileLabel="Demo"
+                hideLabelOnMobile
                 transitionOnSubmit
                 className="h-9 rounded-xl border border-amber-500/40 bg-amber-500/10 px-2.5 text-xs font-semibold text-amber-300 hover:bg-amber-500/20 sm:px-3"
               />
@@ -80,7 +73,8 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
             ) : (
               <TransitionLink href="/register">
                 <ArrowRight className="h-4 w-4" />
-                Mulai Gratis
+                <span className="min-[360px]:hidden">Mulai</span>
+                <span className="hidden min-[360px]:inline">Mulai Gratis</span>
               </TransitionLink>
             )}
           </Button>

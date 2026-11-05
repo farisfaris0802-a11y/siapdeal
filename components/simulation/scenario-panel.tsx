@@ -38,7 +38,7 @@ export function ScenarioPanel({
 
   return (
     <div className="space-y-3">
-      <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+      <div className="w-full max-w-full overflow-hidden break-words rounded-2xl border border-border bg-card p-5 shadow-sm">
         <div className="flex items-center justify-between gap-2">
           <p className="text-xs font-medium text-muted-foreground">
             Detail skenario
@@ -66,7 +66,7 @@ export function ScenarioPanel({
             <div key={label} className="flex items-start gap-2">
               <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
               <span className="min-w-0 flex-1 text-muted-foreground">{label}</span>
-              <span className="max-w-[150px] text-right font-semibold leading-snug text-ink">
+              <span className="max-w-[150px] break-words text-right font-semibold leading-snug text-ink">
                 {value}
               </span>
             </div>
@@ -84,7 +84,7 @@ export function ScenarioPanel({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+      <div className="w-full max-w-full overflow-hidden break-words rounded-2xl border border-border bg-card p-4 shadow-sm">
         <div className="flex items-start gap-2.5">
           <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent">
             <Lightbulb className="h-4 w-4" />
@@ -124,7 +124,7 @@ export function ScenarioPanel({
         </p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+      <div className="w-full max-w-full overflow-hidden break-words rounded-2xl border border-border bg-card p-4 shadow-sm">
         <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
           <Target className="h-3.5 w-3.5" />
           Dinilai di akhir sesi

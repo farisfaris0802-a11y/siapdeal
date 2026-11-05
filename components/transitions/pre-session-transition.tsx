@@ -103,7 +103,7 @@ export function PreSessionTransitionProvider({
           )}
         >
           <Image
-            src="/images/meeting-hero.jpg"
+            src="/images/boardroom-hero.jpg"
             alt=""
             fill
             priority
