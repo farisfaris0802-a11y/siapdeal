@@ -34,7 +34,7 @@ export function AppShell({
           <Logo
             href="/dashboard"
             inverted
-            tagline="B2B AI Negotiation Simulator"
+            tagline="B2B AI Negotiation Simulator for Bali SMEs"
           />
         </div>
 

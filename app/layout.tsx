@@ -8,7 +8,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "SiapDeal — AI Flight Simulator Negosiasi UMKM Bali",
+    default: "SiapDeal — B2B AI Negotiation Simulator for Bali SMEs",
     template: "%s · SiapDeal",
   },
   description:
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "SiapDeal · NegoLab" }],
   openGraph: {
-    title: "SiapDeal — AI Flight Simulator Negosiasi UMKM Bali",
+    title: "SiapDeal — B2B AI Negotiation Simulator for Bali SMEs",
     description:
       "Hadapi pembeli virtual Bali yang realistis, lalu lihat skor dan saran perbaikan negosiasi Anda. Dibuat untuk Bali DigiFest 2026.",
     type: "website",

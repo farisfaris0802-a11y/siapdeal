@@ -4,12 +4,9 @@ import {
   Award,
   BadgeCheck,
   Check,
-  Cpu,
-  Gavel,
   Hotel,
   Lightbulb,
   LineChart,
-  LockKeyhole,
   MapPin,
   MessageSquare,
   MessagesSquare,
@@ -20,7 +17,6 @@ import {
   TrendingUp,
   Users,
   Waves,
-  Zap,
 } from "lucide-react";
 
 import { JudgeLoginButton } from "@/components/auth/judge-login-button";
@@ -42,16 +38,25 @@ const personaTypes = [
     type: "hotel_resort_bali" as const,
     Icon: Hotel,
     tone: "border-amber-200 bg-amber-50 text-amber-700",
+    accent: "border-t-emerald-600",
+    iconTone: "bg-emerald-50 text-emerald-700",
+    locationLabel: "NUSA DUA / KUTA",
   },
   {
     type: "souvenir_retail" as const,
     Icon: Store,
     tone: "border-emerald-200 bg-emerald-50 text-emerald-700",
+    accent: "border-t-amber-500",
+    iconTone: "bg-amber-50 text-amber-700",
+    locationLabel: "DENPASAR",
   },
   {
     type: "beach_club_cafe" as const,
     Icon: Waves,
     tone: "border-sky-200 bg-sky-50 text-sky-700",
+    accent: "border-t-teal-500",
+    iconTone: "bg-teal-50 text-teal-700",
+    locationLabel: "CANGGU",
   },
 ];
 
@@ -92,20 +97,159 @@ const steps = [
 function JudgeDemoForm({
   formClassName,
   buttonClassName,
+  label = "Mode Juri (Demo)",
 }: {
   formClassName?: string;
   buttonClassName?: string;
+  label?: string;
 }) {
   return (
     <form action={judgeLoginAction} className={formClassName}>
       <input type="hidden" name="next" value="/simulasi/baru?demo=1" />
       <JudgeLoginButton
-        label="Quick Demo Login as Judge"
+        label={label}
         pendingLabel="Menyiapkan ruang juri…"
         size="lg"
         className={buttonClassName}
+        icon="sparkles"
       />
     </form>
+  );
+}
+
+function LiveSimulationMockup() {
+  return (
+    <div className="relative mx-auto w-full max-w-[560px] lg:mx-0">
+      <div className="pointer-events-none absolute -inset-8 rounded-[42px] bg-[radial-gradient(circle_at_55%_42%,rgba(251,191,36,0.16),transparent_60%)] blur-2xl" />
+
+      <div className="relative z-10 rounded-2xl border border-emerald-500/30 bg-[#062c1b] p-4 shadow-2xl lg:p-6">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#0f5132_1px,transparent_1px),linear-gradient(to_bottom,#0f5132_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30" />
+
+        {/* Window chrome */}
+        <div className="relative flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
+          <span className="h-2.5 w-2.5 rounded-full bg-amber-300/80" />
+          <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+          <span className="ml-2 flex min-w-0 flex-1 items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[8px] font-medium text-white/30">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/70" />
+            siapdeal.app/simulasi/live
+          </span>
+          <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[8px] font-semibold uppercase tracking-wide text-emerald-300">
+            Live
+          </span>
+        </div>
+
+        {/* Session header */}
+        <div className="relative mt-4 flex items-center justify-between gap-3 rounded-xl border border-emerald-500/20 bg-emerald-950/40 px-3 py-2.5">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <div className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-amber-100 text-base ring-2 ring-white/10">
+              🏨
+              <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#062c1b] bg-emerald-400" />
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-xs font-bold text-white">
+                Ibu Ayu Prameswari
+              </p>
+              <Badge
+                variant="outline"
+                className="mt-1 max-w-full truncate border-emerald-400/20 bg-emerald-400/10 text-[8px] text-emerald-200"
+              >
+                F&amp;B Director · Amrita Resort Nusa Dua
+              </Badge>
+            </div>
+          </div>
+          <Badge
+            variant="outline"
+            className="shrink-0 border-white/10 bg-white/[0.05] text-[8px] text-white/50"
+          >
+            Mitra B2B
+          </Badge>
+        </div>
+
+        {/* Chat preview */}
+        <div className="relative mt-4 space-y-3">
+          <div className="flex items-start gap-2">
+            <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-amber-100 text-[9px] font-bold text-amber-800">
+              A
+            </span>
+            <div className="max-w-[86%] rounded-2xl rounded-tl-none border border-slate-700 bg-slate-900/80 p-3 text-xs leading-relaxed text-slate-200">
+              Untuk welcome amenity kami butuh 300 pcs/bulan. Tapi kami minta
+              harga distributor Rp62.000 &amp; TOP 60 hari, ya.
+            </div>
+          </div>
+
+          <div className="flex justify-end">
+            <div className="max-w-[86%] rounded-2xl rounded-tr-none bg-emerald-600 p-3 text-xs leading-relaxed text-white shadow-md shadow-emerald-950/30">
+              Harga dasar kami Rp85.000. Untuk 300 pcs saya bisa di Rp74.000
+              termasuk gift packaging.
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 pl-8 pt-0.5">
+            <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-300" />
+            <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-300 [animation-delay:150ms]" />
+            <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-300 [animation-delay:300ms]" />
+            <span className="ml-1 text-[9px] text-emerald-200/45">
+              Ibu Ayu sedang mengetik...
+            </span>
+          </div>
+        </div>
+
+        {/* Ghost input */}
+        <div className="relative mt-4 flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-950/40 px-3 py-2">
+          <span className="text-[9px] text-white/25">
+            Ketik respons negosiasi Anda...
+          </span>
+          <span className="ml-auto grid h-6 w-6 place-items-center rounded-full bg-emerald-500/15 text-emerald-300">
+            <ArrowRight className="h-3 w-3" />
+          </span>
+        </div>
+      </div>
+
+      {/* Floating score badge */}
+      <div className="absolute -right-4 -top-7 z-20 w-[152px] rounded-xl border border-amber-500/40 bg-slate-900/90 p-3 shadow-lg backdrop-blur-md sm:-right-5">
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-[8px] font-bold uppercase tracking-wider text-slate-400">
+            Skor Negosiasi
+          </p>
+          <TrendingUp className="h-3 w-3 text-amber-300" />
+        </div>
+        <p className="mt-1 font-sans text-2xl font-bold leading-none text-amber-300">
+          78<span className="ml-0.5 text-[10px] font-medium text-slate-500">/100</span>
+        </p>
+        <div className="mt-2 flex items-center gap-1 text-[8px] font-semibold text-emerald-300">
+          <span className="h-1 w-1 rounded-full bg-emerald-400" />
+          +12 poin dari sesi sebelumnya
+        </div>
+      </div>
+
+      {/* Floating persona pills — desktop */}
+      <div className="absolute -left-4 -top-5 z-20 hidden animate-pulse items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-900/80 px-3 py-1.5 text-[11px] text-emerald-200 shadow-md backdrop-blur-md sm:inline-flex">
+        🏨 Hotel Resort (Nusa Dua)
+      </div>
+      <div className="absolute -bottom-5 -left-5 z-20 hidden animate-pulse items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-900/80 px-3 py-1.5 text-[11px] text-emerald-200 shadow-md backdrop-blur-md [animation-delay:300ms] sm:inline-flex">
+        🛍️ Pusat Oleh-Oleh (Denpasar)
+      </div>
+      <div className="absolute -bottom-11 -right-4 z-20 hidden animate-pulse items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-900/80 px-3 py-1.5 text-[11px] text-emerald-200 shadow-md backdrop-blur-md [animation-delay:600ms] sm:inline-flex">
+        🌅 Beach Club (Canggu)
+      </div>
+
+      {/* Floating persona pills — mobile */}
+      <div className="mt-3 flex flex-wrap justify-center gap-1.5 sm:hidden">
+        {[
+          "🏨 Hotel Resort (Nusa Dua)",
+          "🛍️ Pusat Oleh-Oleh (Denpasar)",
+          "🌅 Beach Club (Canggu)",
+        ].map((label) => (
+          <span
+            key={label}
+            className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-900/80 px-3 py-1.5 text-[10px] text-emerald-200 shadow-md backdrop-blur-md"
+          >
+            {label}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -126,58 +270,59 @@ export default async function LandingPage() {
         <div className="pointer-events-none absolute -right-24 top-10 h-80 w-80 rounded-full bg-amber-300/10 blur-3xl" />
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
-        <div className="container relative grid items-center gap-14 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-12 lg:py-20">
+        <div className="container relative grid items-center gap-14 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:py-20">
           <div className="animate-in-up">
             <Badge className="mb-6 gap-2 border-amber-300/20 bg-amber-300/10 px-3 py-1.5 text-[11px] text-amber-200">
               <Award className="h-3.5 w-3.5" />
               Bali DigiFest 2026 · AI Web Innovation Challenge
             </Badge>
 
-            <h1 className="max-w-3xl font-sans text-[2.7rem] font-bold leading-[0.99] tracking-[-0.045em] sm:text-6xl lg:text-[4.4rem]">
-              Latih negosiasi
+            <h1 className="max-w-[660px] text-balance font-sans text-[2.35rem] font-bold leading-[1.02] tracking-[-0.045em] text-white sm:text-5xl lg:text-[3.1rem] xl:text-[3.65rem]">
+              Flight Simulator
               <br />
-              <span className="text-amber-300">sebelum</span> bertemu
+              <span className="text-amber-300">Negosiasi B2B</span> Pertama
               <br />
-              pembeli Bali.
+              untuk UMKM Bali
             </h1>
 
             <p className="mt-6 max-w-xl text-pretty text-[15px] leading-relaxed text-white/65 sm:text-[17px]">
-              SiapDeal adalah AI flight simulator negosiasi untuk UMKM Bali.
-              Hadapi F&amp;B Director hotel Nusa Dua, manager pusat oleh-oleh,
-              dan owner beach club Canggu yang menawar margin, menuntut titip
-              jual, serta memperpanjang TOP.
+              Latih taktik tawar-menawar menghadapi{" "}
+              <span className="font-semibold text-white">
+                F&amp;B Director Hotel, Ritel, dan Beach Club
+              </span>{" "}
+              berbasis AI sebelum bertemu pembeli aslinya.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button
+                asChild
+                size="lg"
+                className="bg-[linear-gradient(180deg,#FBBF24_0%,#D97706_100%)] text-[#0F172A] shadow-[0_12px_30px_-12px_rgba(217,119,6,0.8)] hover:brightness-105"
+              >
+                <Link href={user ? "/simulasi/baru" : "/register"}>
+                  {user ? "Mulai Simulasi" : "Mulai Gratis"}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+
               {user ? (
                 <Button
                   asChild
                   size="lg"
-                  className="bg-[linear-gradient(180deg,#FBBF24_0%,#D97706_100%)] text-[#0F172A] shadow-[0_12px_30px_-12px_rgba(217,119,6,0.8)] hover:brightness-105"
+                  variant="outline"
+                  className="border-white/20 bg-white/[0.06] text-white hover:bg-white/10 hover:text-white"
                 >
-                  <Link href="/simulasi/baru">
-                    Mulai simulasi baru
+                  <Link href="/dashboard">
+                    Buka dashboard
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
               ) : (
                 <JudgeDemoForm
                   formClassName="w-full sm:w-auto"
-                  buttonClassName="w-full bg-[linear-gradient(180deg,#FBBF24_0%,#D97706_100%)] text-[#0F172A] shadow-[0_12px_30px_-12px_rgba(217,119,6,0.8)] hover:brightness-105 sm:w-auto"
+                  buttonClassName="w-full border border-white/20 bg-white/[0.06] text-white shadow-none hover:bg-white/10 hover:text-white sm:w-auto"
                 />
               )}
-
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white/20 bg-white/[0.06] text-white hover:bg-white/10 hover:text-white"
-              >
-                <Link href={user ? "/dashboard" : "/register"}>
-                  {user ? "Buka dashboard" : "Saya pelaku UMKM"}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
             </div>
 
             {!user && (
@@ -213,131 +358,9 @@ export default async function LandingPage() {
             </div>
           </div>
 
-          {/* Hero chat mockup */}
-          <div className="relative mx-auto w-full max-w-[530px] animate-in-up animate-delay-2 lg:mx-0">
-            <div className="pointer-events-none absolute -inset-6 rounded-[38px] bg-[radial-gradient(circle_at_55%_40%,rgba(251,191,36,0.18),transparent_62%)] blur-2xl" />
-
-            <div className="relative z-10 overflow-hidden rounded-[26px] border border-white/15 bg-white shadow-[0_35px_80px_-30px_rgba(0,0,0,0.6)]">
-              <div className="flex items-center justify-between border-b border-slate-200/80 bg-[#F8FAF9] px-5 py-4">
-                <div className="flex items-center gap-3">
-                  <div className="relative grid h-10 w-10 place-items-center rounded-full bg-amber-50 text-lg ring-1 ring-amber-100">
-                    🏨
-                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold leading-tight text-ink">
-                      Ibu Ayu Prameswari
-                    </p>
-                    <p className="text-[10px] text-slate-500">
-                      F&amp;B Director · Amrita Resort Nusa Dua
-                    </p>
-                    <Badge variant="warning" className="mt-1 text-[8px]">
-                      Hotel Resort
-                    </Badge>
-                  </div>
-                </div>
-                <Badge
-                  variant="outline"
-                  className="border-emerald-200 bg-emerald-50 text-[8px] uppercase tracking-wide text-emerald-700"
-                >
-                  Mitra B2B
-                </Badge>
-              </div>
-
-              <div className="space-y-3.5 bg-[#F8FAF9] p-5">
-                <div className="flex gap-2.5">
-                  <div className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-amber-100 text-[11px] font-bold text-amber-800">
-                    A
-                  </div>
-                  <div className="max-w-[84%] rounded-2xl rounded-tl-none border border-slate-200 bg-white px-3.5 py-2.5 text-[12px] leading-relaxed text-slate-700 shadow-sm">
-                    Untuk welcome amenity kami butuh 300 pcs per bulan. Kami minta
-                    harga distributor Rp62.000 dan TOP 60 hari, ya.
-                  </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <div className="max-w-[86%] rounded-2xl rounded-tr-none bg-[linear-gradient(135deg,#177A52_0%,#0F5132_100%)] px-3.5 py-2.5 text-[12px] leading-relaxed text-white shadow-md">
-                    Harga dasar Rp85.000. Untuk 300 pcs saya bisa Rp74.000,
-                    termasuk gift packaging dan 20 sampel gratis.
-                  </div>
-                </div>
-
-                <div className="flex gap-2.5">
-                  <div className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-amber-100 text-[11px] font-bold text-amber-800">
-                    A
-                  </div>
-                  <div className="max-w-[84%] rounded-2xl rounded-tl-none border border-slate-200 bg-white px-3.5 py-2.5 text-[12px] leading-relaxed text-slate-700 shadow-sm">
-                    Masih di atas target food cost kami. Kalau bisa Rp68.000,
-                    kami bantu eksposur di tiga outlet dan kontrak 6 bulan.
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 pl-9 pt-0.5">
-                  <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500" />
-                  <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500 [animation-delay:150ms]" />
-                  <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500 [animation-delay:300ms]" />
-                  <span className="ml-1 text-[9px] text-slate-400">
-                    Ibu Ayu sedang meninjau penawaran…
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 border-t border-slate-200/80 bg-white p-3">
-                <div className="flex-1 rounded-full border border-slate-200 bg-[#F8FAF9] px-4 py-2.5 text-[11px] text-slate-400">
-                  Ketik respons negosiasi Anda di sini…
-                </div>
-                <div className="grid h-9 w-9 place-items-center rounded-full bg-[#0F5132] text-white shadow-sm">
-                  <ArrowRight className="h-4 w-4" />
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute -right-4 -top-20 z-20 hidden w-[160px] rounded-2xl border border-white/70 bg-white/95 p-3.5 shadow-xl backdrop-blur sm:block">
-              <div className="flex items-center justify-between">
-                <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
-                  Skor negosiasi
-                </p>
-                <TrendingUp className="h-3.5 w-3.5 text-emerald-600" />
-              </div>
-              <div className="mt-1 flex items-end gap-1">
-                <span className="font-sans text-3xl font-bold leading-none text-ink">
-                  78
-                </span>
-                <span className="pb-1 text-[10px] font-medium text-slate-400">
-                  /100
-                </span>
-              </div>
-              <div className="mt-2.5 space-y-1.5">
-                {[86, 78, 64, 72, 88].map((value) => (
-                  <div
-                    key={value}
-                    className="h-1.5 overflow-hidden rounded-full bg-slate-100"
-                  >
-                    <div
-                      className="h-full rounded-full bg-[#0F5132]"
-                      style={{ width: `${value}%` }}
-                    />
-                  </div>
-                ))}
-              </div>
-              <p className="mt-2 text-[9px] font-medium text-emerald-700">
-                +12 poin dari sesi sebelumnya
-              </p>
-            </div>
-
-            <div className="absolute -bottom-16 -left-3 z-20 hidden items-center gap-2.5 rounded-xl border border-emerald-200 bg-white px-3.5 py-2.5 shadow-xl sm:flex">
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-emerald-100">
-                <BadgeCheck className="h-4 w-4 text-emerald-700" />
-              </span>
-              <div>
-                <p className="text-[9px] font-medium text-slate-400">
-                  Status sesi
-                </p>
-                <p className="text-xs font-bold text-ink">
-                  Kesepakatan tercapai 🎉
-                </p>
-              </div>
-            </div>
+          {/* Hero live simulation mockup */}
+          <div className="relative mx-auto w-full max-w-[560px] items-center justify-center lg:mx-0">
+            <LiveSimulationMockup />
           </div>
         </div>
 
@@ -388,42 +411,54 @@ export default async function LandingPage() {
               produk yang sama bisa membutuhkan strategi yang sangat berbeda.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              <span className="rounded-full border border-slate-200 bg-[#F8FAF9] px-3 py-1.5 text-[10px] font-semibold text-slate-600">
+              <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
                 TOP 30–60 hari
               </span>
-              <span className="rounded-full border border-slate-200 bg-[#F8FAF9] px-3 py-1.5 text-[10px] font-semibold text-slate-600">
-                Titip jual & sale-or-return
+              <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                Titip Jual
               </span>
-              <span className="rounded-full border border-slate-200 bg-[#F8FAF9] px-3 py-1.5 text-[10px] font-semibold text-slate-600">
-                FOOD cost & margin
+              <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                Food Cost
               </span>
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
-            {personaTypes.map(({ type, Icon, tone }) => {
-              const meta = PARTNER_META[type];
-              return (
-                <div
-                  key={type}
-                  className="rounded-2xl border border-slate-200/80 bg-[#F8FAF9] p-4 transition-all duration-200 hover:-translate-y-1 hover:bg-white hover:shadow-soft"
-                >
-                  <span className={`grid h-10 w-10 place-items-center rounded-xl border ${tone}`}>
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  <p className="mt-4 text-sm font-bold text-ink">
-                    {meta.shortLabel}
-                  </p>
-                  <p className="mt-1 text-[11px] leading-relaxed text-slate-500">
-                    {meta.description}
-                  </p>
-                  <p className="mt-3 flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wide text-slate-400">
-                    <MapPin className="h-3 w-3" />
-                    {meta.location}
-                  </p>
-                </div>
-              );
-            })}
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {personaTypes.map(
+              ({ type, Icon, accent, iconTone, locationLabel }, index) => {
+                const meta = PARTNER_META[type];
+                return (
+                  <div
+                    key={type}
+                    className={`group relative overflow-hidden rounded-2xl border border-slate-200/80 border-t-4 ${accent} bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <span
+                        className={`grid h-11 w-11 place-items-center rounded-xl ${iconTone}`}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <span className="font-mono text-[10px] font-bold text-slate-200">
+                        0{index + 1}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-4 flex items-center justify-between gap-2 text-base font-bold text-slate-900">
+                      {meta.shortLabel}
+                      <span className="text-lg">{meta.emoji}</span>
+                    </h3>
+                    <p className="mt-2 text-xs font-normal leading-relaxed text-slate-600">
+                      {meta.description}
+                    </p>
+
+                    <div className="mt-4 flex items-center gap-1 border-t border-slate-100 pt-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      <MapPin className="h-3 w-3" />
+                      {locationLabel}
+                    </div>
+                  </div>
+                );
+              }
+            )}
           </div>
         </div>
       </section>
@@ -513,11 +548,21 @@ export default async function LandingPage() {
                   key={type}
                   className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-soft transition-all duration-200 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lift"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className={`grid h-12 w-12 place-items-center rounded-2xl border ${tone}`}>
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <span className="text-2xl">{meta.emoji}</span>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="relative">
+                      <div className="grid h-16 w-16 place-items-center rounded-full bg-[linear-gradient(145deg,#F8FAF9_0%,#E8F3ED_100%)] text-3xl shadow-[0_10px_24px_-14px_rgba(15,81,50,0.45)] ring-4 ring-white">
+                        {meta.emoji}
+                      </div>
+                      <span className={`absolute -bottom-1 -right-1 grid h-7 w-7 place-items-center rounded-full border-2 border-white ${tone}`}>
+                        <Icon className="h-3.5 w-3.5" />
+                      </span>
+                    </div>
+                    <Badge
+                      variant="outline"
+                      className="border-emerald-200 bg-emerald-50/80 text-[9px] text-emerald-700"
+                    >
+                      Bali
+                    </Badge>
                   </div>
                   <h3 className="mt-5 font-sans text-lg font-bold leading-snug text-ink">
                     {meta.label}
@@ -681,161 +726,6 @@ export default async function LandingPage() {
       </section>
 
       {/* ================================================================ */}
-      {/* AI ENGINE                                                        */}
-      {/* ================================================================ */}
-      <section
-        id="teknologi"
-        className="scroll-mt-24 border-y border-slate-200/70 bg-white"
-      >
-        <div className="container grid gap-10 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
-          <div>
-            <Badge variant="muted" className="mb-4">
-              AI engine
-            </Badge>
-            <h2 className="max-w-lg font-sans text-3xl font-bold leading-tight tracking-tight text-ink sm:text-4xl">
-              Bukan chatbot biasa. Ini simulator dengan aturan main.
-            </h2>
-            <p className="mt-4 max-w-lg text-sm leading-relaxed text-slate-500">
-              Setiap persona punya batas harga rahasia, gaya menawar, dan aturan
-              akhir sesi. Evaluasi memakai rubrik yang sama untuk semua sesi.
-            </p>
-
-            <div className="mt-6 space-y-3">
-              {[
-                {
-                  icon: LockKeyhole,
-                  title: "Batas harga pembeli tetap rahasia",
-                  body: "Dihitung dari profil persona dan harga dasar produk, tidak pernah dibocorkan ke lawan bicara.",
-                },
-                {
-                  icon: MessagesSquare,
-                  title: "Chat real-time + transkrip tersimpan",
-                  body: "Balasan pembeli mengalir langsung ke layar, sementara seluruh percakapan disimpan untuk evaluasi.",
-                },
-                {
-                  icon: Gavel,
-                  title: "Penilaian 5 aspek yang konsisten",
-                  body: "Skor, feedback, kekuatan, kelemahan, dan kalimat pengganti disusun dengan format yang sama.",
-                },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  className="flex gap-3 rounded-2xl border border-slate-200/80 bg-[#F8FAF9] p-3.5"
-                >
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-700">
-                    <item.icon className="h-4 w-4" />
-                  </span>
-                  <div>
-                    <p className="text-xs font-bold text-ink">{item.title}</p>
-                    <p className="mt-0.5 text-[11px] leading-relaxed text-slate-500">
-                      {item.body}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative overflow-hidden rounded-3xl bg-[#0F172A] p-6 text-white shadow-lift sm:p-8">
-            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-emerald-400/10 blur-3xl" />
-            <div className="pointer-events-none absolute inset-0 grain opacity-20" />
-            <div className="relative flex items-center justify-between">
-              <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/45">
-                <Cpu className="h-3.5 w-3.5 text-amber-300" />
-                Alur kerja AI SiapDeal
-              </p>
-              <Badge className="border-white/10 bg-white/10 text-[10px] text-white">
-                Gemini / GPT
-              </Badge>
-            </div>
-
-            <div className="relative mt-6 space-y-2.5 text-[11px] leading-relaxed">
-              {[
-                { step: "01", title: "Persona pembeli", value: "Hotel Resort · Menengah" },
-                { step: "02", title: "Batas harga pembeli", value: "79% dari harga dasar" },
-                { step: "03", title: "Chat real-time", value: "Balasan mengalir ke browser" },
-                { step: "04", title: "Deteksi deal", value: "Deal / belum sepakat" },
-                { step: "05", title: "Evaluasi 5 aspek", value: "Skor + saran kalimat" },
-              ].map((row) => (
-                <div
-                  key={row.step}
-                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.05] px-3.5 py-2.5"
-                >
-                  <span className="font-mono text-amber-300">{row.step}</span>
-                  <span className="w-[126px] shrink-0 text-white/45">
-                    {row.title}
-                  </span>
-                  <span className="font-mono text-white/80">{row.value}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="relative mt-5 flex items-start gap-2 rounded-xl border border-white/10 bg-white/[0.05] p-3.5 text-[10px] leading-relaxed text-white/55">
-              <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-300" />
-              Pembeli virtual tetap dalam konteks bisnis. Permintaan membocorkan
-              instruksi atau keluar karakter akan ditolak.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================ */}
-      {/* CTA                                                              */}
-      {/* ================================================================ */}
-      <section className="container py-16 lg:py-20">
-        <div className="relative overflow-hidden rounded-[32px] bg-[linear-gradient(135deg,#FBBF24_0%,#F59E0B_48%,#D97706_100%)] p-8 text-[#0F172A] shadow-lift sm:p-12 lg:p-16">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/25 blur-2xl" />
-          <div className="pointer-events-none absolute -bottom-24 left-1/3 h-72 w-72 rounded-full bg-[#0F5132]/10 blur-2xl" />
-          <div className="relative grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-            <div>
-              <p className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#0F172A]/60">
-                <Zap className="h-3.5 w-3.5" />
-                Bali DigiFest 2026 · siap dinilai
-              </p>
-              <h2 className="font-sans text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-                Coba alur lengkapnya
-                <br className="hidden sm:block" /> dalam satu klik.
-              </h2>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#0F172A]/65 sm:text-base">
-                Juri bisa langsung masuk tanpa registrasi. Pelaku UMKM bisa
-                membuat akun untuk menyimpan riwayat dan membandingkan skor.
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 lg:items-end">
-              {user ? (
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full bg-[#0F172A] text-white shadow-lg hover:bg-[#0F172A]/90 lg:w-auto"
-                >
-                  <Link href="/simulasi/baru">
-                    Mulai simulasi
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-              ) : (
-                <JudgeDemoForm
-                  formClassName="w-full lg:w-auto"
-                  buttonClassName="w-full bg-[#0F172A] text-white shadow-lg hover:bg-[#0F172A]/90 lg:w-auto"
-                />
-              )}
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="w-full border-[#0F172A]/20 bg-transparent hover:bg-white/30 lg:w-auto"
-              >
-                <Link href={user ? "/dashboard" : "/register"}>
-                  {user ? "Buka dashboard" : "Buat akun UMKM"}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================ */}
       {/* FOOTER                                                           */}
       {/* ================================================================ */}
       <footer className="bg-[#0F172A] text-white">
@@ -845,7 +735,7 @@ export default async function LandingPage() {
               <Logo
                 href="/"
                 inverted
-                tagline="B2B AI Negotiation Simulator"
+                tagline="B2B AI Negotiation Simulator for Bali SMEs"
               />
               <p className="mt-4 text-xs leading-relaxed text-white/45">
                 AI flight simulator negosiasi B2B untuk membantu UMKM Bali masuk

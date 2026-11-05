@@ -11,7 +11,6 @@ const navItems = [
   { href: "#cara-kerja", label: "Cara kerja" },
   { href: "#mitra", label: "Persona Bali" },
   { href: "#rubrik", label: "Rubrik" },
-  { href: "#teknologi", label: "Teknologi AI" },
 ];
 
 const frostedButtonClass =
