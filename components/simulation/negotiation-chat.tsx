@@ -569,7 +569,7 @@ export function NegotiationChat({
                 Level: {diff.label}
               </Badge>
               <span className="text-[10px] font-semibold text-brand-navy">
-                Sesi aktif, {isJudge ? "Mode Juri" : "Fast Demo"}
+                Sesi aktif, {isJudge ? "Mode Demo" : "Fast Demo"}
               </span>
             </div>
             <h1 className="mt-1 truncate font-display text-lg font-bold leading-tight text-ink sm:text-xl">

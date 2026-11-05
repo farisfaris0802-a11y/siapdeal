@@ -51,8 +51,8 @@ function JudgeDemoForm({
     <form action={judgeLoginAction} className={formClassName}>
       <input type="hidden" name="next" value="/simulasi/baru?demo=1" />
       <JudgeLoginButton
-        label="Mode Juri (Demo)"
-        pendingLabel="Menyiapkan ruang juri..."
+        label="Mode Demo"
+        pendingLabel="Menyiapkan mode demo..."
         size="lg"
         variant="ghost"
         className={buttonClassName}
@@ -130,7 +130,7 @@ export default async function LandingPage() {
             </div>
 
             <p className="mt-4 text-[11px] text-cream/50">
-              Tanpa registrasi. Satu klik untuk juri.
+              Tanpa registrasi. Satu klik untuk demo.
             </p>
           </div>
 

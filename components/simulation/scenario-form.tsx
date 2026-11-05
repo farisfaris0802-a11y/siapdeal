@@ -202,7 +202,7 @@ export function ScenarioForm({
               <Sparkles className="h-4 w-4 text-brand-navy" />
             </span>
             <div className="text-xs leading-relaxed">
-              <p className="text-sm font-bold">Mode Juri aktif, skenario contoh sudah terisi</p>
+              <p className="text-sm font-bold">Mode Demo aktif, skenario contoh sudah terisi</p>
               <p className="mt-0.5 text-brand-navy/70">
                 Anda bisa langsung menekan <strong>Mulai simulasi</strong>, atau
                 ubah produk, mitra, dan level sesuai skenario yang ingin diuji.

@@ -54,13 +54,13 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
             <form action={judgeLoginAction} className="flex">
               <input type="hidden" name="next" value="/simulator" />
               <JudgeLoginButton
-                label="Mode Juri (Demo 1-Klik)"
+                label="Mode Demo"
                 pendingLabel="Menyiapkan..."
                 size="sm"
                 variant="ghost"
                 icon="target"
                 rememberJudgeMode
-                mobileLabel="Juri"
+                mobileLabel="Demo"
                 transitionOnSubmit
                 className="h-9 rounded-xl border border-amber-500/40 bg-amber-500/10 px-2.5 text-xs font-semibold text-amber-300 hover:bg-amber-500/20 sm:px-3"
               />

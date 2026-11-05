@@ -21,7 +21,7 @@ export function AppShell({
     "Pengguna";
   const isJudge =
     Boolean(user.is_anonymous) || user.user_metadata?.role === "judge";
-  const email = isJudge ? "Mode demo juri" : user.email ?? "";
+  const email = isJudge ? "Mode demo" : user.email ?? "";
 
   return (
     <div className="min-h-screen bg-background">
@@ -67,7 +67,7 @@ export function AppShell({
                   </p>
                   {isJudge && (
                     <span className="shrink-0 rounded-full bg-brand-teal/15 px-1.5 py-0.5 text-[9px] font-semibold text-brand-mint">
-                      Juri
+                      Demo
                     </span>
                   )}
                 </div>

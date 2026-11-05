@@ -54,7 +54,7 @@ export default async function LoginPage({
         </div>
         <div className="relative flex justify-center">
           <span className="bg-background px-3 text-[10px] font-medium text-muted-foreground">
-            Atau untuk juri lomba
+            Atau untuk mode demo
           </span>
         </div>
       </div>
@@ -62,7 +62,7 @@ export default async function LoginPage({
       <form action={judgeLoginAction} className="space-y-2.5">
         <input type="hidden" name="next" value="/simulasi/baru?demo=1" />
         <JudgeLoginButton
-          label="Masuk instan sebagai Juri"
+          label="Masuk instan sebagai Demo"
           size="lg"
           variant="outline"
           className="w-full border-primary/25 bg-white"

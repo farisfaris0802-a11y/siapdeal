@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
 type ButtonProps = React.ComponentProps<typeof Button>;
 
 export function JudgeLoginButton({
-  label = "Quick Demo Login as Judge",
-  pendingLabel = "Menyiapkan ruang juri...",
+  label = "Quick Demo Login",
+  pendingLabel = "Menyiapkan mode demo...",
   variant = "default",
   size = "lg",
   className,
