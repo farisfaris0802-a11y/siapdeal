@@ -10,7 +10,7 @@ type ButtonProps = React.ComponentProps<typeof Button>;
 
 export function JudgeLoginButton({
   label = "Quick Demo Login as Judge",
-  pendingLabel = "Menyiapkan ruang juri…",
+  pendingLabel = "Menyiapkan ruang juri...",
   variant = "default",
   size = "lg",
   className,

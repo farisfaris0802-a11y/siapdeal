@@ -149,6 +149,57 @@
   .animate-delay-3 {
     animation-delay: 240ms;
   }
+
+  .ios-pop {
+    animation: ios-pop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+
+  .ios-sheen::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-block: 0;
+    left: -55%;
+    width: 45%;
+    transform: translateX(0) skewX(-18deg);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.42),
+      transparent
+    );
+    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .ios-sheen:hover::after,
+  .ios-sheen:focus-visible::after {
+    transform: translateX(260%) skewX(-18deg);
+  }
+}
+
+@keyframes ios-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.94);
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(1px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ios-pop {
+    animation: none;
+  }
+
+  .ios-sheen::after {
+    display: none;
+  }
 }
 
 @keyframes in-up {

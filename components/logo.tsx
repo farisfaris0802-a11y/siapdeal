@@ -7,7 +7,13 @@ const DEFAULT_TAGLINE = "B2B Negotiation Simulator";
 const HANDSHAKE_PATH =
   "M11 6h3l3.29-3.3a1 1 0 0 1 1.42 0l2.58 2.59a1 1 0 0 1 0 1.41L19 9h-8v2a1 1 0 0 1-1 1 1 1 0 0 1-1-1V8a2 2 0 0 1 2-2m-6 5v4l-2.29 2.29a1 1 0 0 0 0 1.41l2.58 2.59a1 1 0 0 0 1.42 0L11 17h4a1 1 0 0 0 1-1v-1h1a1 1 0 0 0 1-1v-1h1a1 1 0 0 0 1-1v-1h-7v1a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9Z";
 
-function Handshake({ className }: { className?: string }) {
+function Handshake({
+  className,
+  gradientId = "siapdeal-handshake-light",
+}: {
+  className?: string;
+  gradientId?: string;
+}) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -17,7 +23,7 @@ function Handshake({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient
-          id="siapdeal-handshake"
+          id={gradientId}
           x1="2"
           y1="5"
           x2="22"
@@ -29,7 +35,7 @@ function Handshake({ className }: { className?: string }) {
           <stop offset="1" stopColor="hsl(var(--brand-teal))" />
         </linearGradient>
       </defs>
-      <path d={HANDSHAKE_PATH} fill="url(#siapdeal-handshake)" />
+      <path d={HANDSHAKE_PATH} fill={`url(#${gradientId})`} />
     </svg>
   );
 }
@@ -44,7 +50,7 @@ function BrandMark({
   if (compact) {
     return (
       <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-border bg-card p-1.5 shadow-sm transition-transform duration-300 group-hover:-rotate-2 motion-reduce:transition-none">
-        <Handshake className="h-6 w-6" />
+        <Handshake gradientId="siapdeal-handshake-compact" className="h-6 w-6" />
       </span>
     );
   }
@@ -84,7 +90,7 @@ export function Logo({
     >
       {inverted && !compact ? (
         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-background p-1.5 shadow-sm">
-          <Handshake className="h-8 w-8" />
+          <Handshake gradientId="siapdeal-handshake-inverted" className="h-8 w-8" />
         </span>
       ) : (
         <BrandMark compact={compact} />

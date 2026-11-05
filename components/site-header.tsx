@@ -14,14 +14,14 @@ const navItems = [
 ];
 
 const secondaryButtonClass =
-  "h-8 rounded-full border border-border bg-background px-2.5 text-[11px] font-semibold text-ink/70 transition-colors hover:bg-secondary hover:text-ink sm:h-9 sm:px-3.5 sm:text-[13px]";
+  "group ios-pop ios-sheen relative h-9 overflow-hidden rounded-full border border-border/70 bg-white/55 px-3 text-[12px] font-semibold text-ink/75 shadow-md ring-1 ring-inset ring-white/60 backdrop-blur-xl transition-[transform,background-color,box-shadow,color] duration-300 hover:-translate-y-0.5 hover:bg-white/80 hover:text-ink hover:shadow-lg active:translate-y-0 active:scale-[0.96] motion-reduce:transition-none sm:h-10 sm:px-4 sm:text-[13px]";
 
 const primaryButtonClass =
-  "group h-8 rounded-full bg-primary px-2.5 text-[11px] font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 active:translate-y-px sm:h-9 sm:px-4 sm:text-[13px]";
+  "group ios-pop ios-sheen relative h-9 overflow-hidden rounded-full border border-primary-foreground/15 bg-primary px-3 text-[12px] font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-primary/95 active:translate-y-0 active:scale-[0.96] motion-reduce:transition-none sm:h-10 sm:px-4 sm:text-[13px]";
 
 export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background">
+    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between gap-2 sm:h-[68px] sm:gap-4">
         <div className="flex min-w-0 items-center">
           <Logo className="hidden shrink-0 sm:inline-flex" />
@@ -54,7 +54,7 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
                 asChild
                 variant="ghost"
                 size="sm"
-                className={cn(secondaryButtonClass, "px-2 sm:px-3.5")}
+                className={cn(secondaryButtonClass, "px-3 sm:px-4")}
               >
                 <Link href="/login">Masuk</Link>
               </Button>
@@ -66,15 +66,22 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
                   pendingLabel="Memuat..."
                   size="sm"
                   variant="ghost"
-                  className={cn(secondaryButtonClass, "gap-1.5 px-2 sm:px-3.5")}
+                  className={cn(
+                    secondaryButtonClass,
+                    "animate-delay-1 gap-1.5 px-3 [&_svg]:transition-transform [&_svg]:duration-300 group-hover:[&_svg]:rotate-12 group-hover:[&_svg]:scale-110 sm:px-4"
+                  )}
                   icon="sparkles"
                 />
               </form>
 
-              <Button asChild size="sm" className={primaryButtonClass}>
+              <Button
+                asChild
+                size="sm"
+                className={cn(primaryButtonClass, "animate-delay-2")}
+              >
                 <Link href="/register">
                   Mulai Gratis
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 sm:h-4 sm:w-4" />
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1 sm:h-4 sm:w-4" />
                 </Link>
               </Button>
             </>
