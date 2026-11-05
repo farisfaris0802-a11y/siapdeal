@@ -30,11 +30,7 @@ export function AppShell({
         <div className="pointer-events-none absolute inset-y-0 right-0 w-px bg-primary-foreground/5" />
 
         <div className="relative px-2">
-          <Logo
-            href="/dashboard"
-            inverted
-            tagline="B2B AI Negotiation Simulator for Bali SMEs"
-          />
+          <Logo href="/dashboard" inverted />
         </div>
 
         <Button

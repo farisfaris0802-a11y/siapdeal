@@ -29,6 +29,14 @@
     --input: 214 20% 88%;
     --ring: 151 65% 25%;
     --radius: 0.9rem;
+    --brand-navy: 208 65% 22%;
+    --brand-navy-soft: 196 45% 34%;
+    --brand-teal: 164 40% 53%;
+    --brand-mint: 159 43% 64%;
+    --brand-gray: 0 0% 54%;
+    --grain-dot: rgba(11, 43, 34, 0.06);
+    --scrollbar-thumb: rgba(11, 43, 34, 0.2);
+    --scrollbar-thumb-hover: rgba(11, 43, 34, 0.18);
   }
 
   .dark {

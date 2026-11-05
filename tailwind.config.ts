@@ -59,6 +59,13 @@ const config: Config = {
           100: "#F1F5F3",
           200: "#E2E8E5",
         },
+        brand: {
+          navy: "hsl(var(--brand-navy))",
+          "navy-soft": "hsl(var(--brand-navy-soft))",
+          teal: "hsl(var(--brand-teal))",
+          mint: "hsl(var(--brand-mint))",
+          gray: "hsl(var(--brand-gray))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
