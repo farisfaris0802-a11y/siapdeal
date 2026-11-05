@@ -8,57 +8,57 @@
 @layer base {
   :root {
     --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
-    --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
-    --background: 160 20% 98%;
-    --foreground: 222 47% 11%;
+    --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+    --background: 180 18% 98%;
+    --foreground: 208 60% 20%;
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 208 60% 20%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 151 68% 19%;
+    --popover-foreground: 208 60% 20%;
+    --primary: 208 65% 22%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 158 20% 95%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 20% 96%;
-    --muted-foreground: 215 16% 42%;
-    --accent: 32 95% 44%;
-    --accent-foreground: 222 47% 11%;
+    --secondary: 168 30% 95%;
+    --secondary-foreground: 208 60% 20%;
+    --muted: 195 18% 96%;
+    --muted-foreground: 210 16% 42%;
+    --accent: 164 40% 53%;
+    --accent-foreground: 208 65% 18%;
     --destructive: 0 72% 48%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 20% 90%;
-    --input: 214 20% 88%;
-    --ring: 151 65% 25%;
+    --border: 200 20% 89%;
+    --input: 200 20% 86%;
+    --ring: 164 40% 44%;
     --radius: 0.9rem;
     --brand-navy: 208 65% 22%;
     --brand-navy-soft: 196 45% 34%;
     --brand-teal: 164 40% 53%;
     --brand-mint: 159 43% 64%;
     --brand-gray: 0 0% 54%;
-    --grain-dot: rgba(11, 43, 34, 0.06);
-    --scrollbar-thumb: rgba(11, 43, 34, 0.2);
-    --scrollbar-thumb-hover: rgba(11, 43, 34, 0.18);
+    --grain-dot: rgba(20, 58, 92, 0.06);
+    --scrollbar-thumb: rgba(20, 58, 92, 0.2);
+    --scrollbar-thumb-hover: rgba(20, 58, 92, 0.18);
   }
 
   .dark {
-    --background: 160 40% 6%;
-    --foreground: 42 40% 96%;
-    --card: 160 33% 9%;
-    --card-foreground: 42 40% 96%;
-    --popover: 160 33% 9%;
-    --popover-foreground: 42 40% 96%;
-    --primary: 152 52% 55%;
-    --primary-foreground: 160 47% 8%;
-    --secondary: 160 24% 14%;
-    --secondary-foreground: 42 40% 96%;
-    --muted: 160 24% 14%;
-    --muted-foreground: 158 12% 65%;
-    --accent: 40 93% 56%;
-    --accent-foreground: 160 47% 8%;
+    --background: 208 40% 6%;
+    --foreground: 168 25% 96%;
+    --card: 208 33% 9%;
+    --card-foreground: 168 25% 96%;
+    --popover: 208 33% 9%;
+    --popover-foreground: 168 25% 96%;
+    --primary: 164 40% 53%;
+    --primary-foreground: 208 65% 12%;
+    --secondary: 200 24% 14%;
+    --secondary-foreground: 168 25% 96%;
+    --muted: 200 24% 14%;
+    --muted-foreground: 190 12% 65%;
+    --accent: 159 43% 64%;
+    --accent-foreground: 208 65% 12%;
     --destructive: 0 62% 45%;
-    --destructive-foreground: 42 40% 96%;
-    --border: 160 20% 18%;
-    --input: 160 20% 18%;
-    --ring: 152 52% 55%;
+    --destructive-foreground: 168 25% 96%;
+    --border: 200 20% 18%;
+    --input: 200 20% 18%;
+    --ring: 164 40% 53%;
   }
 
   * {

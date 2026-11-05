@@ -312,8 +312,8 @@ export function NegotiationChat({
           title: "Kesepakatan tercapai!",
           description:
             "Pembeli virtual menyatakan sepakat. AI sedang menyusun evaluasi negosiasi Anda.",
-          className: "border-emerald-200 bg-emerald-50 text-emerald-900",
-          iconClass: "text-emerald-700",
+          className: "border-brand-teal/25 bg-brand-teal/10 text-brand-navy",
+          iconClass: "text-brand-navy",
         }
       : autoOutcome === "no_deal"
         ? {
@@ -333,7 +333,7 @@ export function NegotiationChat({
         <div className="flex min-w-0 items-center gap-3">
           <Link
             href="/dashboard"
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition duration-200 hover:border-emerald-200 hover:text-emerald-700"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition duration-200 hover:border-brand-teal/25 hover:text-brand-navy"
             aria-label="Kembali ke dashboard"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -349,7 +349,7 @@ export function NegotiationChat({
               >
                 Level: {diff.label}
               </Badge>
-              <span className="text-[10px] font-semibold text-emerald-700">
+              <span className="text-[10px] font-semibold text-brand-navy">
                 Sesi aktif, {isJudge ? "Mode Juri" : "Fast Demo"}
               </span>
             </div>
@@ -363,7 +363,7 @@ export function NegotiationChat({
           <Button
             variant="outline"
             size="sm"
-            className="h-auto min-h-9 gap-1.5 border-slate-200 bg-white text-[11px] text-slate-600 hover:border-emerald-200 hover:text-emerald-700 xl:hidden"
+            className="h-auto min-h-9 gap-1.5 border-slate-200 bg-white text-[11px] text-slate-600 hover:border-brand-teal/25 hover:text-brand-navy xl:hidden"
             onClick={() => setInfoOpen(true)}
           >
             <PanelRight className="h-4 w-4" />
@@ -573,7 +573,7 @@ export function NegotiationChat({
                 type="button"
                 onClick={() => setCoachOpen(true)}
                 disabled={locked}
-                className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-[10px] font-semibold text-amber-800 transition-colors hover:bg-amber-100 disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 rounded-full border border-brand-teal/25 bg-brand-teal/10 px-3 py-1.5 text-[10px] font-semibold text-brand-navy transition-colors hover:bg-brand-teal/15 disabled:opacity-50"
               >
                 <Lightbulb className="h-3.5 w-3.5" />
                 Tanya Coach AI
@@ -606,7 +606,7 @@ export function NegotiationChat({
                 }
                 disabled={locked}
                 maxLength={MAX_CHARS}
-                className="min-h-[56px] resize-none rounded-2xl border-slate-200 bg-white py-3.5 pl-4 pr-28 text-sm leading-relaxed shadow-sm transition focus-visible:border-emerald-300 focus-visible:ring-emerald-600/15"
+                className="min-h-[56px] resize-none rounded-2xl border-slate-200 bg-white py-3.5 pl-4 pr-28 text-sm leading-relaxed shadow-sm transition focus-visible:border-brand-teal/35 focus-visible:ring-brand-teal/25"
               />
               <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1">
                 {input.length > 0 && (
@@ -626,8 +626,8 @@ export function NegotiationChat({
                   onClick={startVoiceInput}
                   disabled={locked || isLoading}
                   className={cn(
-                    "h-9 w-9 shrink-0 rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-emerald-700",
-                    isListening && "bg-amber-50 text-amber-700"
+                    "h-9 w-9 shrink-0 rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-brand-navy",
+                    isListening && "bg-brand-teal/10 text-brand-navy"
                   )}
                   aria-label="Input suara"
                   title="Input suara"
@@ -638,7 +638,7 @@ export function NegotiationChat({
                   type="submit"
                   size="icon"
                   disabled={!input.trim() || locked || isLoading}
-                  className="h-9 w-9 shrink-0 rounded-full bg-primary shadow-sm transition duration-200 hover:bg-emerald-700 disabled:bg-primary/60"
+                  className="h-9 w-9 shrink-0 rounded-full bg-primary shadow-sm transition duration-200 hover:bg-brand-teal disabled:bg-primary/60"
                   aria-label="Kirim pesan"
                 >
                   {isLoading ? (
@@ -653,13 +653,13 @@ export function NegotiationChat({
               <span
                 className={cn(
                   "inline-flex items-center gap-1.5 font-medium",
-                  isLoading ? "text-emerald-700" : "text-slate-400"
+                  isLoading ? "text-brand-navy" : "text-slate-400"
                 )}
               >
                 <span
                   className={cn(
                     "h-1.5 w-1.5 rounded-full",
-                    isLoading ? "animate-pulse bg-emerald-500" : "bg-slate-300"
+                    isLoading ? "animate-pulse bg-brand-teal" : "bg-slate-300"
                   )}
                 />
                 {isLoading
@@ -751,7 +751,7 @@ export function NegotiationChat({
       <Dialog open={coachOpen} onOpenChange={setCoachOpen}>
         <DialogContent>
           <DialogHeader>
-            <div className="mb-2 grid h-11 w-11 place-items-center rounded-full bg-amber-50 text-amber-600">
+            <div className="mb-2 grid h-11 w-11 place-items-center rounded-full bg-brand-teal/10 text-brand-navy">
               <Lightbulb className="h-5 w-5" />
             </div>
             <DialogTitle>Tanya Coach AI</DialogTitle>
@@ -765,22 +765,22 @@ export function NegotiationChat({
             {coachSuggestions.map((suggestion, index) => (
               <div
                 key={suggestion.title}
-                className="rounded-xl border border-amber-200/80 bg-amber-50/70 p-3.5"
+                className="rounded-xl border border-brand-teal/25 bg-brand-teal/10 p-3.5"
               >
-                <p className="text-xs font-bold text-amber-950">
+                <p className="text-xs font-bold text-brand-navy">
                   {index + 1}. {suggestion.title}
                 </p>
-                <p className="mt-1 text-[11px] leading-relaxed text-amber-900/75">
+                <p className="mt-1 text-[11px] leading-relaxed text-brand-navy/75">
                   {suggestion.body}
                 </p>
-                <p className="mt-2 rounded-lg border border-amber-200 bg-white/80 p-2.5 text-[11px] italic leading-relaxed text-slate-600">
+                <p className="mt-2 rounded-lg border border-brand-teal/25 bg-white/80 p-2.5 text-[11px] italic leading-relaxed text-slate-600">
                   “{suggestion.example}”
                 </p>
                 <Button
                   type="button"
                   size="sm"
                   variant="outline"
-                  className="mt-2 h-7 border-amber-300 bg-white text-[10px] text-amber-800 hover:bg-amber-50"
+                  className="mt-2 h-7 border-brand-teal/35 bg-white text-[10px] text-brand-navy hover:bg-brand-teal/10"
                   onClick={() => applyCoachSuggestion(suggestion.example)}
                 >
                   Masukkan ke chat
@@ -834,7 +834,7 @@ export function NegotiationChat({
           </div>
 
           {!hasUserMessage && (
-            <p className="flex items-start gap-1.5 text-xs text-amber-700">
+            <p className="flex items-start gap-1.5 text-xs text-brand-navy">
               <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
               Anda belum mengirim pesan. Kirim minimal satu respons agar AI bisa
               menilai negosiasi.

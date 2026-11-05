@@ -16,10 +16,10 @@ const badgeVariants = cva(
           "border-transparent bg-destructive text-destructive-foreground",
         outline: "border-border text-foreground",
         success:
-          "border-emerald-200 bg-emerald-50 text-emerald-700",
+          "border-brand-teal/25 bg-brand-teal/10 text-brand-navy",
         warning:
-          "border-amber-200 bg-amber-50 text-amber-800",
-        info: "border-sky-200 bg-sky-50 text-sky-700",
+          "border-brand-navy/20 bg-brand-navy/5 text-brand-navy-soft",
+        info: "border-brand-navy/20 bg-brand-navy/5 text-brand-navy-soft",
         muted: "border-transparent bg-muted text-muted-foreground",
       },
     },

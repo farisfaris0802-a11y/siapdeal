@@ -44,9 +44,9 @@ const partnerOptions: {
   icon: typeof Store;
   tone: string;
 }[] = [
-  { value: "hotel_resort_bali", icon: Hotel, tone: "bg-amber-100 text-amber-800" },
-  { value: "souvenir_retail", icon: Store, tone: "bg-emerald-100 text-emerald-800" },
-  { value: "beach_club_cafe", icon: Waves, tone: "bg-sky-100 text-sky-800" },
+  { value: "hotel_resort_bali", icon: Hotel, tone: "bg-brand-teal/15 text-brand-navy" },
+  { value: "souvenir_retail", icon: Store, tone: "bg-brand-teal/15 text-brand-navy" },
+  { value: "beach_club_cafe", icon: Waves, tone: "bg-brand-navy/5 text-brand-navy-soft" },
 ];
 
 const difficultyOptions: Difficulty[] = ["easy", "medium", "hard"];
@@ -197,13 +197,13 @@ export function ScenarioForm({
         )}
 
         {demo && (
-          <div className="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4 text-emerald-950">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-100">
-              <Sparkles className="h-4 w-4 text-emerald-700" />
+          <div className="flex items-start gap-3 rounded-2xl border border-brand-teal/25 bg-brand-teal/10 p-4 text-brand-navy">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-teal/15">
+              <Sparkles className="h-4 w-4 text-brand-navy" />
             </span>
             <div className="text-xs leading-relaxed">
               <p className="text-sm font-bold">Mode Juri aktif, skenario contoh sudah terisi</p>
-              <p className="mt-0.5 text-emerald-900/70">
+              <p className="mt-0.5 text-brand-navy/70">
                 Anda bisa langsung menekan <strong>Mulai simulasi</strong>, atau
                 ubah produk, mitra, dan level sesuai skenario yang ingin diuji.
               </p>
@@ -431,8 +431,8 @@ export function ScenarioForm({
                 const meta = DIFFICULTY_META[value];
                 const selected = difficulty === value;
                 const tones: Record<Difficulty, string> = {
-                  easy: "bg-emerald-500",
-                  medium: "bg-amber-500",
+                  easy: "bg-brand-teal",
+                  medium: "bg-brand-navy-soft",
                   hard: "bg-rose-500",
                 };
 

@@ -109,7 +109,7 @@ export default async function EvaluationIndexPage() {
 
         {evaluated.length === 0 ? (
           <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-10 text-center">
-            <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-amber-50 text-amber-600">
+            <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-teal/10 text-brand-navy">
               <Lightbulb className="h-6 w-6" />
             </span>
             <h3 className="mt-4 font-display text-xl font-bold text-ink">
@@ -137,7 +137,7 @@ export default async function EvaluationIndexPage() {
                 <Link
                   key={session.id}
                   href={`/simulasi/${session.id}/hasil`}
-                  className="group flex flex-col gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-soft transition duration-200 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-lift sm:flex-row sm:items-center sm:justify-between sm:p-5"
+                  className="group flex flex-col gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-soft transition duration-200 hover:-translate-y-0.5 hover:border-brand-teal/25 hover:shadow-lift sm:flex-row sm:items-center sm:justify-between sm:p-5"
                 >
                   <div className="flex min-w-0 items-center gap-4">
                     <ScoreRing score={score} size={76} strokeWidth={7} />
@@ -179,7 +179,7 @@ export default async function EvaluationIndexPage() {
                       {score}
                       <span className="text-[10px] font-medium text-slate-400">/100</span>
                     </span>
-                    <span className="grid h-8 w-8 place-items-center rounded-full border border-slate-200 bg-white text-slate-400 transition-colors group-hover:border-emerald-200 group-hover:text-emerald-700">
+                    <span className="grid h-8 w-8 place-items-center rounded-full border border-slate-200 bg-white text-slate-400 transition-colors group-hover:border-brand-teal/25 group-hover:text-brand-navy">
                       <ArrowRight className="h-4 w-4" />
                     </span>
                   </div>

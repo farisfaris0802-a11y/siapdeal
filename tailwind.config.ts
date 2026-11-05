@@ -51,13 +51,13 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
         ink: {
-          DEFAULT: "#0F172A",
-          soft: "#475569",
+          DEFAULT: "hsl(var(--brand-navy))",
+          soft: "hsl(var(--brand-navy-soft))",
         },
         sand: {
           50: "#F8FAF9",
-          100: "#F1F5F3",
-          200: "#E2E8E5",
+          100: "#F1F6F5",
+          200: "#E2ECE9",
         },
         brand: {
           navy: "hsl(var(--brand-navy))",

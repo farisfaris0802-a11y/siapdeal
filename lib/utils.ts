@@ -62,7 +62,24 @@ export function clamp(value: number, min = 0, max = 100) {
 }
 
 export function scoreTone(score: number) {
-  if (score >= 80) return { label: "Sangat baik", color: "text-emerald-700", bg: "bg-emerald-100", stroke: "#047857" };
-  if (score >= 60) return { label: "Cukup baik", color: "text-amber-700", bg: "bg-amber-100", stroke: "#B45309" };
-  return { label: "Perlu latihan", color: "text-rose-700", bg: "bg-rose-100", stroke: "#BE123C" };
+  if (score >= 80)
+    return {
+      label: "Sangat baik",
+      color: "text-brand-navy",
+      bg: "bg-brand-teal/15",
+      stroke: "hsl(var(--brand-teal))",
+    };
+  if (score >= 60)
+    return {
+      label: "Cukup baik",
+      color: "text-brand-navy-soft",
+      bg: "bg-brand-navy/10",
+      stroke: "hsl(var(--brand-navy-soft))",
+    };
+  return {
+    label: "Perlu latihan",
+    color: "text-rose-700",
+    bg: "bg-rose-100",
+    stroke: "hsl(var(--destructive))",
+  };
 }

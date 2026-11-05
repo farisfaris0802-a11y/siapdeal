@@ -129,9 +129,9 @@ export function EvaluationView({
                 className={cn(
                   "gap-1.5 border-transparent px-2.5 py-1",
                   scores.verdict === "siap"
-                    ? "bg-emerald-50 text-emerald-800"
+                    ? "bg-brand-teal/10 text-brand-navy"
                     : scores.verdict === "cukup"
-                      ? "bg-amber-50 text-amber-800"
+                      ? "bg-brand-teal/10 text-brand-navy"
                       : "bg-rose-50 text-rose-800"
                 )}
               >
@@ -235,7 +235,7 @@ export function EvaluationView({
             <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
               {strongest && (
                 <div className="rounded-xl border border-white/10 bg-white/[0.06] p-3.5">
-                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-300">
+                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-brand-mint">
                     <TrendingUp className="h-3.5 w-3.5" />
                     Terkuat
                   </p>
@@ -248,7 +248,7 @@ export function EvaluationView({
               )}
               {weakest && (
                 <div className="rounded-xl border border-white/10 bg-white/[0.06] p-3.5">
-                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-amber-300">
+                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-brand-mint">
                     <Target className="h-3.5 w-3.5" />
                     Prioritas latihan
                   </p>
@@ -327,9 +327,9 @@ export function EvaluationView({
                   className="mt-4 h-1.5"
                   indicatorClassName={cn(
                     aspect.score >= 80
-                      ? "bg-emerald-700"
+                      ? "bg-brand-teal"
                       : aspect.score >= 60
-                        ? "bg-amber-600"
+                        ? "bg-brand-navy-soft"
                         : "bg-rose-600"
                   )}
                 />
@@ -344,17 +344,17 @@ export function EvaluationView({
 
       {/* Strengths & weaknesses */}
       <section className="grid gap-3.5 md:grid-cols-2">
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-5">
+        <div className="rounded-2xl border border-brand-teal/25 bg-brand-teal/10 p-5">
           <div className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-xl bg-emerald-100 text-emerald-800">
+            <span className="grid h-8 w-8 place-items-center rounded-xl bg-brand-teal/15 text-brand-navy">
               <ThumbsUp className="h-4 w-4" />
             </span>
-            <h3 className="font-display text-lg font-bold text-emerald-950">Kekuatan Anda</h3>
+            <h3 className="font-display text-lg font-bold text-brand-navy">Kekuatan Anda</h3>
           </div>
           <ul className="mt-4 space-y-2.5">
             {evaluation.strengths.map((item, index) => (
-              <li key={index} className="flex items-start gap-2.5 text-sm leading-relaxed text-emerald-950/80">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" />
+              <li key={index} className="flex items-start gap-2.5 text-sm leading-relaxed text-brand-navy/80">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-navy" />
                 {item}
               </li>
             ))}
@@ -424,15 +424,15 @@ export function EvaluationView({
                     “{suggestion.original}”
                   </p>
                 </div>
-                <div className="bg-emerald-50/40 p-5">
-                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-800">
+                <div className="bg-brand-teal/10 p-5">
+                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-brand-navy">
                     <Lightbulb className="h-3 w-3" />
                     Versi yang lebih kuat
                   </p>
-                  <p className="mt-2.5 text-sm font-medium leading-relaxed text-emerald-950">
+                  <p className="mt-2.5 text-sm font-medium leading-relaxed text-brand-navy">
                     “{suggestion.improved}”
                   </p>
-                  <p className="mt-3 border-t border-emerald-200/70 pt-2.5 text-[11px] leading-relaxed text-emerald-800/75">
+                  <p className="mt-3 border-t border-brand-teal/25 pt-2.5 text-[11px] leading-relaxed text-brand-navy/75">
                     <span className="font-semibold">Mengapa: </span>
                     {suggestion.reason}
                   </p>
@@ -474,7 +474,7 @@ export function EvaluationView({
                   className={cn("flex gap-2.5", isUser ? "justify-end" : "justify-start")}
                 >
                   {!isUser && (
-                    <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-100 text-[11px] font-bold text-emerald-800">
+                    <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-teal/15 text-[11px] font-bold text-brand-navy">
                       {partner.buyerName.split(" ").slice(-1)[0]?.charAt(0) ?? "P"}
                     </div>
                   )}
@@ -496,7 +496,7 @@ export function EvaluationView({
       </section>
 
       <div className="flex items-start gap-2 rounded-xl border border-border/60 bg-sand-50 px-4 py-3 text-[11px] leading-relaxed text-muted-foreground">
-        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" />
+        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-brand-navy" />
         Penilaian ini dihasilkan AI berdasarkan rubrik tetap dan bersifat panduan
         latihan. Hasil negosiasi nyata dapat berbeda tergantung konteks dan
         dinamika hubungan bisnis.

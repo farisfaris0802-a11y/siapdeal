@@ -52,7 +52,7 @@ export default async function EvaluationResultPage({
           Kembali ke dashboard
         </Link>
         <Badge variant="outline" className="gap-1 bg-white">
-          <CheckCircle2 className="h-3 w-3 text-emerald-700" />
+          <CheckCircle2 className="h-3 w-3 text-brand-navy" />
           Sesi selesai
         </Badge>
       </div>

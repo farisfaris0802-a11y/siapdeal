@@ -54,8 +54,8 @@ export function ScoreRadar({
     >
       <defs>
         <linearGradient id="radar-fill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#0F5132" stopOpacity="0.32" />
-          <stop offset="100%" stopColor="#0F5132" stopOpacity="0.08" />
+          <stop offset="0%" stopColor="hsl(var(--brand-teal))" stopOpacity="0.32" />
+          <stop offset="100%" stopColor="hsl(var(--brand-teal))" stopOpacity="0.08" />
         </linearGradient>
       </defs>
 
@@ -64,7 +64,7 @@ export function ScoreRadar({
           key={grid.level}
           points={grid.points}
           fill={grid.level === 100 ? "#FFFFFF" : "none"}
-          stroke="#D9D3C4"
+          stroke="hsl(var(--border))"
           strokeWidth={grid.level === 100 ? 1.2 : 0.8}
           strokeDasharray={grid.level === 100 ? undefined : "3 4"}
         />
@@ -79,7 +79,7 @@ export function ScoreRadar({
             y1={cy}
             x2={point.x}
             y2={point.y}
-            stroke="#E3DDCF"
+            stroke="hsl(var(--border))"
             strokeWidth="0.8"
           />
         );
@@ -88,20 +88,20 @@ export function ScoreRadar({
       <polygon
         points={polygonPoints(valuePoints)}
         fill="url(#radar-fill)"
-        stroke="#0F5132"
+        stroke="hsl(var(--brand-teal))"
         strokeWidth="2.2"
         strokeLinejoin="round"
       />
 
       {valuePoints.map((point, index) => (
         <g key={data[index].key}>
-          <circle cx={point.x} cy={point.y} r="7" fill="#0F5132" opacity="0.12" />
+          <circle cx={point.x} cy={point.y} r="7" fill="hsl(var(--brand-teal))" opacity="0.12" />
           <circle
             cx={point.x}
             cy={point.y}
             r="3.6"
             fill="#FFFFFF"
-            stroke="#0F5132"
+            stroke="hsl(var(--brand-teal))"
             strokeWidth="2"
           >
             <title>{`${data[index].label}: ${data[index].score}/100`}</title>
@@ -112,7 +112,7 @@ export function ScoreRadar({
             textAnchor="middle"
             fontSize="9.5"
             fontWeight="700"
-            fill="#0F172A"
+            fill="hsl(var(--brand-navy))"
           >
             {data[index].score}
           </text>
@@ -131,7 +131,7 @@ export function ScoreRadar({
             x={outer.x}
             y={outer.y + (outer.y < cy ? -2 : 8)}
             textAnchor={anchor}
-            fill="#0F172A"
+            fill="hsl(var(--brand-navy))"
             fontSize="10.5"
             fontWeight="600"
           >
@@ -141,7 +141,7 @@ export function ScoreRadar({
         );
       })}
 
-      <text x={cx} y={height - 3} textAnchor="middle" fontSize="8.5" fill="#8A958F">
+      <text x={cx} y={height - 3} textAnchor="middle" fontSize="8.5" fill="hsl(var(--muted-foreground))">
         Skor 0 sampai 100, rubrik tetap
       </text>
     </svg>

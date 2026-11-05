@@ -126,14 +126,14 @@ export default async function DashboardPage() {
       value: averageScore !== null ? String(averageScore) : "—",
       note: averageScore !== null ? averageTone?.label ?? "dari 100" : "Belum ada evaluasi",
       icon: BarChart3,
-      tone: "bg-sky-50 text-sky-700",
+      tone: "bg-brand-navy/5 text-brand-navy-soft",
     },
     {
       label: "Skor terbaik",
       value: bestScore !== null ? String(bestScore) : "—",
       note: bestScore !== null ? "dari seluruh sesi" : "Selesaikan satu sesi",
       icon: Trophy,
-      tone: "bg-amber-50 text-amber-700",
+      tone: "bg-brand-teal/10 text-brand-navy",
     },
     {
       label: "Perkembangan",
@@ -143,7 +143,7 @@ export default async function DashboardPage() {
           ? "poin dari sesi pertama"
           : "Butuh minimal 2 sesi dinilai",
       icon: TrendingUp,
-      tone: "bg-emerald-50 text-emerald-700",
+      tone: "bg-brand-teal/10 text-brand-navy",
     },
   ];
 
@@ -190,17 +190,17 @@ export default async function DashboardPage() {
       {activeSessions.length > 0 && (
         <Link
           href={`/simulasi/${activeSessions[0].id}`}
-          className="group mb-5 flex flex-col justify-between gap-3 rounded-2xl border border-amber-200 bg-amber-50/70 p-4 transition-colors hover:bg-amber-50 sm:flex-row sm:items-center"
+          className="group mb-5 flex flex-col justify-between gap-3 rounded-2xl border border-brand-teal/25 bg-brand-teal/10 p-4 transition-colors hover:bg-brand-teal/10 sm:flex-row sm:items-center"
         >
           <div className="flex items-start gap-3">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-amber-100 text-amber-800">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-teal/15 text-brand-navy">
               <Clock className="h-4 w-4" />
             </span>
             <div>
-              <p className="text-sm font-bold text-amber-950">
+              <p className="text-sm font-bold text-brand-navy">
                 Ada sesi yang belum selesai
               </p>
-              <p className="mt-0.5 text-xs text-amber-900/70">
+              <p className="mt-0.5 text-xs text-brand-navy/70">
                 {activeSessions[0].products?.name ?? "Sesi simulasi"},{" "}
                 {activeSessions[0].buyer_personas
                   ? PARTNER_META[activeSessions[0].buyer_personas.partner_type].shortLabel
@@ -210,7 +210,7 @@ export default async function DashboardPage() {
               </p>
             </div>
           </div>
-          <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-amber-900 px-3 py-1.5 text-xs font-semibold text-white sm:self-auto">
+          <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-brand-navy px-3 py-1.5 text-xs font-semibold text-primary-foreground sm:self-auto">
             Lanjutkan
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </span>
@@ -251,7 +251,7 @@ export default async function DashboardPage() {
               </p>
             </div>
             <Badge variant="outline" className="gap-1 bg-white text-[10px]">
-              <TrendingUp className="h-3 w-3 text-emerald-700" />
+              <TrendingUp className="h-3 w-3 text-brand-navy" />
               {scoreDelta !== null ? `${scoreDelta > 0 ? "+" : ""}${scoreDelta} poin` : "Mulai tracking"}
             </Badge>
           </CardHeader>
@@ -263,7 +263,7 @@ export default async function DashboardPage() {
         <Card className="overflow-hidden">
           <CardHeader className="pb-4">
             <div className="flex items-center gap-2">
-              <span className="grid h-8 w-8 place-items-center rounded-xl bg-amber-100 text-amber-800">
+              <span className="grid h-8 w-8 place-items-center rounded-xl bg-brand-teal/15 text-brand-navy">
                 <Lightbulb className="h-4 w-4" />
               </span>
               <div>
@@ -275,14 +275,14 @@ export default async function DashboardPage() {
           <CardContent className="space-y-4 pt-0">
             {focusAspect && focusAspect.average !== null ? (
               <>
-                <div className="rounded-xl border border-amber-200 bg-amber-50/70 p-3.5">
+                <div className="rounded-xl border border-brand-teal/25 bg-brand-teal/10 p-3.5">
                   <div className="flex items-center justify-between gap-2">
-                    <p className="text-sm font-bold text-amber-950">{focusAspect.label}</p>
-                    <span className="font-display text-lg font-bold text-amber-800">
+                    <p className="text-sm font-bold text-brand-navy">{focusAspect.label}</p>
+                    <span className="font-display text-lg font-bold text-brand-navy">
                       {focusAspect.average}
                     </span>
                   </div>
-                  <p className="mt-1.5 text-[11px] leading-relaxed text-amber-900/70">
+                  <p className="mt-1.5 text-[11px] leading-relaxed text-brand-navy/70">
                     {focusAspect.description}
                   </p>
                 </div>
@@ -299,9 +299,9 @@ export default async function DashboardPage() {
                         className="mt-1 h-1.5"
                         indicatorClassName={cn(
                           (aspect.average ?? 0) >= 80
-                            ? "bg-emerald-700"
+                            ? "bg-brand-teal"
                             : (aspect.average ?? 0) >= 60
-                              ? "bg-amber-600"
+                              ? "bg-brand-navy-soft"
                               : "bg-rose-600"
                         )}
                       />
@@ -448,7 +448,7 @@ export default async function DashboardPage() {
                         </div>
                       </div>
                     ) : isActive ? (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-700">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-brand-navy">
                         Lanjutkan
                         <ArrowUpRight className="h-3.5 w-3.5" />
                       </span>

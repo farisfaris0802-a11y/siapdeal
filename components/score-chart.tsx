@@ -51,8 +51,8 @@ export function ScoreChart({ data }: { data: Point[] }) {
       >
         <defs>
           <linearGradient id="score-area" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#047857" stopOpacity="0.22" />
-            <stop offset="100%" stopColor="#047857" stopOpacity="0" />
+            <stop offset="0%" stopColor="hsl(var(--brand-teal))" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="hsl(var(--brand-teal))" stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -87,7 +87,7 @@ export function ScoreChart({ data }: { data: Point[] }) {
         <path
           d={linePath}
           fill="none"
-          stroke="#065F46"
+          stroke="hsl(var(--brand-teal))"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -95,13 +95,13 @@ export function ScoreChart({ data }: { data: Point[] }) {
 
         {points.map((point, index) => (
           <g key={`${point.date}-${index}`}>
-            <circle cx={point.x} cy={point.y} r="9" fill="#065F46" opacity="0.12" />
+            <circle cx={point.x} cy={point.y} r="9" fill="hsl(var(--brand-teal))" opacity="0.12" />
             <circle
               cx={point.x}
               cy={point.y}
               r="4.5"
               fill="#FFFFFF"
-              stroke="#065F46"
+              stroke="hsl(var(--brand-teal))"
               strokeWidth="2.5"
             >
               <title>{`Skor ${Math.round(point.score)}, ${formatDate(point.date)}`}</title>

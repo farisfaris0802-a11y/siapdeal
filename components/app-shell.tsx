@@ -66,7 +66,7 @@ export function AppShell({
                     {fullName}
                   </p>
                   {isJudge && (
-                    <span className="shrink-0 rounded-full bg-amber-400/15 px-1.5 py-0.5 text-[9px] font-semibold text-amber-300">
+                    <span className="shrink-0 rounded-full bg-brand-teal/15 px-1.5 py-0.5 text-[9px] font-semibold text-brand-mint">
                       Juri
                     </span>
                   )}
@@ -74,7 +74,7 @@ export function AppShell({
                 <p className="mt-0.5 truncate text-[10px] text-primary-foreground/40">
                   {email}
                 </p>
-                <p className="mt-1 text-[9px] font-medium text-emerald-300/80">
+                <p className="mt-1 text-[9px] font-medium text-brand-mint/80">
                   Online, Free Plan
                 </p>
               </div>
@@ -113,7 +113,7 @@ export function AppShell({
             </form>
             <Link href="/dashboard" aria-label="Profil">
               <Avatar className="h-8 w-8 border border-primary-foreground/10">
-                <AvatarFallback className="bg-emerald-500/20 text-[10px] font-bold text-emerald-200">
+                <AvatarFallback className="bg-brand-teal/20 text-[10px] font-bold text-brand-mint">
                   {initials(fullName)}
                 </AvatarFallback>
               </Avatar>
