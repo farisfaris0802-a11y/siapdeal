@@ -94,7 +94,7 @@ export function EvaluationTrigger({
         </div>
 
         <p className="mt-4 text-[11px] text-muted-foreground">
-          Proses biasanya memakan waktu 10–20 detik.
+          Proses biasanya memakan waktu 10 sampai 20 detik.
         </p>
       </div>
     </div>

@@ -15,8 +15,8 @@ function BrandMark({
     return (
       <span
         className={cn(
-          "relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-[14px] bg-[linear-gradient(145deg,#1B7353_0%,#0F5132_48%,#08301F_100%)] shadow-[0_8px_20px_-8px_rgba(8,48,31,0.65),inset_0_1px_0_rgba(255,255,255,0.28)] ring-1 ring-white/20 transition-all duration-300 group-hover:-rotate-3",
-          inverted ? "ring-white/20" : ""
+          "relative grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-[14px] bg-primary shadow-sm ring-1 ring-primary/20 transition duration-300 group-hover:-rotate-3",
+          inverted ? "ring-primary-foreground/20" : ""
         )}
       >
         <span
@@ -31,19 +31,22 @@ function BrandMark({
         >
           <path
             d="M42 14c7 0 11 4.3 11 10 0 6.2-5 10-12 10H31c-7 0-11 4.2-11 10 0 5.7 4 10 11 10"
-            stroke="#D97706"
+            className="text-accent"
+            stroke="currentColor"
             strokeWidth="9"
             strokeLinecap="round"
           />
           <path
             d="M22 14c-7 0-11 4.3-11 10 0 6.2 5 10 12 10h10c7 0 11 4.2 11 10 0 5.7-4 10-11 10"
-            stroke="#FFFFFF"
+            className="text-primary-foreground"
+            stroke="currentColor"
             strokeWidth="9"
             strokeLinecap="round"
           />
           <path
             d="M49 5.5l1.9 4.6 4.6 1.9-4.6 1.9L49 18.5l-1.9-4.6L42.5 12l4.6-1.9L49 5.5Z"
-            fill="#FBBF24"
+            className="text-accent"
+            fill="currentColor"
           />
         </svg>
       </span>
@@ -59,19 +62,22 @@ function BrandMark({
     >
       <path
         d="M42 14c7 0 11 4.3 11 10 0 6.2-5 10-12 10H31c-7 0-11 4.2-11 10 0 5.7 4 10 11 10"
-        stroke="#D97706"
+        className="text-accent"
+        stroke="currentColor"
         strokeWidth="9"
         strokeLinecap="round"
       />
       <path
         d="M22 14c-7 0-11 4.3-11 10 0 6.2 5 10 12 10h10c7 0 11 4.2 11 10 0 5.7-4 10-11 10"
-        stroke="#0F5132"
+        className={inverted ? "text-primary-foreground" : "text-primary"}
+        stroke="currentColor"
         strokeWidth="9"
         strokeLinecap="round"
       />
       <path
         d="M49 5.5l1.9 4.6 4.6 1.9-4.6 1.9L49 18.5l-1.9-4.6L42.5 12l4.6-1.9L49 5.5Z"
-        fill="#D97706"
+        className="text-accent"
+        fill="currentColor"
       />
     </svg>
   );
@@ -98,21 +104,21 @@ export function Logo({
     <Link
       href={href}
       className={cn("group inline-flex items-center gap-2.5", className)}
-      aria-label="SiapDeal — B2B AI Negotiation Simulator for Bali SMEs"
+      aria-label="SiapDeal, B2B AI Negotiation Simulator for Bali SMEs"
     >
       <BrandMark compact={compact} inverted={inverted} />
 
       {showWordmark && (
         <span className="flex min-w-0 flex-col">
           <span className="font-sans text-[1.45rem] font-bold leading-none tracking-[-0.05em]">
-            <span className={inverted ? "text-white" : "text-[#0F172A]"}>Siap</span>
-            <span className="text-[#D97706]">Deal.</span>
+            <span className={inverted ? "text-primary-foreground" : "text-ink"}>Siap</span>
+            <span className="text-accent">Deal.</span>
           </span>
           {showTagline && (
             <span
               className={cn(
-                "mt-1 truncate text-[7px] font-bold uppercase tracking-[0.17em] sm:text-[7.5px]",
-                inverted ? "text-white/40" : "text-slate-400"
+                "mt-1 truncate text-[8.5px] font-medium tracking-normal",
+                inverted ? "text-primary-foreground/40" : "text-muted-foreground"
               )}
             >
               {tagline ?? DEFAULT_TAGLINE}

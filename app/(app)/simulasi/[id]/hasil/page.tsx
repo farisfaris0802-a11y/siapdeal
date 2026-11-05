@@ -87,7 +87,7 @@ export default async function EvaluationResultPage({
                   {session.products.name}
                 </h1>
                 <p className="mt-1.5 text-sm text-muted-foreground">
-                  {formatDate(session.created_at, true)} · {messages.length} pesan
+                  {formatDate(session.created_at, true)}, {messages.length} pesan
                   dalam transkrip
                 </p>
               </div>

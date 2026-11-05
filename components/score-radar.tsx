@@ -142,7 +142,7 @@ export function ScoreRadar({
       })}
 
       <text x={cx} y={height - 3} textAnchor="middle" fontSize="8.5" fill="#8A958F">
-        Skor 0–100 · rubrik tetap
+        Skor 0 sampai 100, rubrik tetap
       </text>
     </svg>
   );

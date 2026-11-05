@@ -117,7 +117,6 @@ export function EvaluationView({
     <div className="space-y-6">
       {/* Hero */}
       <section className="relative overflow-hidden rounded-3xl border border-border/80 bg-white shadow-soft">
-        <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-emerald-100/70 blur-3xl" />
         <div className="relative grid gap-6 p-6 sm:p-8 lg:grid-cols-[auto_minmax(0,1fr)_270px] lg:items-center">
           <div className="flex justify-center lg:justify-start">
             <ScoreRing score={scores.overall} size={152} strokeWidth={11} />
@@ -170,7 +169,7 @@ export function EvaluationView({
           </div>
 
           <div className="rounded-2xl border border-border/70 bg-sand-50/80 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+            <p className="text-[10px] font-bold text-muted-foreground">
               Ringkasan sesi
             </p>
             <div className="mt-3 space-y-2.5 text-xs">
@@ -206,7 +205,7 @@ export function EvaluationView({
         <div className="rounded-2xl border border-border/80 bg-white p-5 shadow-soft">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+              <p className="text-[10px] font-bold text-muted-foreground">
                 Profil negosiasi
               </p>
               <h3 className="mt-1 font-display text-lg font-bold text-ink">
@@ -214,7 +213,7 @@ export function EvaluationView({
               </h3>
             </div>
             <Badge variant="outline" className="bg-white text-[10px]">
-              Skala 0–100
+              Skala 0 sampai 100
             </Badge>
           </div>
           <div className="mt-2">
@@ -223,21 +222,20 @@ export function EvaluationView({
         </div>
 
         <div className="relative overflow-hidden rounded-2xl bg-primary p-5 text-primary-foreground shadow-soft sm:p-6">
-          <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/15 blur-2xl" />
           <div className="relative">
-            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-accent">
+            <p className="text-[10px] font-bold text-accent">
               Cara membaca hasil
             </p>
             <h3 className="mt-2 text-balance font-display text-xl font-bold leading-snug">
               {strongest && weakest && strongest.score - weakest.score >= 15
                 ? `Kekuatan Anda ada di ${strongest.label.toLowerCase()}, tetapi ${weakest.label.toLowerCase()} masih menahan skor.`
-                : "Profil Anda cukup seimbang — sekarang tinggal mempertajam konsistensi."}
+                : "Profil Anda cukup seimbang, sekarang tinggal mempertajam konsistensi."}
             </h3>
 
             <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
               {strongest && (
                 <div className="rounded-xl border border-white/10 bg-white/[0.06] p-3.5">
-                  <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-emerald-300">
+                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-300">
                     <TrendingUp className="h-3.5 w-3.5" />
                     Terkuat
                   </p>
@@ -250,7 +248,7 @@ export function EvaluationView({
               )}
               {weakest && (
                 <div className="rounded-xl border border-white/10 bg-white/[0.06] p-3.5">
-                  <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-amber-300">
+                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-amber-300">
                     <Target className="h-3.5 w-3.5" />
                     Prioritas latihan
                   </p>
@@ -275,14 +273,14 @@ export function EvaluationView({
       <section>
         <div className="mb-4 flex items-end justify-between gap-4">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+            <p className="text-[10px] font-bold text-muted-foreground">
               Rubrik tetap
             </p>
             <h3 className="mt-1 font-display text-xl font-bold text-ink">
               Penilaian per aspek
             </h3>
           </div>
-          <span className="text-xs text-muted-foreground">Skala 0–100</span>
+          <span className="text-xs text-muted-foreground">Skala 0 sampai 100</span>
         </div>
 
         <div className="grid gap-3.5 md:grid-cols-2">
@@ -305,7 +303,7 @@ export function EvaluationView({
                     </span>
                     <div>
                       <p className="text-sm font-bold leading-snug text-ink">{aspect.label}</p>
-                      <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">
+                      <p className="mt-0.5 text-[9px] font-semibold text-muted-foreground/70">
                         {RUBRIC_ASPECTS.find((item) => item.key === aspect.key)?.labelEn}
                       </p>
                       <p className={cn("mt-0.5 text-[11px] font-semibold", aspectTone.color)}>
@@ -385,7 +383,7 @@ export function EvaluationView({
       <section>
         <div className="mb-4 flex items-end justify-between gap-4">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+            <p className="text-[10px] font-bold text-muted-foreground">
               Saran perbaikan
             </p>
             <h3 className="mt-1 font-display text-xl font-bold text-ink">
@@ -418,7 +416,7 @@ export function EvaluationView({
 
               <div className="grid gap-0 divide-y divide-border/60 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
                 <div className="p-5">
-                  <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-rose-700">
+                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-rose-700">
                     <Quote className="h-3 w-3" />
                     Respons asli Anda
                   </p>
@@ -427,7 +425,7 @@ export function EvaluationView({
                   </p>
                 </div>
                 <div className="bg-emerald-50/40 p-5">
-                  <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-emerald-800">
+                  <p className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-800">
                     <Lightbulb className="h-3 w-3" />
                     Versi yang lebih kuat
                   </p>
@@ -456,14 +454,14 @@ export function EvaluationView({
               <div>
                 <p className="text-sm font-bold text-ink">Lihat transkrip lengkap</p>
                 <p className="text-[11px] text-muted-foreground">
-                  {messages.length} pesan · buka untuk meninjau seluruh percakapan
+                  {messages.length} pesan, buka untuk meninjau seluruh percakapan
                 </p>
               </div>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90" />
           </summary>
 
-          <div className="max-h-[520px] space-y-3 overflow-y-auto border-t border-border/60 bg-[#F8FAF9] p-4 sm:p-5">
+          <div className="max-h-[520px] space-y-3 overflow-y-auto border-t border-border/60 bg-background p-4 sm:p-5">
             {messages.map((message) => {
               const isUser = message.role === "user";
               const content = isUser
@@ -506,10 +504,9 @@ export function EvaluationView({
 
       {/* CTA */}
       <section className="relative overflow-hidden rounded-3xl bg-primary p-6 text-primary-foreground shadow-lift sm:p-8">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/15 blur-2xl" />
         <div className="relative flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-accent">
+            <p className="text-[10px] font-bold text-accent">
               Terus berlatih
             </p>
             <h3 className="mt-2 max-w-lg text-balance font-display text-2xl font-bold leading-tight">

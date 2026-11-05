@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, BadgeCheck, Check, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowLeft, BadgeCheck, Check, ShieldCheck } from "lucide-react";
 
 import { Logo } from "@/components/logo";
 
@@ -18,8 +18,6 @@ export function AuthShell({
         {/* Brand panel */}
         <div className="relative hidden overflow-hidden bg-primary p-10 text-primary-foreground lg:flex lg:flex-col lg:justify-between xl:p-14">
           <div className="pointer-events-none absolute inset-0 grain opacity-25" />
-          <div className="pointer-events-none absolute -right-28 top-24 h-80 w-80 rounded-full bg-accent/15 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-20 -left-16 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
 
           <Logo href="/" className="relative" inverted />
 
@@ -36,8 +34,8 @@ export function AuthShell({
 
             <div className="mt-8 space-y-3.5">
               {[
-                "9 profil pembeli: hotel resort, oleh-oleh, dan beach club",
-                "Penilaian 5 aspek dengan skor 0–100",
+                "Tiga tipe pembeli Bali: hotel resort, oleh-oleh, dan beach club",
+                "Penilaian 5 aspek dengan skor 0 sampai 100",
                 "Riwayat sesi dan grafik perkembangan skor",
                 "Tanpa risiko merusak hubungan mitra sungguhan",
               ].map((benefit) => (
@@ -51,16 +49,15 @@ export function AuthShell({
             </div>
           </div>
 
-          <div className="relative flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur-sm">
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent/20 text-lg">
-              ☕
-            </div>
-            <div>
-              <p className="text-sm font-semibold">“Latihannya terasa seperti meeting asli.”</p>
-              <p className="mt-0.5 text-xs text-primary-foreground/60">
-                Produsen kopi lokal · pengguna beta
-              </p>
-            </div>
+          <div className="relative rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-4">
+            <p className="flex items-center gap-2 text-sm font-semibold text-primary-foreground">
+              <ShieldCheck className="h-4 w-4 text-accent" />
+              Latihan privat, tanpa risiko.
+            </p>
+            <p className="mt-1.5 text-xs leading-relaxed text-primary-foreground/60">
+              Semua sesi berjalan di ruang latihan Anda sendiri. Hubungan mitra
+              nyata tidak tersentuh.
+            </p>
           </div>
         </div>
 
@@ -82,10 +79,6 @@ export function AuthShell({
           <div className="flex flex-1 items-center justify-center px-5 pb-14 pt-4 sm:px-8">
             <div className="w-full max-w-[430px]">
               <div className="mb-8">
-                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-white px-3 py-1 text-[11px] font-semibold text-primary shadow-sm">
-                  <Sparkles className="h-3 w-3" />
-                  Ruang latihan negosiasi
-                </div>
                 <h1 className="font-display text-3xl font-bold tracking-tight text-ink">
                   {title}
                 </h1>

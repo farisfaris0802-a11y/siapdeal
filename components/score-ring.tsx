@@ -63,7 +63,7 @@ export function ScoreRing({
           {Math.round(clamped)}
         </span>
         <span
-          className="mt-1 font-semibold uppercase tracking-wider text-muted-foreground"
+          className="mt-1 font-semibold tracking-normal text-muted-foreground"
           style={{ fontSize: Math.max(9, size * 0.068) }}
         >
           {label ?? "dari 100"}

@@ -30,7 +30,7 @@ export const PARTNER_META: Record<
       "Volume besar dan kontrak panjang, tetapi standar kualitas, sertifikasi, serta TOP 30–60 hari sangat ketat.",
     buyerName: "Ibu Ayu Prameswari",
     buyerRole: "F&B Director",
-    company: "Amrita Resort & Spa · Nusa Dua",
+    company: "Amrita Resort & Spa",
     context:
       "Resort bintang lima dengan 210 kamar, tiga restoran, dan layanan banquet di Nusa Dua. Tamu didominasi wisatawan Australia, Eropa, dan korporat. Pengadaan dilakukan terpusat, diaudit setiap kuartal, dan sangat menjaga konsistensi rasa serta keamanan pangan. High season Juli–September dan Desember menjadi periode paling sibuk.",
     playbook: [
@@ -52,7 +52,7 @@ export const PARTNER_META: Record<
       "Paling sensitif pada margin dan titip jual. Menuntut harga distributor, skema sale-or-return, dan dukungan display.",
     buyerName: "Pak Gede Wirayuda",
     buyerRole: "Purchasing Manager",
-    company: "Bali Heritage Souvenir · 12 gerai",
+    company: "Bali Heritage Souvenir",
     context:
       "Jaringan pusat oleh-oleh dengan 12 gerai di Kuta, Seminyak, dan Denpasar. Sekitar 70% pembeli adalah turis yang mencari produk khas Bali dengan kemasan menarik. Perputaran cepat pada high season, tetapi ruang rak terbatas dan produk yang tidak laku harus diputar ke gerai lain atau diretur.",
     playbook: [
@@ -74,7 +74,7 @@ export const PARTNER_META: Record<
       "Trend-driven dan sadar food cost. MOQ kecil, keputusan cepat, tetapi margin dan konsistensi rasa tidak bisa ditawar.",
     buyerName: "Ibu Kadek Alina",
     buyerRole: "Owner & F&B Lead",
-    company: "Sundara Beach House · Canggu",
+    company: "Sundara Beach House",
     context:
       "Beach club dan restoran modern di Canggu dengan sunset crowd, live DJ, dan rotasi menu musiman. Keputusan pembelian cepat, tetapi food cost dijaga 30–35%, porsi harus konsisten, dan tampilan menu harus layak masuk konten Instagram. Arus kas harian membuat pembayaran panjang sulit diterima.",
     playbook: [

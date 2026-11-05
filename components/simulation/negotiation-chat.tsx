@@ -9,6 +9,7 @@ import {
   ArrowLeft,
   CheckCircle2,
   CircleStop,
+  Hotel,
   Info,
   Lightbulb,
   Loader2,
@@ -17,6 +18,8 @@ import {
   RotateCcw,
   Send,
   Sparkles,
+  Store,
+  Waves,
   XCircle,
   X,
 } from "lucide-react";
@@ -94,6 +97,12 @@ export function NegotiationChat({
   const router = useRouter();
   const partner = PARTNER_META[partnerType];
   const diff = DIFFICULTY_META[difficulty];
+  const PartnerIcon =
+    partnerType === "hotel_resort_bali"
+      ? Hotel
+      : partnerType === "souvenir_retail"
+        ? Store
+        : Waves;
 
   const [endOpen, setEndOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -109,6 +118,7 @@ export function NegotiationChat({
   const evaluationInFlightRef = useRef(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const didInitialScrollRef = useRef(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const finishSession = useCallback(
@@ -254,6 +264,17 @@ export function NegotiationChat({
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
+
+    if (!didInitialScrollRef.current) {
+      if (messages.length === 0) return;
+      container.scrollTo({
+        top: messages.length === 1 ? 0 : container.scrollHeight,
+        behavior: "auto",
+      });
+      didInitialScrollRef.current = true;
+      return;
+    }
+
     container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
   }, [messages, isLoading, autoOutcome, evaluationError]);
 
@@ -299,7 +320,7 @@ export function NegotiationChat({
             icon: XCircle,
             title: "Negosiasi berakhir tanpa kesepakatan",
             description:
-              "Pembeli virtual mengakhiri negosiasi. Tetap ada pelajaran berharga — AI sedang menilai cara Anda.",
+              "Pembeli virtual mengakhiri negosiasi. Tetap ada pelajaran berharga, AI sedang menilai cara Anda.",
             className: "border-rose-200 bg-rose-50 text-rose-900",
             iconClass: "text-rose-700",
           }
@@ -312,7 +333,7 @@ export function NegotiationChat({
         <div className="flex min-w-0 items-center gap-3">
           <Link
             href="/dashboard"
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all duration-200 hover:border-emerald-200 hover:text-emerald-700"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition duration-200 hover:border-emerald-200 hover:text-emerald-700"
             aria-label="Kembali ke dashboard"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -328,9 +349,8 @@ export function NegotiationChat({
               >
                 Level: {diff.label}
               </Badge>
-              <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
-                Sesi Aktif · {isJudge ? "Mode Juri" : "Fast Demo"}
+              <span className="text-[10px] font-semibold text-emerald-700">
+                Sesi aktif, {isJudge ? "Mode Juri" : "Fast Demo"}
               </span>
             </div>
             <h1 className="mt-1 truncate font-display text-lg font-bold leading-tight text-ink sm:text-xl">
@@ -351,7 +371,7 @@ export function NegotiationChat({
           </Button>
           <Button
             size="sm"
-            className="h-auto min-h-9 w-full shrink-0 gap-1.5 whitespace-normal border border-rose-200 bg-rose-50 px-4 py-2 text-[11px] font-semibold text-rose-700 shadow-sm transition-all duration-200 hover:bg-rose-100 sm:w-auto sm:text-xs"
+            className="h-auto min-h-9 w-full shrink-0 gap-1.5 whitespace-normal border border-rose-200 bg-rose-50 px-4 py-2 text-[11px] font-semibold text-rose-700 shadow-sm transition duration-200 hover:bg-rose-100 sm:w-auto sm:text-xs"
             onClick={() => setEndOpen(true)}
             disabled={locked}
           >
@@ -365,38 +385,36 @@ export function NegotiationChat({
       <div className="grid min-h-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-soft">
           {/* Chat header */}
-          <div className="flex shrink-0 items-center justify-between bg-[linear-gradient(120deg,#0B3B2A_0%,#0F5132_56%,#0E7490_135%)] px-4 py-3.5 text-white">
+          <div className="flex shrink-0 items-center justify-between bg-primary px-4 py-3.5 text-primary-foreground">
             <div className="flex min-w-0 items-center gap-3">
-              <div className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white/10 text-lg ring-1 ring-white/20">
-                {partner.emoji}
-                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[#0F5132] bg-emerald-300" />
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-foreground/10 ring-1 ring-primary-foreground/20">
+                <PartnerIcon className="h-5 w-5" />
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <p className="truncate text-sm font-bold leading-tight text-white">
+                  <p className="truncate text-sm font-bold leading-tight text-primary-foreground">
                     {partner.buyerName}
                   </p>
                   <Badge
                     variant="outline"
-                    className="border-white/15 bg-white/10 text-[8px] uppercase tracking-wide text-white/80"
+                    className="border-primary-foreground/15 bg-primary-foreground/10 text-[9px] font-medium text-primary-foreground/75"
                   >
                     Mitra B2B
                   </Badge>
                 </div>
-                <p className="truncate text-[10px] text-white/55">
-                  {partner.buyerRole} · {partner.company}
+                <p className="truncate text-[10px] text-primary-foreground/60">
+                  {partner.buyerRole}, {partner.company}
                 </p>
-                <p className="mt-0.5 flex items-center gap-1 text-[9px] font-medium text-emerald-200/80">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
-                  Online · siap bernegosiasi
+                <p className="mt-0.5 text-[9px] text-primary-foreground/55">
+                  Online, siap bernegosiasi
                 </p>
               </div>
             </div>
             <Badge
               variant="outline"
-              className="shrink-0 gap-1 border-white/15 bg-white/10 text-[10px] text-white/85"
+              className="shrink-0 gap-1 border-primary-foreground/15 bg-primary-foreground/10 text-[9px] text-primary-foreground/80"
             >
-              <Sparkles className="h-3 w-3 text-amber-300" />
+              <Sparkles className="h-3 w-3 text-accent" />
               AI Negotiator
             </Badge>
           </div>
@@ -404,9 +422,9 @@ export function NegotiationChat({
           {/* Messages */}
           <div
             ref={scrollRef}
-            className="chat-scroll flex-1 space-y-4 overflow-y-auto bg-[#F8FAF9] px-3 py-4 sm:px-5"
+            className="chat-scroll flex-1 space-y-4 overflow-y-auto bg-background px-3 py-4 sm:px-5"
           >
-            <div className="mx-auto max-w-md rounded-xl border border-slate-200/80 bg-white/80 px-3 py-2 text-center text-[10px] leading-relaxed text-slate-500">
+            <div className="mx-auto max-w-md rounded-xl border border-border bg-card px-3 py-2 text-center text-[10px] leading-relaxed text-muted-foreground">
               Simulasi latihan. AI memerankan pembeli profesional dan tidak
               mewakili perusahaan nyata.
             </div>
@@ -422,30 +440,30 @@ export function NegotiationChat({
               return (
                 <div key={message.id} className={cn(isUser ? "" : "space-y-1")}>
                   {!isUser && (
-                    <p className="pl-9 text-[9px] font-semibold tracking-wide text-slate-400">
-                      {partner.buyerRole} · {partner.company}
+                    <p className="pl-9 text-[9px] font-medium text-muted-foreground">
+                      {partner.buyerRole}, {partner.company}
                     </p>
                   )}
                   <div
                     className={cn("flex gap-2.5", isUser ? "justify-end" : "justify-start")}
                   >
                     {!isUser && (
-                      <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-50 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-100">
-                        {partner.buyerName.split(" ").slice(-1)[0]?.charAt(0) ?? "P"}
+                      <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-secondary text-primary">
+                        <PartnerIcon className="h-3.5 w-3.5" />
                       </div>
                     )}
                     <div
                       className={cn(
                         "max-w-[86%] whitespace-pre-wrap break-words rounded-2xl px-4 py-3 text-[13px] leading-relaxed shadow-sm sm:max-w-[78%] sm:text-sm",
                         isUser
-                          ? "rounded-tr-none bg-primary text-primary-foreground shadow-emerald-950/10"
-                          : "rounded-tl-none border border-slate-200 bg-white text-slate-700"
+                          ? "rounded-tr-none bg-primary text-primary-foreground"
+                          : "rounded-tl-none border border-border bg-card text-foreground"
                       )}
                     >
                       {content}
                     </div>
                     {isUser && (
-                      <div className="mt-0.5 hidden h-7 w-7 shrink-0 place-items-center rounded-full bg-slate-900 text-[10px] font-bold text-white sm:grid">
+                      <div className="mt-0.5 hidden h-7 w-7 shrink-0 place-items-center rounded-full bg-ink text-[10px] font-bold text-primary-foreground sm:grid">
                         Anda
                       </div>
                     )}
@@ -456,19 +474,19 @@ export function NegotiationChat({
 
             {isLoading && (
               <div className="space-y-1">
-                <p className="pl-9 text-[9px] font-semibold tracking-wide text-slate-400">
-                  {partner.buyerRole} · {partner.company}
+                <p className="pl-9 text-[9px] font-medium text-muted-foreground">
+                  {partner.buyerRole}, {partner.company}
                 </p>
                 <div className="flex gap-2.5">
-                  <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-emerald-50 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-100">
-                    {partner.buyerName.split(" ").slice(-1)[0]?.charAt(0) ?? "P"}
+                  <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-secondary text-primary">
+                    <PartnerIcon className="h-3.5 w-3.5" />
                   </div>
-                  <div className="flex items-center gap-1.5 rounded-2xl rounded-tl-none border border-slate-200 bg-white px-4 py-3 shadow-sm">
-                    <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500" />
-                    <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500 [animation-delay:150ms]" />
-                    <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-emerald-500 [animation-delay:300ms]" />
-                    <span className="ml-1 text-[10px] text-slate-500">
-                      {partner.buyerName} sedang meninjau penawaran Anda...
+                  <div className="flex items-center gap-1.5 rounded-2xl rounded-tl-none border border-border bg-card px-4 py-3 shadow-sm">
+                    <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-primary motion-reduce:animate-none" />
+                    <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-primary [animation-delay:150ms] motion-reduce:animate-none" />
+                    <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-primary [animation-delay:300ms] motion-reduce:animate-none" />
+                    <span className="ml-1 text-[10px] text-muted-foreground">
+                      {partner.buyerName} sedang meninjau penawaran Anda…
                     </span>
                   </div>
                 </div>
@@ -584,11 +602,11 @@ export function NegotiationChat({
                 placeholder={
                   locked
                     ? "Sesi sedang dievaluasi…"
-                    : "Ketik respons negosiasi Anda di sini... (Tekan Enter untuk kirim)"
+                    : "Ketik respons negosiasi Anda di sini… (Tekan Enter untuk kirim)"
                 }
                 disabled={locked}
                 maxLength={MAX_CHARS}
-                className="min-h-[56px] resize-none rounded-2xl border-slate-200 bg-white py-3.5 pl-4 pr-28 text-sm leading-relaxed shadow-sm transition-all focus-visible:border-emerald-300 focus-visible:ring-emerald-600/15"
+                className="min-h-[56px] resize-none rounded-2xl border-slate-200 bg-white py-3.5 pl-4 pr-28 text-sm leading-relaxed shadow-sm transition focus-visible:border-emerald-300 focus-visible:ring-emerald-600/15"
               />
               <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1">
                 {input.length > 0 && (
@@ -620,7 +638,7 @@ export function NegotiationChat({
                   type="submit"
                   size="icon"
                   disabled={!input.trim() || locked || isLoading}
-                  className="h-9 w-9 shrink-0 rounded-full bg-primary shadow-sm transition-all duration-200 hover:bg-emerald-700 disabled:bg-primary/60"
+                  className="h-9 w-9 shrink-0 rounded-full bg-primary shadow-sm transition duration-200 hover:bg-emerald-700 disabled:bg-primary/60"
                   aria-label="Kirim pesan"
                 >
                   {isLoading ? (
@@ -645,7 +663,7 @@ export function NegotiationChat({
                   )}
                 />
                 {isLoading
-                  ? "AI sedang mengetik..."
+                  ? "AI sedang mengetik…"
                   : "AI siap menerima respons Anda"}
               </span>
               <span className="hidden text-slate-400 sm:inline">
@@ -655,7 +673,7 @@ export function NegotiationChat({
           </div>
 
           {isEvaluating && !autoOutcome && (
-            <div className="absolute inset-0 z-30 flex items-center justify-center bg-white/80 p-6 backdrop-blur-sm">
+            <div className="absolute inset-0 z-30 flex items-center justify-center bg-white/80 p-6">
               <div className="max-w-sm rounded-2xl border border-border bg-white p-6 text-center shadow-lift">
                 <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-primary/10 text-primary">
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -665,7 +683,7 @@ export function NegotiationChat({
                 </p>
                 <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
                   Transkrip dianalisis dengan 5 aspek rubrik. Proses ini biasanya
-                  memakan waktu 10–20 detik.
+                  memakan waktu 10 sampai 20 detik.
                 </p>
                 <div className="mt-4 flex items-center justify-center gap-1.5">
                   <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-primary/50" />
@@ -697,18 +715,15 @@ export function NegotiationChat({
         >
           <button
             type="button"
-            className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-950/45"
             onClick={() => setInfoOpen(false)}
             aria-label="Tutup detail skenario"
           />
-          <div className="absolute inset-x-0 bottom-0 max-h-[86dvh] overflow-y-auto rounded-t-3xl border-t border-slate-200 bg-[#F8FAF9] p-4 pb-8 shadow-2xl">
-            <div className="mx-auto h-1 w-10 rounded-full bg-slate-300" />
+          <div className="absolute inset-x-0 bottom-0 max-h-[86dvh] overflow-y-auto rounded-t-3xl border-t border-border bg-background p-4 pb-8 shadow-2xl">
+            <div className="mx-auto h-1 w-10 rounded-full bg-border" />
             <div className="mt-3 flex items-center justify-between gap-4">
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                  Informasi sesi
-                </p>
-                <h2 className="mt-1 font-display text-lg font-bold text-ink">
+                <h2 className="font-display text-lg font-bold text-ink">
                   Detail Skenario
                 </h2>
               </div>
@@ -806,7 +821,7 @@ export function NegotiationChat({
               <div className="flex justify-between gap-3">
                 <span>Mitra</span>
                 <span className="font-medium text-ink">
-                  {partner.shortLabel} · {diff.label}
+                  {partner.shortLabel}, {diff.label}
                 </span>
               </div>
               <div className="flex justify-between gap-3">

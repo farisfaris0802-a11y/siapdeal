@@ -26,7 +26,7 @@ export default function GlobalError({
           Terjadi kesalahan
         </h1>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          Halaman gagal dimuat. Coba muat ulang — jika masalah berlanjut,
+          Halaman gagal dimuat. Coba muat ulang, jika masalah berlanjut,
           periksa konfigurasi Supabase dan API key AI.
         </p>
         <Button onClick={reset} className="mt-5">

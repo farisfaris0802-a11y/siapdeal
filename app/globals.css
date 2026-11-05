@@ -1,3 +1,6 @@
+/* Hallmark | redesign: full | genre: modern-minimal | theme: brand | v2.0.0
+ * critique: removed the drawn browser window, emoji icons, tracked labels and ornamental glows. The page is now a deal-room product panel, a numbered process, plain persona cards and one rubric scorecard. */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -58,13 +61,39 @@
     scroll-behavior: smooth;
   }
 
+  html,
+  body {
+    overflow-x: clip;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01", "cv11";
   }
 
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+  }
+
   ::selection {
     @apply bg-accent/40 text-ink;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -78,13 +107,13 @@
   }
 
   .grain {
-    background-image: radial-gradient(rgba(11, 43, 34, 0.06) 1px, transparent 1px);
+    background-image: radial-gradient(var(--grain-dot) 1px, transparent 1px);
     background-size: 18px 18px;
   }
 
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: rgba(11, 43, 34, 0.2) transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
   }
 
   .scrollbar-thin::-webkit-scrollbar {
@@ -93,7 +122,7 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: rgba(11, 43, 34, 0.18);
+    background: var(--scrollbar-thumb-hover);
     border-radius: 999px;
   }
 

@@ -53,7 +53,7 @@ export default async function LoginPage({
           <span className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center">
-          <span className="bg-background px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="bg-background px-3 text-[10px] font-medium text-muted-foreground">
             Atau untuk juri lomba
           </span>
         </div>

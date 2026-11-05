@@ -20,6 +20,7 @@ const primaryNav = [
 
 function isActive(pathname: string, href: string, exact: boolean) {
   if (href.startsWith("/dashboard#")) return false;
+  if (href === "/simulasi/baru") return pathname.startsWith("/simulasi");
   if (exact) return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -37,24 +38,21 @@ export function SidebarNav() {
             key={item.label}
             href={item.href}
             className={cn(
-              "group flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-medium transition-all duration-200",
+              "group flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-medium transition-colors duration-200",
               active
-                ? "bg-emerald-400/10 text-white ring-1 ring-inset ring-emerald-300/15"
-                : "text-white/55 hover:bg-white/[0.055] hover:text-white"
+                ? "bg-primary-foreground/10 text-primary-foreground ring-1 ring-inset ring-primary-foreground/15"
+                : "text-primary-foreground/55 hover:bg-primary-foreground/5 hover:text-primary-foreground"
             )}
           >
             <item.icon
               className={cn(
                 "h-[18px] w-[18px] transition-colors",
                 active
-                  ? "text-emerald-300"
-                  : "text-white/35 group-hover:text-emerald-300/80"
+                  ? "text-accent"
+                  : "text-primary-foreground/35 group-hover:text-accent/80"
               )}
             />
             {item.label}
-            {active && (
-              <span className="ml-auto h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_0_3px_rgba(251,191,36,0.12)]" />
-            )}
           </Link>
         );
       })}
@@ -73,7 +71,7 @@ export function MobileNav() {
   ];
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background pb-[env(safe-area-inset-bottom)] lg:hidden">
       <div className="grid grid-cols-4">
         {items.map((item) => {
           const active = isActive(pathname, item.href, item.href === "/dashboard");
@@ -84,7 +82,7 @@ export function MobileNav() {
               href={item.href}
               className={cn(
                 "flex flex-col items-center gap-1 py-2.5 text-[10px] font-semibold transition-colors duration-200",
-                active ? "text-emerald-700" : "text-slate-400"
+                active ? "text-primary" : "text-muted-foreground"
               )}
             >
               <item.icon className="h-5 w-5" />

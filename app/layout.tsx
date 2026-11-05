@@ -9,7 +9,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: {
     default: "SiapDeal — B2B AI Negotiation Simulator for Bali SMEs",
-    template: "%s · SiapDeal",
+    template: "%s, SiapDeal",
   },
   description:
     "Latih negosiasi B2B dengan F&B Director hotel Nusa Dua, manager pusat oleh-oleh Bali, dan owner beach club Canggu. Dapatkan skor 5 aspek serta saran kalimat yang lebih kuat — tanpa risiko kehilangan mitra sungguhan.",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "supplier hotel",
     "titip jual",
   ],
-  authors: [{ name: "SiapDeal · NegoLab" }],
+  authors: [{ name: "SiapDeal, NegoLab" }],
   openGraph: {
     title: "SiapDeal — B2B AI Negotiation Simulator for Bali SMEs",
     description:

@@ -8,8 +8,6 @@ export default function NotFound() {
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6 py-16">
       <div className="pointer-events-none absolute inset-0 grain opacity-40" />
-      <div className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 bottom-20 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
 
       <div className="relative flex flex-col items-center text-center">
         <Logo />

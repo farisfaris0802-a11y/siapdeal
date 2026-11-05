@@ -50,7 +50,7 @@ export default async function NewSimulationPage({
           <div>
             <Badge variant="outline" className="mb-3 gap-1.5 border-primary/20 bg-white text-primary">
               <Sparkles className="h-3 w-3" />
-              {isDemo ? "Demo Juri · Bali DigiFest 2026" : "Skenario baru"}
+              {isDemo ? "Demo Juri, Bali DigiFest 2026" : "Skenario baru"}
             </Badge>
             <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
               Siapkan lawan negosiasi Anda.

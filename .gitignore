@@ -26,6 +26,7 @@ yarn-error.log*
 dev-server.out.log
 dev-server.err.log
 build-check.log
+.hallmark/
 
 # local env files
 .env

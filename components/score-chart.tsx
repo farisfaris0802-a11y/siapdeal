@@ -104,7 +104,7 @@ export function ScoreChart({ data }: { data: Point[] }) {
               stroke="#065F46"
               strokeWidth="2.5"
             >
-              <title>{`Skor ${Math.round(point.score)} · ${formatDate(point.date)}`}</title>
+              <title>{`Skor ${Math.round(point.score)}, ${formatDate(point.date)}`}</title>
             </circle>
             <text
               x={point.x}
