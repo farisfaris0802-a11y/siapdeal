@@ -60,19 +60,60 @@ interface ChatProduct {
   category: ProductCategory;
 }
 
-interface SpeechRecognitionEventLike {
-  results: ArrayLike<ArrayLike<{ transcript: string }>>;
+interface RecordingSession {
+  context: AudioContext;
+  stream: MediaStream;
+  source: MediaStreamAudioSourceNode;
+  processor: ScriptProcessorNode;
+  gain: GainNode;
+  chunks: Float32Array[];
 }
 
-interface SpeechRecognitionLike {
-  lang: string;
-  interimResults: boolean;
-  continuous: boolean;
-  start: () => void;
-  stop: () => void;
-  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
-  onerror: (() => void) | null;
-  onend: (() => void) | null;
+function mergeAudioChunks(chunks: Float32Array[]) {
+  const length = chunks.reduce((total, chunk) => total + chunk.length, 0);
+  const merged = new Float32Array(length);
+  let offset = 0;
+
+  chunks.forEach((chunk) => {
+    merged.set(chunk, offset);
+    offset += chunk.length;
+  });
+
+  return merged;
+}
+
+function encodeWav(samples: Float32Array, sampleRate: number) {
+  const buffer = new ArrayBuffer(44 + samples.length * 2);
+  const view = new DataView(buffer);
+
+  const writeString = (offset: number, value: string) => {
+    for (let index = 0; index < value.length; index += 1) {
+      view.setUint8(offset + index, value.charCodeAt(index));
+    }
+  };
+
+  writeString(0, "RIFF");
+  view.setUint32(4, 36 + samples.length * 2, true);
+  writeString(8, "WAVE");
+  writeString(12, "fmt ");
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeString(36, "data");
+  view.setUint32(40, samples.length * 2, true);
+
+  let offset = 44;
+  for (let index = 0; index < samples.length; index += 1) {
+    const sample = Math.max(-1, Math.min(1, samples[index]));
+    view.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7fff, true);
+    offset += 2;
+  }
+
+  return buffer;
 }
 
 interface NegotiationChatProps {
@@ -108,6 +149,7 @@ export function NegotiationChat({
   const [infoOpen, setInfoOpen] = useState(false);
   const [coachOpen, setCoachOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [evaluationError, setEvaluationError] = useState<string | null>(null);
   const [autoOutcome, setAutoOutcome] = useState<Exclude<SessionOutcome, "manual"> | null>(
@@ -120,6 +162,7 @@ export function NegotiationChat({
   const scrollRef = useRef<HTMLDivElement>(null);
   const didInitialScrollRef = useRef(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const recordingRef = useRef<RecordingSession | null>(null);
 
   const finishSession = useCallback(
     async (outcome: SessionOutcome) => {
@@ -199,40 +242,151 @@ export function NegotiationChat({
   const locked = isEvaluating || autoOutcome !== null;
   const hasUserMessage = messages.some((message) => message.role === "user");
 
-  const startVoiceInput = () => {
-    if (typeof window === "undefined") return;
+  const stopVoiceInput = async () => {
+    const session = recordingRef.current;
+    if (!session) return;
 
-    const speechWindow = window as unknown as {
-      SpeechRecognition?: new () => SpeechRecognitionLike;
-      webkitSpeechRecognition?: new () => SpeechRecognitionLike;
-    };
-    const Recognition =
-      speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition;
+    recordingRef.current = null;
+    setIsListening(false);
 
-    if (!Recognition) {
-      toast.info("Browser ini belum mendukung input suara. Gunakan Chrome atau Edge.");
+    const sampleRate = session.context.sampleRate;
+    const chunks = session.chunks.slice();
+
+    session.processor.onaudioprocess = null;
+    session.source.disconnect();
+    session.processor.disconnect();
+    session.gain.disconnect();
+    session.stream.getTracks().forEach((track) => track.stop());
+    void session.context.close();
+
+    const samples = mergeAudioChunks(chunks);
+    if (samples.length < sampleRate * 0.25) {
+      toast.error("Rekaman terlalu pendek. Coba bicara lebih jelas.");
       return;
     }
 
-    const recognition = new Recognition();
-    recognition.lang = "id-ID";
-    recognition.interimResults = true;
-    recognition.continuous = false;
-    setIsListening(true);
+    setIsTranscribing(true);
+    try {
+      const formData = new FormData();
+      formData.append(
+        "audio",
+        new Blob([encodeWav(samples, sampleRate)], { type: "audio/wav" }),
+        "voice.wav"
+      );
 
-    recognition.onresult = (event) => {
-      const transcript = Array.from(event.results)
-        .map((result) => result[0]?.transcript ?? "")
-        .join(" ")
-        .trim();
-      if (transcript) setInput(transcript);
-    };
-    recognition.onerror = () => {
-      setIsListening(false);
-      toast.error("Input suara gagal. Coba lagi.");
-    };
-    recognition.onend = () => setIsListening(false);
-    recognition.start();
+      const response = await fetch("/api/transcribe", {
+        method: "POST",
+        body: formData,
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string; text?: string }
+        | null;
+
+      if (!response.ok) {
+        throw new Error(payload?.error || "Gagal memproses suara.");
+      }
+
+      const transcript = payload?.text?.trim();
+      if (!transcript) {
+        throw new Error("Tidak ada suara yang bisa dikenali. Coba lagi.");
+      }
+
+      setInput((current) =>
+        current.trim() ? `${current.trim()} ${transcript}` : transcript
+      );
+      textareaRef.current?.focus();
+      toast.success("Suara berhasil diubah menjadi teks.");
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Input suara gagal. Coba lagi."
+      );
+    } finally {
+      setIsTranscribing(false);
+    }
+  };
+
+  const startVoiceInput = async () => {
+    if (typeof window === "undefined" || recordingRef.current) return;
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      toast.error("Browser ini belum mendukung perekaman suara.");
+      return;
+    }
+
+    let stream: MediaStream | null = null;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+      });
+
+      const AudioCtor =
+        window.AudioContext ??
+        (window as Window & { webkitAudioContext?: typeof AudioContext })
+          .webkitAudioContext;
+
+      if (!AudioCtor) {
+        throw new Error("Browser ini belum mendukung perekaman suara.");
+      }
+
+      const context = new AudioCtor();
+      await context.resume();
+
+      const source = context.createMediaStreamSource(stream);
+      const processor = context.createScriptProcessor(4096, 1, 1);
+      const gain = context.createGain();
+      gain.gain.value = 0;
+
+      const chunks: Float32Array[] = [];
+      processor.onaudioprocess = (event) => {
+        const data = event.inputBuffer.getChannelData(0);
+        chunks.push(new Float32Array(data));
+      };
+
+      source.connect(processor);
+      processor.connect(gain);
+      gain.connect(context.destination);
+
+      recordingRef.current = {
+        context,
+        stream,
+        source,
+        processor,
+        gain,
+        chunks,
+      };
+      setIsListening(true);
+      toast.info("Merekam... tekan mikrofon lagi untuk berhenti.");
+    } catch (error) {
+      stream?.getTracks().forEach((track) => track.stop());
+
+      const name = error instanceof DOMException ? error.name : "";
+      const message =
+        name === "NotAllowedError" || name === "SecurityError"
+          ? "Izin mikrofon ditolak. Aktifkan izin mikrofon di browser."
+          : name === "NotFoundError"
+            ? "Mikrofon tidak ditemukan."
+            : name === "NotReadableError"
+              ? "Mikrofon sedang dipakai aplikasi lain."
+              : error instanceof Error
+                ? error.message
+                : "Input suara gagal. Coba lagi.";
+
+      toast.error(message);
+    }
+  };
+
+  const toggleVoiceInput = () => {
+    if (recordingRef.current) {
+      void stopVoiceInput();
+    } else {
+      void startVoiceInput();
+    }
   };
 
   const coachSuggestions = [
@@ -281,6 +435,16 @@ export function NegotiationChat({
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      const session = recordingRef.current;
+      if (session) {
+        recordingRef.current = null;
+        session.processor.onaudioprocess = null;
+        session.source.disconnect();
+        session.processor.disconnect();
+        session.gain.disconnect();
+        session.stream.getTracks().forEach((track) => track.stop());
+        void session.context.close();
+      }
     };
   }, []);
 
@@ -623,16 +787,33 @@ export function NegotiationChat({
                   type="button"
                   size="icon"
                   variant="ghost"
-                  onClick={startVoiceInput}
-                  disabled={locked || isLoading}
+                  onClick={toggleVoiceInput}
+                  disabled={locked || isLoading || isTranscribing}
                   className={cn(
-                    "h-9 w-9 shrink-0 rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-brand-navy",
+                    "h-9 w-9 shrink-0 rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-brand-navy disabled:opacity-60",
                     isListening && "bg-brand-teal/10 text-brand-navy"
                   )}
-                  aria-label="Input suara"
-                  title="Input suara"
+                  aria-label={
+                    isListening
+                      ? "Berhenti merekam suara"
+                      : isTranscribing
+                        ? "Mentranskripsi suara"
+                        : "Input suara"
+                  }
+                  aria-pressed={isListening}
+                  title={
+                    isListening
+                      ? "Berhenti merekam"
+                      : isTranscribing
+                        ? "Mentranskripsi suara..."
+                        : "Input suara"
+                  }
                 >
-                  <Mic className={cn("h-4 w-4", isListening && "animate-pulse")} />
+                  {isTranscribing ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Mic className={cn("h-4 w-4", isListening && "animate-pulse")} />
+                  )}
                 </Button>
                 <Button
                   type="submit"
@@ -653,18 +834,26 @@ export function NegotiationChat({
               <span
                 className={cn(
                   "inline-flex items-center gap-1.5 font-medium",
-                  isLoading ? "text-brand-navy" : "text-slate-400"
+                  isLoading || isListening || isTranscribing
+                    ? "text-brand-navy"
+                    : "text-slate-400"
                 )}
               >
                 <span
                   className={cn(
                     "h-1.5 w-1.5 rounded-full",
-                    isLoading ? "animate-pulse bg-brand-teal" : "bg-slate-300"
+                    isLoading || isListening || isTranscribing
+                      ? "animate-pulse bg-brand-teal"
+                      : "bg-slate-300"
                   )}
                 />
-                {isLoading
-                  ? "AI sedang mengetik…"
-                  : "AI siap menerima respons Anda"}
+                {isTranscribing
+                  ? "Mentranskripsi suara..."
+                  : isListening
+                    ? "Merekam... tekan mikrofon untuk berhenti"
+                    : isLoading
+                      ? "AI sedang mengetik…"
+                      : "AI siap menerima respons Anda"}
               </span>
               <span className="hidden text-slate-400 sm:inline">
                 Shift + Enter untuk baris baru
