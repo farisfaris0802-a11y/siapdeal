@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 
 import { ScoreChart } from "@/components/score-chart";
+import { DashboardSoundToggle } from "@/components/dashboard/dashboard-effects";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -150,7 +151,7 @@ export default async function DashboardPage() {
   return (
     <div className="mx-auto max-w-[1240px] px-4 py-6 sm:px-6 lg:px-8 lg:py-9">
       {/* Page header */}
-      <header className="mb-7 flex flex-col justify-between gap-4 border-b border-border pb-6 sm:flex-row sm:items-end">
+      <header className="mb-7 flex animate-in-up flex-col justify-between gap-4 border-b border-border pb-6 motion-reduce:animate-none sm:flex-row sm:items-end">
         <div>
           <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <CalendarDays className="h-3.5 w-3.5" />
@@ -171,6 +172,7 @@ export default async function DashboardPage() {
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
+          <DashboardSoundToggle />
           <Button asChild variant="outline" className="hidden sm:inline-flex">
             <Link href="/evaluasi">
               <ClipboardCheck className="h-4 w-4" />
@@ -190,7 +192,7 @@ export default async function DashboardPage() {
       {activeSessions.length > 0 && (
         <Link
           href={`/simulasi/${activeSessions[0].id}`}
-          className="group mb-5 flex flex-col justify-between gap-3 rounded-2xl border border-brand-teal/25 bg-brand-teal/10 p-4 transition-colors hover:bg-brand-teal/10 sm:flex-row sm:items-center"
+          className="group mb-5 flex animate-in-up animate-delay-1 flex-col justify-between gap-3 rounded-2xl border border-brand-teal/25 bg-brand-teal/10 p-4 transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-brand-teal/15 motion-reduce:animate-none sm:flex-row sm:items-center"
         >
           <div className="flex items-start gap-3">
             <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-teal/15 text-brand-navy">
@@ -219,10 +221,11 @@ export default async function DashboardPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {stats.map((stat) => (
+        {stats.map((stat, index) => (
           <div
             key={stat.label}
-            className="rounded-2xl border border-border/80 bg-card p-4"
+            className="animate-in-up rounded-2xl border border-border/80 bg-card p-4 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-brand-teal/30 motion-reduce:animate-none"
+            style={{ animationDelay: `${100 + index * 70}ms` }}
           >
             <p className="text-[11px] font-semibold text-muted-foreground">
               {stat.label}
@@ -242,7 +245,7 @@ export default async function DashboardPage() {
 
       {/* Chart + focus */}
       <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
-        <Card>
+        <Card className="animate-in-up animate-delay-2 motion-reduce:animate-none">
           <CardHeader className="flex-row items-start justify-between space-y-0 pb-4">
             <div>
               <CardTitle className="text-base">Progres skor</CardTitle>
@@ -260,7 +263,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="overflow-hidden">
+        <Card className="animate-in-up animate-delay-2 overflow-hidden motion-reduce:animate-none">
           <CardHeader className="pb-4">
             <div className="flex items-center gap-2">
               <span className="grid h-8 w-8 place-items-center rounded-xl bg-brand-teal/15 text-brand-navy">
@@ -336,7 +339,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* History */}
-      <section id="riwayat" className="mt-8 scroll-mt-20">
+      <section id="riwayat" className="mt-8 scroll-mt-20 animate-in-up animate-delay-3 motion-reduce:animate-none">
         <div className="mb-4 flex items-end justify-between gap-4">
           <div>
             <h2 className="font-display text-xl font-bold text-ink">
@@ -352,7 +355,7 @@ export default async function DashboardPage() {
           <div className="relative overflow-hidden rounded-3xl border border-dashed border-border bg-white p-8 text-center sm:p-12">
             <div className="pointer-events-none absolute inset-0 grain opacity-30" />
             <div className="relative mx-auto max-w-md">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary animate-float motion-reduce:animate-none">
                 <Sparkles className="h-7 w-7" />
               </div>
               <h3 className="mt-5 font-display text-2xl font-bold text-ink">
