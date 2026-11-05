@@ -49,7 +49,7 @@ export const PARTNER_META: Record<
     shortLabel: "Oleh-Oleh",
     location: "Kuta / Denpasar",
     description:
-      "Paling sensitif pada margin dan titip jual. Menuntut harga distributor, sale-or-return, dan dukungan display.",
+      "Paling sensitif pada margin dan titip jual. Menuntut harga distributor, skema sale-or-return, dan dukungan display.",
     buyerName: "Pak Gede Wirayuda",
     buyerRole: "Purchasing Manager",
     company: "Bali Heritage Souvenir · 12 gerai",

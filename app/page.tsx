@@ -33,6 +33,12 @@ import {
 } from "@/lib/ai/personas";
 import { getCurrentUser } from "@/lib/auth";
 
+const personaCardTitles = {
+  hotel_resort_bali: "F&B Director Hotel Resort",
+  souvenir_retail: "Manager Pusat Oleh-Oleh & Ritel",
+  beach_club_cafe: "Owner Kafe & Restoran Modern",
+} as const;
+
 const personaTypes = [
   {
     type: "hotel_resort_bali" as const,
@@ -40,7 +46,6 @@ const personaTypes = [
     tone: "border-amber-200 bg-amber-50 text-amber-700",
     accent: "border-t-emerald-600",
     iconTone: "bg-emerald-50 text-emerald-700",
-    locationLabel: "NUSA DUA / KUTA",
   },
   {
     type: "souvenir_retail" as const,
@@ -48,7 +53,6 @@ const personaTypes = [
     tone: "border-emerald-200 bg-emerald-50 text-emerald-700",
     accent: "border-t-amber-500",
     iconTone: "bg-amber-50 text-amber-700",
-    locationLabel: "DENPASAR",
   },
   {
     type: "beach_club_cafe" as const,
@@ -56,7 +60,6 @@ const personaTypes = [
     tone: "border-sky-200 bg-sky-50 text-sky-700",
     accent: "border-t-teal-500",
     iconTone: "bg-teal-50 text-teal-700",
-    locationLabel: "CANGGU",
   },
 ];
 
@@ -425,7 +428,7 @@ export default async function LandingPage() {
 
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {personaTypes.map(
-              ({ type, Icon, accent, iconTone, locationLabel }, index) => {
+              ({ type, Icon, accent, iconTone }, index) => {
                 const meta = PARTNER_META[type];
                 return (
                   <div
@@ -444,17 +447,12 @@ export default async function LandingPage() {
                     </div>
 
                     <h3 className="mt-4 flex items-center justify-between gap-2 text-base font-bold text-slate-900">
-                      {meta.shortLabel}
+                      {personaCardTitles[type]}
                       <span className="text-lg">{meta.emoji}</span>
                     </h3>
                     <p className="mt-2 text-xs font-normal leading-relaxed text-slate-600">
                       {meta.description}
                     </p>
-
-                    <div className="mt-4 flex items-center gap-1 border-t border-slate-100 pt-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                      <MapPin className="h-3 w-3" />
-                      {locationLabel}
-                    </div>
                   </div>
                 );
               }
@@ -546,7 +544,7 @@ export default async function LandingPage() {
               return (
                 <div
                   key={type}
-                  className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-soft transition-all duration-200 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lift"
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft transition-all duration-200 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lift"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="relative">
@@ -557,20 +555,10 @@ export default async function LandingPage() {
                         <Icon className="h-3.5 w-3.5" />
                       </span>
                     </div>
-                    <Badge
-                      variant="outline"
-                      className="border-emerald-200 bg-emerald-50/80 text-[9px] text-emerald-700"
-                    >
-                      Bali
-                    </Badge>
                   </div>
                   <h3 className="mt-5 font-sans text-lg font-bold leading-snug text-ink">
-                    {meta.label}
+                    {personaCardTitles[type]}
                   </h3>
-                  <p className="mt-1 flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400">
-                    <MapPin className="h-3 w-3" />
-                    {meta.location}
-                  </p>
                   <p className="mt-2 text-xs leading-relaxed text-slate-500">
                     {meta.description}
                   </p>
