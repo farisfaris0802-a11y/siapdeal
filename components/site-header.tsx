@@ -10,17 +10,17 @@ import { cn } from "@/lib/utils";
 const navItems = [{ href: "#rubrik", label: "Rubrik" }];
 
 const secondaryButtonClass =
-  "group ios-pop ios-sheen relative h-9 overflow-hidden rounded-full border border-border/70 bg-white/55 px-3 text-[12px] font-semibold text-ink/75 shadow-md ring-1 ring-inset ring-white/60 backdrop-blur-xl transition-[transform,background-color,box-shadow,color] duration-300 hover:-translate-y-0.5 hover:bg-white/80 hover:text-ink hover:shadow-lg active:translate-y-0 active:scale-[0.96] motion-reduce:transition-none sm:h-10 sm:px-4 sm:text-[13px]";
+  "group ios-pop ios-sheen relative h-9 overflow-hidden rounded-full border border-white/20 bg-white/10 px-3 text-[12px] font-semibold text-cream/90 shadow-lg shadow-black/10 ring-1 ring-inset ring-white/10 backdrop-blur-xl transition-[transform,background-color,box-shadow,color] duration-300 hover:-translate-y-0.5 hover:bg-white/20 hover:text-cream active:translate-y-0 active:scale-[0.96] motion-reduce:transition-none sm:h-10 sm:px-4 sm:text-[13px]";
 
 const primaryButtonClass =
-  "group ios-pop ios-sheen relative h-9 overflow-hidden rounded-full border border-primary-foreground/15 bg-primary px-3 text-[12px] font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-primary/95 active:translate-y-0 active:scale-[0.96] motion-reduce:transition-none sm:h-10 sm:px-4 sm:text-[13px]";
+  "group ios-pop ios-sheen relative h-9 overflow-hidden rounded-full border border-white/40 bg-cream px-3 text-[12px] font-semibold text-cream-foreground shadow-lg shadow-black/15 transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-cream/90 active:translate-y-0 active:scale-[0.96] motion-reduce:transition-none sm:h-10 sm:px-4 sm:text-[13px]";
 
 export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-xl">
+    <header className="absolute inset-x-0 top-0 z-50">
       <div className="container flex h-16 items-center justify-between gap-2 sm:h-[68px] sm:gap-4">
         <div className="flex min-w-0 items-center">
-          <Logo className="hidden shrink-0 sm:inline-flex" />
+          <Logo className="hidden shrink-0 sm:inline-flex" inverted />
           <Logo className="shrink-0 sm:hidden" compact showWordmark={false} />
         </div>
 
@@ -29,7 +29,7 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
             <a
               key={item.href}
               href={item.href}
-              className="whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium text-cream/70 transition-colors hover:bg-white/10 hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
             >
               {item.label}
             </a>

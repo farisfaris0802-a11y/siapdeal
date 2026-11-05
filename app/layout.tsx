@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/fraunces";
 import "@fontsource-variable/plus-jakarta-sans";
 import { Toaster } from "sonner";
 

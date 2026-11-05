@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -143,33 +144,53 @@ export default async function DashboardPage() {
   return (
     <div className="mx-auto max-w-[1240px] px-4 py-6 sm:px-6 lg:px-8 lg:py-9">
       {/* Page header */}
-      <header className="mb-7 flex animate-in-up flex-col justify-between gap-4 border-b border-border pb-6 motion-reduce:animate-none sm:flex-row sm:items-end">
-        <div>
-          <h1 className="sr-only">Dashboard</h1>
-          <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <CalendarDays className="h-3.5 w-3.5" />
-            {formatDate(new Date())}
-          </p>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            {sessions.length === 0
-              ? "Siap memulai latihan negosiasi pertama Anda? Pilih skenario, hadapi mitra virtual, lalu lihat skor deal Anda."
-              : "Pantau perkembangan negosiasi, bandingkan skor, dan lanjutkan latihan berikutnya."}
-          </p>
-        </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <DashboardSoundToggle />
-          <Button asChild variant="outline" className="hidden sm:inline-flex">
-            <Link href="/evaluasi">
-              <ClipboardCheck className="h-4 w-4" />
-              Evaluasi
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link href="/simulasi/baru">
-              <Plus className="h-4 w-4" />
-              Simulasi Baru
-            </Link>
-          </Button>
+      <header className="relative mb-7 animate-in-up overflow-hidden rounded-3xl motion-reduce:animate-none">
+        <Image
+          src="/images/bali-hero.jpg"
+          alt=""
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 1000px"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/35" />
+        <div className="relative flex flex-col justify-between gap-5 p-6 text-cream sm:flex-row sm:items-end sm:p-8">
+          <div>
+            <p className="flex items-center gap-1.5 text-xs text-cream/70">
+              <CalendarDays className="h-3.5 w-3.5" />
+              {formatDate(new Date())}
+            </p>
+            <h1 className="mt-3 font-display text-3xl font-semibold tracking-tight text-cream sm:text-4xl">
+              Meja negosiasi
+            </h1>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-cream/70">
+              {sessions.length === 0
+                ? "Siap memulai latihan negosiasi pertama Anda? Pilih skenario, hadapi mitra virtual, lalu lihat skor deal Anda."
+                : "Pantau perkembangan negosiasi, bandingkan skor, dan lanjutkan latihan berikutnya."}
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <DashboardSoundToggle className="border-white/20 bg-white/10 text-cream hover:bg-white/20 hover:text-cream" />
+            <Button
+              asChild
+              variant="outline"
+              className="hidden border-white/20 bg-white/10 text-cream hover:bg-white/20 hover:text-cream sm:inline-flex"
+            >
+              <Link href="/evaluasi">
+                <ClipboardCheck className="h-4 w-4" />
+                Evaluasi
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className="border border-white/20 bg-cream text-cream-foreground hover:bg-cream/90"
+            >
+              <Link href="/simulasi/baru">
+                <Plus className="h-4 w-4" />
+                Simulasi Baru
+              </Link>
+            </Button>
+          </div>
         </div>
       </header>
 

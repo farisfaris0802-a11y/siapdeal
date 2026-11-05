@@ -66,6 +66,10 @@ const config: Config = {
           mint: "hsl(var(--brand-mint))",
           gray: "hsl(var(--brand-gray))",
         },
+        cream: {
+          DEFAULT: "hsl(var(--cream))",
+          foreground: "hsl(var(--cream-foreground))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

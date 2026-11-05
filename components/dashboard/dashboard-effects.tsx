@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const SOUND_KEY = "siapdeal:dashboard-sound";
 
@@ -11,7 +12,11 @@ type AudioWindow = Window & {
   webkitAudioContext?: typeof AudioContext;
 };
 
-export function DashboardSoundToggle() {
+export function DashboardSoundToggle({
+  className,
+}: {
+  className?: string;
+}) {
   const [enabled, setEnabled] = useState(true);
   const audioContextRef = useRef<AudioContext | null>(null);
   const playedRef = useRef(false);
@@ -112,7 +117,10 @@ export function DashboardSoundToggle() {
       type="button"
       variant="outline"
       size="default"
-      className="h-10 shrink-0 gap-1.5 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      className={cn(
+        "h-10 shrink-0 gap-1.5 px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        className
+      )}
       onClick={toggle}
       aria-label={enabled ? "Matikan suara dashboard" : "Aktifkan suara dashboard"}
       aria-pressed={enabled}

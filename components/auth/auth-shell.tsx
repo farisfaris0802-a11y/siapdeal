@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, BadgeCheck, Check, ShieldCheck } from "lucide-react";
 
@@ -17,6 +18,15 @@ export function AuthShell({
       <div className="grid min-h-screen lg:grid-cols-[0.95fr_1.05fr]">
         {/* Brand panel */}
         <div className="relative hidden overflow-hidden bg-primary p-10 text-primary-foreground lg:flex lg:flex-col lg:justify-between xl:p-14">
+          <Image
+            src="/images/bali-hero.jpg"
+            alt=""
+            fill
+            priority
+            sizes="50vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/75 to-primary/95" />
           <div className="pointer-events-none absolute inset-0 grain opacity-25" />
 
           <Logo href="/" className="relative" inverted />

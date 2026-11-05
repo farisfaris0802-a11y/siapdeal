@@ -8,8 +8,8 @@
 @layer base {
   :root {
     --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
-    --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
-    --background: 180 18% 98%;
+    --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+    --background: 40 30% 97%;
     --foreground: 208 60% 20%;
     --card: 0 0% 100%;
     --card-foreground: 208 60% 20%;
@@ -17,18 +17,20 @@
     --popover-foreground: 208 60% 20%;
     --primary: 208 65% 22%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 168 30% 95%;
+    --secondary: 40 25% 94%;
     --secondary-foreground: 208 60% 20%;
-    --muted: 195 18% 96%;
-    --muted-foreground: 210 16% 42%;
+    --muted: 38 20% 95%;
+    --muted-foreground: 210 12% 42%;
     --accent: 164 40% 53%;
     --accent-foreground: 208 65% 18%;
     --destructive: 0 72% 48%;
     --destructive-foreground: 0 0% 100%;
-    --border: 200 20% 89%;
-    --input: 200 20% 86%;
+    --border: 35 15% 88%;
+    --input: 35 15% 86%;
     --ring: 164 40% 44%;
     --radius: 0.9rem;
+    --cream: 40 45% 88%;
+    --cream-foreground: 208 65% 18%;
     --brand-navy: 208 65% 22%;
     --brand-navy-soft: 196 45% 34%;
     --brand-teal: 164 40% 53%;

@@ -1,41 +1,59 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
   Award,
   BadgeCheck,
-  Hotel,
+  Briefcase,
   Lightbulb,
-  TrendingUp,
+  MapPin,
+  MessagesSquare,
 } from "lucide-react";
 
 import { JudgeLoginButton } from "@/components/auth/judge-login-button";
 import { Logo } from "@/components/logo";
 import { ScoreRing } from "@/components/score-ring";
 import { SiteHeader } from "@/components/site-header";
-import { Button } from "@/components/ui/button";
 import { judgeLoginAction } from "@/lib/actions/auth";
-import {
-  RUBRIC_ASPECTS,
-} from "@/lib/ai/personas";
+import { RUBRIC_ASPECTS } from "@/lib/ai/personas";
 import { getCurrentUser } from "@/lib/auth";
+
+const steps = [
+  {
+    number: "01",
+    title: "Pilih skenario",
+    body: "Produk, mitra, dan level tekanan.",
+    icon: Briefcase,
+  },
+  {
+    number: "02",
+    title: "Hadapi pembeli",
+    body: "AI berperan sebagai buyer Bali.",
+    icon: MessagesSquare,
+  },
+  {
+    number: "03",
+    title: "Tutup deal",
+    body: "Skor 5 aspek dan saran konkret.",
+    icon: BadgeCheck,
+  },
+];
 
 function JudgeDemoForm({
   formClassName,
   buttonClassName,
-  variant = "default",
 }: {
   formClassName?: string;
   buttonClassName?: string;
-  variant?: "default" | "outline";
 }) {
   return (
     <form action={judgeLoginAction} className={formClassName}>
       <input type="hidden" name="next" value="/simulasi/baru?demo=1" />
       <JudgeLoginButton
         label="Mode Juri (Demo)"
-        pendingLabel="Menyiapkan ruang juri…"
+        pendingLabel="Menyiapkan ruang juri..."
         size="lg"
-        variant={variant}
+        variant="ghost"
         className={buttonClassName}
         icon="sparkles"
       />
@@ -43,104 +61,33 @@ function JudgeDemoForm({
   );
 }
 
-function DealRoomPanel() {
-  return (
-    <div className="overflow-hidden rounded-2xl border border-primary-foreground/15 bg-background text-ink shadow-sm">
-      <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-4">
-        <div className="flex min-w-0 items-center gap-3">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
-            <Hotel className="h-5 w-5" />
-          </span>
-          <div className="min-w-0">
-            <p className="truncate text-sm font-bold text-ink">
-              Ibu Ayu Prameswari
-            </p>
-            <p className="truncate text-xs text-muted-foreground">
-              F&amp;B Director, Amrita Resort Nusa Dua
-            </p>
-          </div>
-        </div>
-        <span className="shrink-0 text-[11px] font-medium text-muted-foreground">
-          Sesi aktif
-        </span>
-      </div>
-
-      <div className="space-y-4 px-5 py-5">
-        <div>
-          <p className="mb-1.5 text-[11px] font-medium text-muted-foreground">
-            Mitra B2B
-          </p>
-          <div className="max-w-[92%] rounded-2xl rounded-tl-none border border-border bg-card px-4 py-3 text-sm leading-relaxed text-ink">
-            Untuk welcome amenity kami butuh 300 pcs per bulan. Kami minta harga
-            distributor Rp62.000 dan TOP 60 hari, ya.
-          </div>
-        </div>
-
-        <div className="flex justify-end">
-          <div className="max-w-[92%] rounded-2xl rounded-tr-none bg-primary px-4 py-3 text-sm leading-relaxed text-primary-foreground">
-            Harga dasar Rp85.000. Untuk 300 pcs saya bisa Rp74.000, termasuk
-            gift packaging dan 20 sampel gratis.
-          </div>
-        </div>
-
-        <div>
-          <p className="mb-1.5 text-[11px] font-medium text-muted-foreground">
-            Mitra B2B
-          </p>
-          <div className="max-w-[92%] rounded-2xl rounded-tl-none border border-border bg-card px-4 py-3 text-sm leading-relaxed text-ink">
-            Masih di atas target food cost kami. Kalau bisa Rp68.000, kami bantu
-            eksposur di tiga outlet dan kontrak 6 bulan.
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 pt-1 text-[11px] text-muted-foreground">
-          <span className="flex gap-1">
-            <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-primary motion-reduce:animate-none" />
-            <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-primary [animation-delay:150ms] motion-reduce:animate-none" />
-            <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-primary [animation-delay:300ms] motion-reduce:animate-none" />
-          </span>
-          Ibu Ayu sedang meninjau penawaran Anda
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between gap-4 border-t border-border px-5 py-4">
-        <div>
-          <p className="text-[11px] font-medium text-muted-foreground">
-            Skor negosiasi
-          </p>
-          <p className="mt-1 flex items-end gap-1">
-            <span className="font-display text-3xl font-bold leading-none text-ink">
-              78
-            </span>
-            <span className="pb-0.5 text-xs text-muted-foreground">/100</span>
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="flex items-center justify-end gap-1 text-xs font-semibold text-primary">
-            <TrendingUp className="h-3.5 w-3.5" />
-            +12 poin
-          </p>
-          <p className="mt-1 text-[11px] text-muted-foreground">
-            dari sesi sebelumnya
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default async function LandingPage() {
   const { user } = await getCurrentUser();
 
   return (
-    <div className="min-h-screen bg-background font-sans text-ink [&_a:focus-visible]:outline [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-ring">
+    <div className="min-h-screen bg-background font-sans text-ink">
       <SiteHeader isLoggedIn={Boolean(user)} />
 
-      {/* Hero */}
-      <section className="bg-primary text-primary-foreground">
-        <div className="container grid w-full grid-cols-1 gap-12 py-12 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-center lg:gap-16 lg:py-16">
-          <div className="min-w-0">
-            <h1 className="w-full max-w-[650px] break-words font-sans text-[2.5rem] font-bold leading-[1.02] tracking-[-0.045em] sm:text-5xl lg:text-[3.55rem]">
+      <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-primary text-cream">
+        <Image
+          src="/images/bali-hero.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/50 to-primary/95" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-transparent to-primary/30" />
+
+        <div className="container relative z-10 flex flex-1 flex-col justify-center pb-8 pt-28 sm:pt-32">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="flex items-center justify-center gap-2 text-xs font-medium text-cream/75">
+              <MapPin className="h-3.5 w-3.5 text-cream/60" />
+              Bali, Indonesia
+            </p>
+
+            <h1 className="mx-auto mt-5 max-w-4xl text-balance font-display text-[3.1rem] font-semibold leading-[0.98] tracking-[-0.025em] text-cream drop-shadow-lg sm:text-6xl lg:text-[5.2rem]">
               Deal hebat
               <br className="hidden sm:block" />{" "}
               dimenangkan sebelum
@@ -148,70 +95,93 @@ export default async function LandingPage() {
               meja negosiasi
             </h1>
 
-            <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-primary-foreground/70 sm:text-base">
+            <p className="mx-auto mt-6 max-w-2xl text-balance text-[15px] leading-relaxed text-cream/80 drop-shadow-md sm:text-lg">
               Bersama AI, latih tawar-menawar, jaga margin, dan jawab keberatan
               sebelum bertemu F&amp;B Director hotel, manajer ritel, dan owner
               beach club Bali yang sesungguhnya.
             </p>
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button
-                asChild
-                size="lg"
-                variant="accent"
-                className="shadow-sm"
+            <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+              <Link
+                href={user ? "/simulasi/baru" : "/register"}
+                className="group inline-flex h-14 items-center justify-between gap-6 rounded-2xl bg-cream pl-7 pr-2 text-sm font-semibold text-cream-foreground shadow-2xl shadow-black/20 transition-transform duration-300 hover:-translate-y-0.5 active:scale-[0.98] sm:min-w-[220px]"
               >
-                <Link href={user ? "/simulasi/baru" : "/register"}>
-                  {user ? "Mulai simulasi" : "Mulai Gratis"}
+                <span>{user ? "Mulai simulasi" : "Mulai Gratis"}</span>
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-primary text-cream transition-transform duration-300 group-hover:translate-x-0.5">
                   <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
+                </span>
+              </Link>
 
               {user ? (
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="border-primary-foreground/25 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                <Link
+                  href="/dashboard"
+                  className="inline-flex h-14 items-center justify-center rounded-2xl border border-white/25 bg-white/10 px-6 text-sm font-semibold text-cream backdrop-blur-xl transition-colors hover:bg-white/20"
                 >
-                  <Link href="/dashboard">Buka dashboard</Link>
-                </Button>
+                  Buka dashboard
+                </Link>
               ) : (
                 <JudgeDemoForm
                   formClassName="w-full sm:w-auto"
-                  variant="outline"
-                  buttonClassName="w-full border border-primary-foreground/25 bg-transparent text-primary-foreground shadow-none hover:bg-primary-foreground/10 hover:text-primary-foreground sm:w-auto"
+                  buttonClassName="h-14 w-full rounded-2xl border border-white/25 bg-white/10 px-6 text-sm font-semibold text-cream shadow-none backdrop-blur-xl hover:bg-white/20 hover:text-cream sm:w-auto"
                 />
               )}
             </div>
 
-            <p className="mt-3 text-[11px] text-primary-foreground/55">
+            <p className="mt-4 text-[11px] text-cream/50">
               Tanpa registrasi. Satu klik untuk juri.
             </p>
           </div>
 
-          <div className="relative min-w-0">
-            <DealRoomPanel />
+          <div className="mx-auto mt-16 w-full max-w-5xl sm:mt-auto sm:pt-20">
+            <div className="overflow-hidden rounded-2xl border border-white/15 bg-primary/30 backdrop-blur-xl">
+              <div className="grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+                {steps.map((step) => (
+                  <div
+                    key={step.number}
+                    className="flex items-start gap-4 p-4 sm:p-5"
+                  >
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/20 bg-white/5 text-cream">
+                      <step.icon className="h-4 w-4" />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-cream">
+                        {step.title}
+                      </p>
+                      <p className="mt-1 text-[11px] leading-relaxed text-cream/55">
+                        {step.body}
+                      </p>
+                    </div>
+                    <span className="text-[10px] tabular-nums text-cream/35">
+                      {step.number}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col justify-between gap-2 text-[10px] text-cream/45 sm:flex-row">
+              <span>SiapDeal, negosiasi B2B untuk UMKM Bali</span>
+              <span>Percakapan dan evaluasi dibantu AI</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Rubric */}
       <section id="rubrik" className="scroll-mt-24 bg-background">
         <div className="container py-16 lg:py-24">
-          <div className="overflow-hidden rounded-2xl bg-ink text-primary-foreground">
+          <div className="overflow-hidden rounded-3xl bg-primary text-cream shadow-2xl shadow-primary/10">
             <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
               <div className="p-7 sm:p-10 lg:p-12">
-                <h2 className="max-w-lg font-sans text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+                <h2 className="max-w-lg font-display text-3xl font-semibold leading-tight tracking-tight text-cream sm:text-4xl">
                   Lima aspek yang menentukan apakah penawaran Anda layak
                   dipercaya.
                 </h2>
-                <p className="mt-3 max-w-lg text-sm leading-relaxed text-primary-foreground/60">
+                <p className="mt-3 max-w-lg text-sm leading-relaxed text-cream/60">
                   Rubrik yang sama dipakai di setiap sesi, sehingga skor Anda
                   bisa dibandingkan dari waktu ke waktu.
                 </p>
 
-                <div className="mt-7 space-y-0 divide-y divide-primary-foreground/10 border-y border-primary-foreground/10">
+                <div className="mt-7 space-y-0 divide-y divide-cream/10 border-y border-cream/10">
                   {RUBRIC_ASPECTS.map((aspect, index) => (
                     <div
                       key={aspect.key}
@@ -221,10 +191,10 @@ export default async function LandingPage() {
                         0{index + 1}
                       </span>
                       <div>
-                        <p className="text-sm font-semibold text-primary-foreground">
+                        <p className="text-sm font-semibold text-cream">
                           {aspect.label}
                         </p>
-                        <p className="mt-0.5 text-[11px] leading-relaxed text-primary-foreground/55">
+                        <p className="mt-0.5 text-[11px] leading-relaxed text-cream/50">
                           {aspect.description}
                         </p>
                       </div>
@@ -291,17 +261,16 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-ink text-primary-foreground">
+      <footer className="bg-primary text-cream">
         <div className="container py-12">
           <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
             <div className="max-w-sm">
               <Logo href="/" inverted />
-              <p className="mt-4 text-xs leading-relaxed text-primary-foreground/50">
+              <p className="mt-4 text-xs leading-relaxed text-cream/50">
                 AI flight simulator negosiasi B2B untuk membantu UMKM Bali masuk
                 jalur retail dan hospitality dengan lebih percaya diri.
               </p>
-              <p className="mt-4 flex items-center gap-1.5 text-[10px] text-primary-foreground/45">
+              <p className="mt-4 flex items-center gap-1.5 text-[10px] text-cream/45">
                 <Award className="h-3 w-3 text-accent" />
                 Bali DigiFest 2026, AI Web Innovation Challenge
               </p>
@@ -309,26 +278,26 @@ export default async function LandingPage() {
 
             <div className="grid grid-cols-2 gap-8 text-xs">
               <div>
-                <p className="font-semibold text-primary-foreground">Produk</p>
-                <div className="mt-3 space-y-2 text-primary-foreground/50">
-                  <Link href="/simulasi/baru" className="block hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                <p className="font-semibold text-cream">Produk</p>
+                <div className="mt-3 space-y-2 text-cream/50">
+                  <Link href="/simulasi/baru" className="block hover:text-cream">
                     Simulasi baru
                   </Link>
-                  <Link href="/dashboard" className="block hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  <Link href="/dashboard" className="block hover:text-cream">
                     Dashboard
                   </Link>
-                  <a href="#rubrik" className="block hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  <a href="#rubrik" className="block hover:text-cream">
                     Rubrik penilaian
                   </a>
                 </div>
               </div>
               <div>
-                <p className="font-semibold text-primary-foreground">Akun</p>
-                <div className="mt-3 space-y-2 text-primary-foreground/50">
-                  <Link href="/login" className="block hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                <p className="font-semibold text-cream">Akun</p>
+                <div className="mt-3 space-y-2 text-cream/50">
+                  <Link href="/login" className="block hover:text-cream">
                     Masuk
                   </Link>
-                  <Link href="/register" className="block hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  <Link href="/register" className="block hover:text-cream">
                     Daftar
                   </Link>
                 </div>
@@ -336,7 +305,7 @@ export default async function LandingPage() {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-col justify-between gap-2 border-t border-primary-foreground/10 pt-5 text-[10px] text-primary-foreground/35 sm:flex-row">
+          <div className="mt-10 flex flex-col justify-between gap-2 border-t border-cream/10 pt-5 text-[10px] text-cream/35 sm:flex-row">
             <p>© {new Date().getFullYear()} SiapDeal. Dibuat untuk UMKM Bali.</p>
             <p>Denpasar, Nusa Dua, Canggu</p>
           </div>
