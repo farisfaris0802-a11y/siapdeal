@@ -175,6 +175,17 @@
   .ios-sheen:focus-visible::after {
     transform: translateX(260%) skewX(-18deg);
   }
+
+  .ios-primary {
+    background-image: linear-gradient(
+      110deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--brand-navy-soft)) 50%,
+      hsl(var(--primary)) 100%
+    );
+    background-size: 200% 100%;
+    animation: ios-gradient 8s ease-in-out infinite;
+  }
 }
 
 @keyframes ios-pop {
@@ -192,6 +203,16 @@
   }
 }
 
+@keyframes ios-gradient {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ios-pop {
     animation: none;
@@ -199,6 +220,11 @@
 
   .ios-sheen::after {
     display: none;
+  }
+
+  .ios-primary {
+    animation: none;
+    background-position: 50% 50%;
   }
 }
 
