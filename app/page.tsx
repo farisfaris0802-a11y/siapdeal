@@ -5,9 +5,7 @@ import {
   BadgeCheck,
   Hotel,
   Lightbulb,
-  Store,
   TrendingUp,
-  Waves,
 } from "lucide-react";
 
 import { JudgeLoginButton } from "@/components/auth/judge-login-button";
@@ -193,21 +191,6 @@ export default async function LandingPage() {
 
           <div className="relative min-w-0">
             <DealRoomPanel />
-
-            <div className="mt-4 grid grid-cols-3 gap-2 border-t border-primary-foreground/15 pt-4 text-[11px] text-primary-foreground/60">
-              <span className="flex items-center gap-1.5">
-                <Hotel className="h-3.5 w-3.5 text-accent" />
-                Hotel Resort
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Store className="h-3.5 w-3.5 text-accent" />
-                Oleh-Oleh
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Waves className="h-3.5 w-3.5 text-accent" />
-                Beach Club
-              </span>
-            </div>
           </div>
         </div>
       </section>
