@@ -127,6 +127,8 @@ interface NegotiationChatProps {
 
 const MAX_CHARS = 1500;
 
+type MicPermission = "unknown" | "granted" | "denied" | "prompt";
+
 export function NegotiationChat({
   sessionId,
   product,
@@ -150,6 +152,7 @@ export function NegotiationChat({
   const [coachOpen, setCoachOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
+  const [micPermission, setMicPermission] = useState<MicPermission>("unknown");
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [evaluationError, setEvaluationError] = useState<string | null>(null);
   const [autoOutcome, setAutoOutcome] = useState<Exclude<SessionOutcome, "manual"> | null>(
@@ -163,6 +166,36 @@ export function NegotiationChat({
   const didInitialScrollRef = useRef(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const recordingRef = useRef<RecordingSession | null>(null);
+
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !navigator.permissions) return;
+
+    let active = true;
+    let status: PermissionStatus | null = null;
+
+    const sync = () => {
+      if (active && status) {
+        setMicPermission(status.state as MicPermission);
+      }
+    };
+
+    navigator.permissions
+      .query({ name: "microphone" as PermissionName })
+      .then((result) => {
+        if (!active) return;
+        status = result;
+        setMicPermission(result.state as MicPermission);
+        result.addEventListener("change", sync);
+      })
+      .catch(() => {
+        // Browser tidak mendukung query permission mikrofon.
+      });
+
+    return () => {
+      active = false;
+      status?.removeEventListener("change", sync);
+    };
+  }, []);
 
   const finishSession = useCallback(
     async (outcome: SessionOutcome) => {
@@ -321,6 +354,13 @@ export function NegotiationChat({
   const startVoiceInput = async () => {
     if (typeof window === "undefined" || recordingRef.current) return;
 
+    if (micPermission === "denied") {
+      toast.error(
+        "Akses mikrofon masih diblokir. Aktifkan lewat pengaturan situs di browser, lalu muat ulang halaman."
+      );
+      return;
+    }
+
     if (!navigator.mediaDevices?.getUserMedia) {
       toast.error("Browser ini belum mendukung perekaman suara.");
       return;
@@ -335,6 +375,7 @@ export function NegotiationChat({
           autoGainControl: true,
         },
       });
+      setMicPermission("granted");
 
       const AudioCtor =
         window.AudioContext ??
@@ -377,6 +418,9 @@ export function NegotiationChat({
       stream?.getTracks().forEach((track) => track.stop());
 
       const name = error instanceof DOMException ? error.name : "";
+      if (name === "NotAllowedError" || name === "SecurityError") {
+        setMicPermission("denied");
+      }
       const message =
         name === "NotAllowedError" || name === "SecurityError"
           ? "Izin mikrofon ditolak. Aktifkan izin mikrofon di browser."
@@ -741,6 +785,33 @@ export function NegotiationChat({
                   </Button>
                 </AlertDescription>
               </Alert>
+            )}
+
+            {micPermission === "denied" && (
+              <div
+                role="alert"
+                className="mb-2 flex items-start gap-2 rounded-xl border border-destructive/20 bg-destructive/5 p-3 text-[11px] leading-relaxed text-destructive"
+              >
+                <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold">Akses mikrofon diblokir</p>
+                  <p className="mt-0.5">
+                    Klik ikon kunci atau pengaturan situs di address bar, pilih
+                    Mikrofon, lalu Izinkan. Di Windows, aktifkan juga Settings →
+                    Privacy &amp; security → Microphone → Let desktop apps access
+                    your microphone.
+                  </p>
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  className="h-7 shrink-0 border-destructive/20 bg-white text-[10px] text-destructive"
+                  onClick={() => window.location.reload()}
+                >
+                  Muat ulang
+                </Button>
+              </div>
             )}
 
             <div className="mb-2 flex items-center justify-between gap-2">
