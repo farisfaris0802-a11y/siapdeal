@@ -57,14 +57,6 @@ export default async function DashboardPage() {
   const user = await requireUser();
   const sessions = await getSessionsForUser(user.id);
 
-  const fullName =
-    (user.user_metadata?.full_name as string | undefined) ||
-    user.email?.split("@")[0] ||
-    "Pengguna";
-  const firstName = fullName.trim().split(/\s+/)[0];
-  const isJudge =
-    Boolean(user.is_anonymous) || user.user_metadata?.role === "judge";
-
   const evaluated = sessions
     .map((session) => ({ session, evaluation: evaluationOf(session) }))
     .filter(
@@ -153,18 +145,11 @@ export default async function DashboardPage() {
       {/* Page header */}
       <header className="mb-7 flex animate-in-up flex-col justify-between gap-4 border-b border-border pb-6 motion-reduce:animate-none sm:flex-row sm:items-end">
         <div>
+          <h1 className="sr-only">Dashboard</h1>
           <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <CalendarDays className="h-3.5 w-3.5" />
             {formatDate(new Date())}
           </p>
-          <h1 className="mt-2 flex flex-wrap items-center gap-2 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-            Halo, {firstName}.
-            {isJudge && (
-              <span className="text-xs font-medium text-muted-foreground">
-                Demo juri
-              </span>
-            )}
-          </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
             {sessions.length === 0
               ? "Siap memulai latihan negosiasi pertama Anda? Pilih skenario, hadapi mitra virtual, lalu lihat skor deal Anda."
