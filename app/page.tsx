@@ -11,7 +11,6 @@ import {
   MessageSquare,
   MessagesSquare,
   ShieldCheck,
-  Sparkles,
   Store,
   Target,
   TrendingUp,
@@ -44,22 +43,16 @@ const personaTypes = [
     type: "hotel_resort_bali" as const,
     Icon: Hotel,
     tone: "border-amber-200 bg-amber-50 text-amber-700",
-    accent: "border-t-emerald-600",
-    iconTone: "bg-emerald-50 text-emerald-700",
   },
   {
     type: "souvenir_retail" as const,
     Icon: Store,
     tone: "border-emerald-200 bg-emerald-50 text-emerald-700",
-    accent: "border-t-amber-500",
-    iconTone: "bg-amber-50 text-amber-700",
   },
   {
     type: "beach_club_cafe" as const,
     Icon: Waves,
     tone: "border-sky-200 bg-sky-50 text-sky-700",
-    accent: "border-t-teal-500",
-    iconTone: "bg-teal-50 text-teal-700",
   },
 ];
 
@@ -388,75 +381,6 @@ export default async function LandingPage() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================ */}
-      {/* VALUE / TRUST                                                    */}
-      {/* ================================================================ */}
-      <section className="border-b border-slate-200/70 bg-white">
-        <div className="container grid gap-10 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16 lg:py-20">
-          <div>
-            <Badge
-              variant="outline"
-              className="mb-4 border-emerald-200 bg-emerald-50/70 text-emerald-800"
-            >
-              <Sparkles className="h-3 w-3" />
-              Built for Bali SMEs
-            </Badge>
-            <h2 className="max-w-xl font-sans text-3xl font-bold leading-tight tracking-tight text-ink sm:text-4xl">
-              Negosiasi Bali punya aturannya sendiri.
-            </h2>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-500">
-              Hotel menuntut sertifikasi dan TOP panjang. Pusat oleh-oleh menawar
-              dengan titip jual. Beach club menghitung food cost per porsi. Satu
-              produk yang sama bisa membutuhkan strategi yang sangat berbeda.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                TOP 30–60 hari
-              </span>
-              <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                Titip Jual
-              </span>
-              <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                Food Cost
-              </span>
-            </div>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {personaTypes.map(
-              ({ type, Icon, accent, iconTone }, index) => {
-                const meta = PARTNER_META[type];
-                return (
-                  <div
-                    key={type}
-                    className={`group relative overflow-hidden rounded-2xl border border-slate-200/80 border-t-4 ${accent} bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <span
-                        className={`grid h-11 w-11 place-items-center rounded-xl ${iconTone}`}
-                      >
-                        <Icon className="h-5 w-5" />
-                      </span>
-                      <span className="font-mono text-[10px] font-bold text-slate-200">
-                        0{index + 1}
-                      </span>
-                    </div>
-
-                    <h3 className="mt-4 flex items-center justify-between gap-2 text-base font-bold text-slate-900">
-                      {personaCardTitles[type]}
-                      <span className="text-lg">{meta.emoji}</span>
-                    </h3>
-                    <p className="mt-2 text-xs font-normal leading-relaxed text-slate-600">
-                      {meta.description}
-                    </p>
-                  </div>
-                );
-              }
-            )}
           </div>
         </div>
       </section>
