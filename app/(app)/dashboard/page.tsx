@@ -147,7 +147,7 @@ export default async function DashboardPage() {
       {/* Page header */}
       <header className="relative mb-7 animate-in-up overflow-hidden rounded-3xl motion-reduce:animate-none">
         <Image
-          src="/images/boardroom-hero.jpg"
+          src="/images/boardroom-hero-bright.jpg"
           alt=""
           fill
           priority

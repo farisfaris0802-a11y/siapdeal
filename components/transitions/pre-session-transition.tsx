@@ -103,7 +103,7 @@ export function PreSessionTransitionProvider({
           )}
         >
           <Image
-            src="/images/boardroom-hero.jpg"
+            src="/images/boardroom-hero-bright.jpg"
             alt=""
             fill
             priority

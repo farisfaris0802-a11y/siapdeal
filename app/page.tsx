@@ -72,14 +72,14 @@ export default async function LandingPage() {
 
       <section className="relative isolate flex min-h-[85vh] flex-col overflow-hidden bg-primary text-cream sm:min-h-[calc(100svh-4rem)]">
         <Image
-          src="/images/boardroom-hero.jpg"
+          src="/images/boardroom-hero-bright.jpg"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="scale-105 object-cover object-center blur-[1px]"
+          className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/90 to-slate-950" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/75 to-slate-950/95" />
 
         <div className="container relative z-10 flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 sm:pt-16">
           <div className="mx-auto max-w-4xl text-center">
