@@ -72,15 +72,15 @@ export default async function LandingPage() {
 
       <section className="relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-primary text-cream">
         <Image
-          src="/images/bali-hero.jpg"
+          src="/images/meeting-hero.jpg"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="scale-105 object-cover object-center blur-[1px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/50 to-primary/95" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-transparent to-primary/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/60 to-primary/95" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/15 to-primary/45" />
 
         <div className="container relative z-10 flex flex-1 flex-col justify-center pb-8 pt-12 sm:pt-16">
           <div className="mx-auto max-w-4xl text-center">
@@ -312,7 +312,6 @@ export default async function LandingPage() {
 
           <div className="mt-10 flex flex-col justify-between gap-2 border-t border-cream/10 pt-5 text-[10px] text-cream/35 sm:flex-row">
             <p>© {new Date().getFullYear()} SiapDeal. Dibuat untuk UMKM Bali.</p>
-            <p>Denpasar, Nusa Dua, Canggu</p>
           </div>
         </div>
       </footer>

@@ -19,7 +19,7 @@ export function AuthShell({
         {/* Brand panel */}
         <div className="relative hidden overflow-hidden bg-primary p-10 text-primary-foreground lg:flex lg:flex-col lg:justify-between xl:p-14">
           <Image
-            src="/images/bali-hero.jpg"
+            src="/images/meeting-hero.jpg"
             alt=""
             fill
             priority

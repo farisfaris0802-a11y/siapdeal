@@ -216,6 +216,32 @@
   }
 }
 
+@keyframes presession-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes presession-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.presession-in {
+  animation: presession-in 0.35s ease-out;
+}
+
+.presession-progress {
+  animation: presession-progress 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
 .voice-bar {
   transform-origin: bottom;
   animation: voice-bar 1.05s ease-in-out infinite;
@@ -225,6 +251,15 @@
   .voice-bar {
     animation: none;
     transform: scaleY(0.7);
+  }
+
+  .presession-in {
+    animation: none;
+  }
+
+  .presession-progress {
+    animation: none;
+    transform: scaleX(1);
   }
 }
 

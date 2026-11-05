@@ -11,6 +11,7 @@ import {
   useState,
 } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Radar } from "lucide-react";
 
@@ -97,15 +98,25 @@ export function PreSessionTransitionProvider({
           aria-live="polite"
           aria-busy="true"
           className={cn(
-            "fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-slate-950/95 px-6 backdrop-blur-xl transition-opacity duration-300",
+            "presession-in fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-slate-950/90 px-6 backdrop-blur-xl transition-opacity duration-300",
             leaving ? "pointer-events-none opacity-0" : "opacity-100"
           )}
         >
+          <Image
+            src="/images/meeting-hero.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center opacity-25 brightness-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950/95" />
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/10 blur-3xl" />
 
-          <div className="relative flex flex-col items-center text-center">
+          <div className="relative z-10 flex flex-col items-center text-center">
             <div className="relative grid h-28 w-28 place-items-center">
               <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500/15 motion-reduce:animate-none" />
+              <span className="absolute inset-2 animate-pulse rounded-full border border-amber-400/30 motion-reduce:animate-none" />
               <span className="absolute inset-4 rounded-full border border-emerald-400/25" />
               <span className="relative grid h-16 w-16 place-items-center rounded-full bg-slate-900/90 text-emerald-400 shadow-[0_0_56px_rgba(16,185,129,0.32)] ring-1 ring-emerald-400/30">
                 <Radar className="h-7 w-7 animate-pulse motion-reduce:animate-none" />
@@ -127,12 +138,16 @@ export function PreSessionTransitionProvider({
 
             <p className="mt-6 text-sm font-medium text-slate-200 sm:text-base">
               {phase === 0
-                ? "🎯 Mengaktifkan Simulator Negosiasi..."
-                : "🤝 Menghubungkan dengan F&B Director AI..."}
+                ? "Menginisialisasi Simulator B2B AI..."
+                : "Menyiapkan skenario negosiasi F&B Director..."}
             </p>
             <p className="mt-2 text-[11px] text-slate-500">
               Menyiapkan ruang latihan Anda
             </p>
+
+            <div className="mt-5 h-1 w-52 overflow-hidden rounded-full bg-slate-800">
+              <span className="presession-progress block h-full w-full origin-left rounded-full bg-gradient-to-r from-emerald-400 via-emerald-300 to-amber-300" />
+            </div>
           </div>
         </div>
       )}
