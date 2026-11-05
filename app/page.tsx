@@ -145,7 +145,7 @@ export default async function LandingPage() {
               <br className="hidden sm:block" />{" "}
               dimenangkan sebelum
               <br className="hidden sm:block" />{" "}
-              meja negosiasi.
+              meja negosiasi
             </h1>
 
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-primary-foreground/70 sm:text-base">
