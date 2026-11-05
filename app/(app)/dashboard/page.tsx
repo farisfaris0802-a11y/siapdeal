@@ -27,6 +27,7 @@ import { DashboardSoundToggle } from "@/components/dashboard/dashboard-effects";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TransitionLink } from "@/components/transitions/pre-session-transition";
 import { Progress } from "@/components/ui/progress";
 import { requireUser } from "@/lib/auth";
 import { DIFFICULTY_META, PARTNER_META, RUBRIC_ASPECTS } from "@/lib/ai/personas";
@@ -185,10 +186,10 @@ export default async function DashboardPage() {
               asChild
               className="border border-white/20 bg-cream text-cream-foreground hover:bg-cream/90"
             >
-              <Link href="/simulasi/baru">
+              <TransitionLink href="/simulasi/baru">
                 <Plus className="h-4 w-4" />
                 Simulasi Baru
-              </Link>
+              </TransitionLink>
             </Button>
           </div>
         </div>
@@ -319,10 +320,10 @@ export default async function DashboardPage() {
                 </div>
 
                 <Button asChild size="sm" className="w-full">
-                  <Link href="/simulasi/baru">
+                  <TransitionLink href="/simulasi/baru">
                     Latih aspek ini
                     <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
+                  </TransitionLink>
                 </Button>
               </>
             ) : (
@@ -336,7 +337,7 @@ export default async function DashboardPage() {
                   aspek yang perlu diperkuat.
                 </p>
                 <Button asChild size="sm" variant="outline" className="mt-4">
-                  <Link href="/simulasi/baru">Mulai latihan</Link>
+                  <TransitionLink href="/simulasi/baru">Mulai latihan</TransitionLink>
                 </Button>
               </div>
             )}
@@ -372,10 +373,10 @@ export default async function DashboardPage() {
                 menit, Anda akan mendapat skor dan saran perbaikan yang konkret.
               </p>
               <Button asChild size="lg" className="mt-6">
-                <Link href="/simulasi/baru">
+                <TransitionLink href="/simulasi/baru">
                   <CirclePlay className="h-4 w-4" />
                   Mulai simulasi pertama
-                </Link>
+                </TransitionLink>
               </Button>
             </div>
           </div>

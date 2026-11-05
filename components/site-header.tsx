@@ -1,87 +1,90 @@
 import Link from "next/link";
-import { ArrowRight, LayoutDashboard } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import { Logo } from "@/components/logo";
 import { JudgeLoginButton } from "@/components/auth/judge-login-button";
+import { Logo } from "@/components/logo";
+import { MobileSiteNav } from "@/components/site-mobile-nav";
+import { TransitionLink } from "@/components/transitions/pre-session-transition";
 import { Button } from "@/components/ui/button";
 import { judgeLoginAction } from "@/lib/actions/auth";
-import { cn } from "@/lib/utils";
 
-const navItems = [{ href: "#rubrik", label: "Rubrik" }];
-
-const secondaryButtonClass =
-  "group ios-pop ios-sheen relative h-9 overflow-hidden rounded-full border border-white/20 bg-white/10 px-3 text-[12px] font-semibold text-cream/90 shadow-lg shadow-black/10 ring-1 ring-inset ring-white/10 backdrop-blur-xl transition-[transform,background-color,box-shadow,color] duration-300 hover:-translate-y-0.5 hover:bg-white/20 hover:text-cream active:translate-y-0 active:scale-[0.96] motion-reduce:transition-none sm:h-10 sm:px-4 sm:text-[13px]";
-
-const primaryButtonClass =
-  "group ios-pop ios-sheen relative h-9 overflow-hidden rounded-full border border-white/40 bg-cream px-3 text-[12px] font-semibold text-cream-foreground shadow-lg shadow-black/15 transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-cream/90 active:translate-y-0 active:scale-[0.96] motion-reduce:transition-none sm:h-10 sm:px-4 sm:text-[13px]";
+const navItems = [
+  { href: "/simulasi/baru", label: "Persona Buyer" },
+  { href: "#rubrik", label: "Fitur AI" },
+  { href: "#cara-kerja", label: "Cara Kerja" },
+];
 
 export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
-      <div className="container flex h-16 items-center justify-between gap-2 sm:h-[68px] sm:gap-4">
-        <div className="flex min-w-0 items-center">
-          <Logo className="hidden shrink-0 sm:inline-flex" inverted />
-          <Logo className="shrink-0 sm:hidden" compact showWordmark={false} />
+    <header className="sticky top-0 z-50 border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <Logo
+            href="/"
+            inverted
+            showTagline={false}
+            className="hidden sm:inline-flex"
+          />
+          <Logo
+            href="/"
+            compact
+            showWordmark={false}
+            className="sm:hidden"
+          />
+          <span className="hidden rounded-full border border-emerald-800 bg-emerald-950/80 px-2 py-0.5 text-[10px] font-medium text-emerald-400 sm:inline-flex">
+            v1.0 MVP
+          </span>
         </div>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
-              className="whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium text-cream/70 transition-colors hover:bg-white/10 hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+              className="text-sm font-medium text-slate-300 transition-colors hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-          {isLoggedIn ? (
-            <Button asChild size="sm" className={primaryButtonClass}>
+        <div className="flex shrink-0 items-center gap-2">
+          {!isLoggedIn && (
+            <form action={judgeLoginAction} className="flex">
+              <input type="hidden" name="next" value="/simulator" />
+              <JudgeLoginButton
+                label="Mode Juri (Demo 1-Klik)"
+                pendingLabel="Menyiapkan..."
+                size="sm"
+                variant="ghost"
+                icon="target"
+                rememberJudgeMode
+                hideLabelOnMobile
+                transitionOnSubmit
+                className="h-9 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 text-xs font-semibold text-amber-300 hover:bg-amber-500/20"
+              />
+            </form>
+          )}
+
+          <Button
+            asChild
+            size="sm"
+            className="h-9 rounded-xl bg-emerald-600 px-3 text-xs font-semibold text-white shadow-md shadow-emerald-950 transition-colors hover:bg-emerald-500 sm:h-10 sm:px-4 sm:text-sm"
+          >
+            {isLoggedIn ? (
               <Link href="/dashboard">
-                <LayoutDashboard className="h-3.5 w-3.5" />
+                <ArrowRight className="h-4 w-4" />
                 Dashboard
               </Link>
-            </Button>
-          ) : (
-            <>
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className={cn(secondaryButtonClass, "px-3 sm:px-4")}
-              >
-                <Link href="/login">Masuk</Link>
-              </Button>
+            ) : (
+              <TransitionLink href="/register">
+                <ArrowRight className="h-4 w-4" />
+                Mulai Gratis
+              </TransitionLink>
+            )}
+          </Button>
 
-              <form action={judgeLoginAction} className="flex">
-                <input type="hidden" name="next" value="/simulasi/baru?demo=1" />
-                <JudgeLoginButton
-                  label="Demo"
-                  pendingLabel="Memuat..."
-                  size="sm"
-                  variant="ghost"
-                  className={cn(
-                    secondaryButtonClass,
-                    "animate-delay-1 gap-1.5 px-3 [&_svg]:transition-transform [&_svg]:duration-300 group-hover:[&_svg]:rotate-12 group-hover:[&_svg]:scale-110 sm:px-4"
-                  )}
-                  icon="sparkles"
-                />
-              </form>
-
-              <Button
-                asChild
-                size="sm"
-                className={cn(primaryButtonClass, "animate-delay-2")}
-              >
-                <Link href="/register">
-                  Mulai Gratis
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1 sm:h-4 sm:w-4" />
-                </Link>
-              </Button>
-            </>
-          )}
+          <MobileSiteNav items={navItems} />
         </div>
       </div>
     </header>

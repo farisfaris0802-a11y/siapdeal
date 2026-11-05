@@ -3,6 +3,8 @@ import "@fontsource-variable/fraunces";
 import "@fontsource-variable/plus-jakarta-sans";
 import { Toaster } from "sonner";
 
+import { PreSessionTransitionProvider } from "@/components/transitions/pre-session-transition";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -44,18 +46,20 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className="font-sans">
-        {children}
-        <Toaster
-          position="top-center"
-          richColors
-          closeButton
-          toastOptions={{
-            style: {
-              borderRadius: "14px",
-              fontFamily: "var(--font-sans)",
-            },
-          }}
-        />
+        <PreSessionTransitionProvider>
+          {children}
+          <Toaster
+            position="top-center"
+            richColors
+            closeButton
+            toastOptions={{
+              style: {
+                borderRadius: "14px",
+                fontFamily: "var(--font-sans)",
+              },
+            }}
+          />
+        </PreSessionTransitionProvider>
       </body>
     </html>
   );

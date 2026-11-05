@@ -14,6 +14,7 @@ import { JudgeLoginButton } from "@/components/auth/judge-login-button";
 import { Logo } from "@/components/logo";
 import { ScoreRing } from "@/components/score-ring";
 import { SiteHeader } from "@/components/site-header";
+import { TransitionLink } from "@/components/transitions/pre-session-transition";
 import { judgeLoginAction } from "@/lib/actions/auth";
 import { RUBRIC_ASPECTS } from "@/lib/ai/personas";
 import { getCurrentUser } from "@/lib/auth";
@@ -56,6 +57,7 @@ function JudgeDemoForm({
         variant="ghost"
         className={buttonClassName}
         icon="sparkles"
+        transitionOnSubmit
       />
     </form>
   );
@@ -68,7 +70,7 @@ export default async function LandingPage() {
     <div className="min-h-screen bg-background font-sans text-ink">
       <SiteHeader isLoggedIn={Boolean(user)} />
 
-      <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-primary text-cream">
+      <section className="relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-primary text-cream">
         <Image
           src="/images/bali-hero.jpg"
           alt=""
@@ -80,7 +82,7 @@ export default async function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/50 to-primary/95" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-transparent to-primary/30" />
 
-        <div className="container relative z-10 flex flex-1 flex-col justify-center pb-8 pt-28 sm:pt-32">
+        <div className="container relative z-10 flex flex-1 flex-col justify-center pb-8 pt-12 sm:pt-16">
           <div className="mx-auto max-w-4xl text-center">
             <p className="flex items-center justify-center gap-2 text-xs font-medium text-cream/75">
               <MapPin className="h-3.5 w-3.5 text-cream/60" />
@@ -102,7 +104,7 @@ export default async function LandingPage() {
             </p>
 
             <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-              <Link
+              <TransitionLink
                 href={user ? "/simulasi/baru" : "/register"}
                 className="group inline-flex h-14 items-center justify-between gap-6 rounded-2xl bg-cream pl-7 pr-2 text-sm font-semibold text-cream-foreground shadow-2xl shadow-black/20 transition-transform duration-300 hover:-translate-y-0.5 active:scale-[0.98] sm:min-w-[220px]"
               >
@@ -110,7 +112,7 @@ export default async function LandingPage() {
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-primary text-cream transition-transform duration-300 group-hover:translate-x-0.5">
                   <ArrowRight className="h-4 w-4" />
                 </span>
-              </Link>
+              </TransitionLink>
 
               {user ? (
                 <Link
@@ -132,7 +134,10 @@ export default async function LandingPage() {
             </p>
           </div>
 
-          <div className="mx-auto mt-16 w-full max-w-5xl sm:mt-auto sm:pt-20">
+          <div
+            id="cara-kerja"
+            className="mx-auto mt-16 w-full max-w-5xl scroll-mt-24 sm:mt-auto sm:pt-20"
+          >
             <div className="overflow-hidden rounded-2xl border border-white/15 bg-primary/30 backdrop-blur-xl">
               <div className="grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
                 {steps.map((step) => (

@@ -204,6 +204,30 @@
   }
 }
 
+@keyframes voice-bar {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.voice-bar {
+  transform-origin: bottom;
+  animation: voice-bar 1.05s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-bar {
+    animation: none;
+    transform: scaleY(0.7);
+  }
+}
+
 @keyframes in-up {
   from {
     opacity: 0;
