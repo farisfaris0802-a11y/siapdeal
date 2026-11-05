@@ -265,6 +265,17 @@ export function NegotiationChat({
       return;
     }
 
+    const rms = Math.sqrt(
+      samples.reduce((total, sample) => total + sample * sample, 0) /
+        samples.length
+    );
+    if (rms < 0.001) {
+      toast.error(
+        "Tidak ada suara yang terdeteksi. Pastikan mikrofon aktif dan coba lagi."
+      );
+      return;
+    }
+
     setIsTranscribing(true);
     try {
       const formData = new FormData();

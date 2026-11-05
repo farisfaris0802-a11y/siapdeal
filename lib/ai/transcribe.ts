@@ -1,5 +1,9 @@
 const PRIMARY_MODEL = "gemini-3.5-transcribe";
-const FALLBACK_MODEL = "gemini-3.8-flash";
+const FALLBACK_MODELS = [
+  "gemini-3.1-flash-lite",
+  "gemini-3.6-flash",
+  "gemini-3.5-flash",
+];
 const PROMPT =
   "Transkripsikan audio ini secara verbatim dalam Bahasa Indonesia. Kembalikan hanya teks transkrip tanpa penjelasan, tanpa tanda kutip, dan tanpa label.";
 
@@ -44,7 +48,7 @@ async function requestTranscription(
           },
         ],
       }),
-      signal: AbortSignal.timeout(45_000),
+      signal: AbortSignal.timeout(15_000),
     }
   );
 
@@ -90,18 +94,28 @@ export async function transcribeAudio({
   }
 
   const base64Audio = bytes.toString("base64");
-  const primary = process.env.AI_TRANSCRIBE_MODEL || PRIMARY_MODEL;
+  const configuredModel = process.env.AI_TRANSCRIBE_MODEL;
+  const models = [
+    ...(configuredModel ? [configuredModel] : []),
+    PRIMARY_MODEL,
+    ...FALLBACK_MODELS,
+  ].filter((model, index, all) => all.indexOf(model) === index);
 
-  try {
-    return await requestTranscription(primary, key, base64Audio, mimeType);
-  } catch (primaryError) {
-    console.warn("[transcribe] primary model failed", {
-      model: primary,
-      message: primaryError instanceof Error ? primaryError.message : primaryError,
-    });
+  let lastError: unknown = null;
 
-    if (primary === FALLBACK_MODEL) throw primaryError;
-
-    return requestTranscription(FALLBACK_MODEL, key, base64Audio, mimeType);
+  for (const model of models) {
+    try {
+      return await requestTranscription(model, key, base64Audio, mimeType);
+    } catch (error) {
+      lastError = error;
+      console.warn("[transcribe] model failed", {
+        model,
+        message: error instanceof Error ? error.message : error,
+      });
+    }
   }
+
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("Gagal memproses transkripsi suara.");
 }
