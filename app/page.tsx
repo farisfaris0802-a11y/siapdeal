@@ -141,16 +141,17 @@ export default async function LandingPage() {
         <div className="container grid w-full grid-cols-1 gap-12 py-12 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-center lg:gap-16 lg:py-16">
           <div className="min-w-0">
             <h1 className="w-full max-w-[650px] break-words font-sans text-[2.5rem] font-bold leading-[1.02] tracking-[-0.045em] sm:text-5xl lg:text-[3.55rem]">
-              Flight Simulator
+              Deal hebat
               <br className="hidden sm:block" />{" "}
-              Negosiasi B2B Pertama
+              dimenangkan sebelum
               <br className="hidden sm:block" />{" "}
-              untuk UMKM Bali
+              meja negosiasi.
             </h1>
 
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-primary-foreground/70 sm:text-base">
-              Latih taktik tawar-menawar menghadapi F&amp;B Director Hotel,
-              Ritel, dan Beach Club berbasis AI sebelum bertemu pembeli aslinya.
+              Bersama AI, latih tawar-menawar, jaga margin, dan jawab keberatan
+              sebelum bertemu F&amp;B Director hotel, manajer ritel, dan owner
+              beach club Bali yang sesungguhnya.
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
