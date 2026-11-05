@@ -3,13 +3,9 @@ import {
   ArrowRight,
   Award,
   BadgeCheck,
-  Check,
   Hotel,
   Lightbulb,
-  MessageSquare,
-  MessagesSquare,
   Store,
-  Target,
   TrendingUp,
   Waves,
 } from "lucide-react";
@@ -21,61 +17,9 @@ import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { judgeLoginAction } from "@/lib/actions/auth";
 import {
-  PARTNER_META,
   RUBRIC_ASPECTS,
 } from "@/lib/ai/personas";
 import { getCurrentUser } from "@/lib/auth";
-
-const personaCardTitles = {
-  hotel_resort_bali: "F&B Director Hotel Resort",
-  souvenir_retail: "Manager Pusat Oleh-Oleh & Ritel",
-  beach_club_cafe: "Owner Kafe & Restoran Modern",
-} as const;
-
-const personaTypes = [
-  {
-    type: "hotel_resort_bali" as const,
-    Icon: Hotel,
-    iconTone: "bg-primary/10 text-primary",
-  },
-  {
-    type: "souvenir_retail" as const,
-    Icon: Store,
-    iconTone: "bg-accent/10 text-accent",
-  },
-  {
-    type: "beach_club_cafe" as const,
-    Icon: Waves,
-    iconTone: "bg-secondary text-secondary-foreground",
-  },
-];
-
-const processSteps = [
-  {
-    number: "01",
-    title: "Pilih produk dan mitra",
-    body: "Masukkan produk, harga dasar, kategori, dan USP. Pilih hotel resort, pusat oleh-oleh, atau beach club.",
-    icon: MessageSquare,
-  },
-  {
-    number: "02",
-    title: "Mulai negosiasi",
-    body: "Pembeli virtual membuka percakapan dengan karakter Bali, batas harga, dan tuntutan komersial yang konsisten.",
-    icon: MessagesSquare,
-  },
-  {
-    number: "03",
-    title: "Dapatkan skor 5 aspek",
-    body: "Transkrip dinilai dengan rubrik tetap: kejelasan penawaran, nilai produk, objection handling, margin, dan closing.",
-    icon: Target,
-  },
-  {
-    number: "04",
-    title: "Perbaiki strategi",
-    body: "Baca kekuatan, kelemahan, dan contoh kalimat yang lebih kuat untuk dipakai di sesi berikutnya.",
-    icon: TrendingUp,
-  },
-];
 
 function JudgeDemoForm({
   formClassName,
@@ -245,24 +189,6 @@ export default async function LandingPage() {
             <p className="mt-3 text-[11px] text-primary-foreground/55">
               Tanpa registrasi. Satu klik untuk juri.
             </p>
-
-            <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-primary-foreground/15 pt-6 sm:grid-cols-4">
-              {[
-                ["3", "Persona Bali"],
-                ["9", "Skenario mitra"],
-                ["5", "Aspek penilaian"],
-                ["0", "Risiko nyata"],
-              ].map(([value, label]) => (
-                <div key={label}>
-                  <p className="font-display text-2xl font-bold leading-none text-primary-foreground">
-                    {value}
-                  </p>
-                  <p className="mt-1 text-[11px] text-primary-foreground/55">
-                    {label}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="relative min-w-0">
@@ -282,109 +208,6 @@ export default async function LandingPage() {
                 Beach Club
               </span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Process */}
-      <section id="cara-kerja" className="scroll-mt-24 bg-background">
-        <div className="container py-16 lg:py-24">
-          <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-            <div>
-              <h2 className="max-w-md font-sans text-3xl font-bold leading-tight tracking-tight text-ink sm:text-4xl">
-                Dari skenario ke strategi baru dalam empat langkah.
-              </h2>
-              <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-                Tidak ada teori panjang. Anda berlatih menghadapi tekanan
-                pembeli profesional dan mendapat umpan balik yang bisa dipakai.
-              </p>
-              <Button asChild variant="outline" className="mt-6">
-                <Link href={user ? "/simulasi/baru" : "/register"}>
-                  Coba sekarang
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-
-            <div className="divide-y divide-border border-y border-border">
-              {processSteps.map((step) => (
-                <div
-                  key={step.number}
-                  className="grid gap-3 py-5 sm:grid-cols-[56px_1fr_1.3fr] sm:items-start sm:gap-6"
-                >
-                  <span className="font-display text-2xl font-bold text-primary/35">
-                    {step.number}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <step.icon className="h-4 w-4 shrink-0 text-primary" />
-                    <h3 className="text-sm font-bold text-ink">{step.title}</h3>
-                  </div>
-                  <p className="text-xs leading-relaxed text-muted-foreground">
-                    {step.body}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Personas */}
-      <section id="mitra" className="scroll-mt-24 border-y border-border bg-card">
-        <div className="container py-16 lg:py-24">
-          <div className="max-w-2xl">
-            <h2 className="font-sans text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Tiga wajah pembeli Bali.
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Setiap kombinasi punya karakter, batas harga, dan tuntutan
-              komersial yang berbeda.
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {personaTypes.map(({ type, Icon, iconTone }) => {
-              const meta = PARTNER_META[type];
-              return (
-                <article
-                  key={type}
-                  className="flex flex-col rounded-2xl border border-border bg-background p-6"
-                >
-                  <span
-                    className={`grid h-12 w-12 place-items-center rounded-xl ${iconTone}`}
-                  >
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <h3 className="mt-5 text-base font-bold text-ink">
-                    {personaCardTitles[type]}
-                  </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                    {meta.description}
-                  </p>
-
-                  <div className="mt-5 space-y-2 border-t border-border pt-4">
-                    {meta.playbook.slice(0, 2).map((tactic) => (
-                      <p
-                        key={tactic}
-                        className="flex items-start gap-2 text-[11px] leading-relaxed text-muted-foreground"
-                      >
-                        <Check className="mt-0.5 h-3 w-3 shrink-0 text-primary" />
-                        {tactic}
-                      </p>
-                    ))}
-                  </div>
-
-                  <div className="mt-auto border-t border-border pt-4">
-                    <p className="text-xs font-semibold text-ink">
-                      {meta.buyerName}
-                    </p>
-                    <p className="mt-0.5 text-[11px] text-muted-foreground">
-                      {meta.buyerRole}, {meta.company}
-                    </p>
-                  </div>
-                </article>
-              );
-            })}
           </div>
         </div>
       </section>
@@ -524,9 +347,6 @@ export default async function LandingPage() {
                   <Link href="/register" className="block hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                     Daftar
                   </Link>
-                  <a href="#mitra" className="block hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                    Profil pembeli
-                  </a>
                 </div>
               </div>
             </div>

@@ -7,11 +7,7 @@ import { Button } from "@/components/ui/button";
 import { judgeLoginAction } from "@/lib/actions/auth";
 import { cn } from "@/lib/utils";
 
-const navItems = [
-  { href: "#cara-kerja", label: "Cara kerja" },
-  { href: "#mitra", label: "Persona Bali" },
-  { href: "#rubrik", label: "Rubrik" },
-];
+const navItems = [{ href: "#rubrik", label: "Rubrik" }];
 
 const secondaryButtonClass =
   "group ios-pop ios-sheen relative h-9 overflow-hidden rounded-full border border-border/70 bg-white/55 px-3 text-[12px] font-semibold text-ink/75 shadow-md ring-1 ring-inset ring-white/60 backdrop-blur-xl transition-[transform,background-color,box-shadow,color] duration-300 hover:-translate-y-0.5 hover:bg-white/80 hover:text-ink hover:shadow-lg active:translate-y-0 active:scale-[0.96] motion-reduce:transition-none sm:h-10 sm:px-4 sm:text-[13px]";
